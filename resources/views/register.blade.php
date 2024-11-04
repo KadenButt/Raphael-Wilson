@@ -7,8 +7,8 @@
         <title>Register</title>
     </head>
     <body>
-        <section id="login">
-            <div id="login-header">
+        <section id="register">
+            <div id="register-header">
                 <h2>Register</h2>
             </div>
             <form id="register-form" action="register.blade.php" method="POST">
