@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customer', function(Blueprint $table)
-        {
-            $table->integer('id');
-            $table->string('email');
-            $table->string('password');
-            $table->unsignedBigInteger('payment_id');
-
-            //FK
-            $table->foreign('payment_id')->references('payment_id')->on('payment');
+        Schema::create('address', function(Blueprint $table){
+            $table->id('address_id')->primary();
+            $table->integer('address_number');
+            $table->string('address_street');
+            $table->string('address_postcode', 6);
         });
     }
 
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists("address");
     }
 };

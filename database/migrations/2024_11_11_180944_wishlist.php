@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payment', function(Blueprint $table)
-        {
-            $table->unsignedBigInteger('payment_id');
-            $table->integer('account_number');
+        Schema::create('wishlist', function(Blueprint $table){
+            $table->id('wishlist_id')->primary();
+            $table->foreignId('customer_id')->references('customer_id')->on('customer');
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('wishlist');
     }
 };
