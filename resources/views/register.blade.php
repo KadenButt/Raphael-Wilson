@@ -7,8 +7,8 @@
         <title>Register</title>
     </head>
     <body>
-        <section id="login">
-            <div id="login-header">
+        <section id="register">
+            <div id="register-header">
                 <h2>Register</h2>
             </div>
             <form id="register-form" action="register.blade.php" method="POST">
@@ -19,7 +19,7 @@
                 <br><br>
                 <input type="password" name="confirm-password" placeholder="Confirm Password"/>
                 <br><br>
-                <input type="submit" name="submitted" value="Log in"/>
+                <input type="submit" name="submitted" value="Register"/>
 
                 <input type = "hidden" name = "submitted" value = "true" />
 
