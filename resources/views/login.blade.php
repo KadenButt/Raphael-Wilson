@@ -4,6 +4,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width , initial-scale=1.0">
+        <link rel="icon" type = "image" href = "favicon_io\android-chrome-512x512.png">
+        
         <title>Log in</title>
     </head>
 
@@ -16,6 +18,9 @@
     </header>
 
     <body>
+
+    
+
         <section id="login">
             <div id="login-header">
                 <h2>Log in</h2>
