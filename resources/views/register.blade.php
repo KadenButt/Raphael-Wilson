@@ -40,7 +40,10 @@
             <br><br>
             <input type="password" name="password" placeholder="Password" />
             <br><br>
-            <input type="password" name="confirm-password" placeholder="Confirm Password" />
+            <input type="password" name="password_confirmation" placeholder="Confirm Password" />
+            <br><br>
+            <input type="checkbox" name="admin" value="admin">
+            <label for="admin"> Click to create an admin account</label><br>
             <br><br>
             <input type="submit" name="submitted" value="Register" />
             <br><br>

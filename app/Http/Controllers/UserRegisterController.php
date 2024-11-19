@@ -19,42 +19,41 @@ class UserRegisterController extends Controller
             'street' => 'required|max:255',
             'postcode' => 'required|max:6',
             'payment_number' => 'required|integer|max:11',
-            'password' => 'required|confirmed',
-            'confirm-password' => 'required'
+            'password' => 'required|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,255}$/',
+            'password_confirmation' => 'required'
         ], [
             'fname.required' => 'First name is required and cannot be empty.',
             'fname.max' => 'First name cannot exceed 255 characters.',
             'fname.alpha' => 'First name should contain only letters.',
-        
+
             'sname.required' => 'Last name is required and cannot be empty.',
             'sname.max' => 'Last name cannot exceed 255 characters.',
             'sname.alpha' => 'Last name should contain only letters.',
-        
+
             'email.required' => 'Email address is required.',
             'email.email' => 'Please provide a valid email address.',
             'email.max' => 'Email cannot exceed 255 characters.',
-        
+
             'address_number.required' => 'Address number is required.',
             'address_number.integer' => 'Address number must be a number.',
             'address_number.max' => 'Address number cannot exceed 255 characters.',
-        
+
             'street.required' => 'Street name is required.',
             'street.max' => 'Street name cannot exceed 255 characters.',
-        
+
             'postcode.required' => 'Postcode is required.',
             'postcode.max' => 'Postcode cannot exceed 6 characters.',
-        
+
             'payment_number.required' => 'Payment number is required.',
             'payment_number.integer' => 'Payment number must be a number.',
             'payment_number.max' => 'Payment number cannot exceed 11 characters.',
-        
+
             'password.required' => 'Password is required.',
-            'password.confirmed' => 'Passwords do not match.',
-        
-            'confirm-password.required' => 'Please confirm your password.'
+            'password.regex' => 'The password must be longer then 8 characters contain at least one uppercase letter, one number, and one special character.',
+
         ]);
 
-        
+
         //creates address table and returns ID
         $addressId = DB::table('address')->insertGetId([
             'address_number' => $request->input('address_number'),
@@ -72,10 +71,8 @@ class UserRegisterController extends Controller
             'customer_password' => bcrypt($request->input('password')),
             'customer_fname' => $request->input('fname'),
             'customer_sname' => $request->input('sname'),
-            'address_id' => $addressId,  
-            'payment_id' => $paymentId,  
+            'address_id' => $addressId,
+            'payment_id' => $paymentId,
         ]);
-
-
     }
 }
