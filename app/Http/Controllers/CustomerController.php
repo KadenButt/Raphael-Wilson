@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class UserRegisterController extends Controller
+class CustomerController extends Controller
 {
-    public function registerUser(Request $request)
+    public function registerCustomer(Request $request)
     {
 
         //validate data (alpha = only letters)
@@ -52,7 +52,6 @@ class UserRegisterController extends Controller
             'password.regex' => 'The password must be longer then 8 characters contain at least one uppercase letter, one number, and one special character.',
 
         ]);
-
 
         //creates address table and returns ID
         $addressId = DB::table('address')->insertGetId([

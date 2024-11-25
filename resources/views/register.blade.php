@@ -22,7 +22,7 @@
         <div id="register-header">
             <h2>Register</h2>
         </div>
-        <form id="register-form" method="POST" action="{{ route('user.register') }}">
+        <form id="register-form" method="POST" action="{{ route('customer.register') }}">
             @csrf
             <input type="text" name="fname" placeholder="First Name">
             <br><br>
@@ -42,14 +42,11 @@
             <br><br>
             <input type="password" name="password_confirmation" placeholder="Confirm Password" />
             <br><br>
-            <input type="checkbox" name="admin" value="admin">
-            <label for="admin"> Click to create an admin account</label><br>
-            <br><br>
             <input type="submit" name="submitted" value="Register" />
             <br><br>
             <input type="hidden" name="submitted" value="true" />
 
-            <p>Already a user? <a href="login.blade.php">Log in here</a></p>
+            <p>Already a user? <a href="{{ route('customer.login') }}">Log in here</a></p>
 
         </form>
     </section>

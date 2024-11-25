@@ -25,7 +25,7 @@
             <div id="login-header">
                 <h2>Log in</h2>
             </div>
-            <form id="login-form" action="login.blade.php" method="POST">
+            <form id="login-form"  method="POST" action="{{ route('customer.login') }}">
 
                 <input type="email" name="email" placeholder="Email"/>
                 <br><br>
@@ -35,7 +35,7 @@
 
                 <input type = "hidden" name = "submitted" value = "true" />
 
-                <p>Not a user? <a href= "register.blade.php">Register here</a></p>
+                <p>Not a user? <a href= "{{ route('customer.register.form') }}">Register here</a></p>
 
             </form>
             </section>
