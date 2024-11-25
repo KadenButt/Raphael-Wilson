@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 class CustomerController extends Controller
 {
@@ -74,4 +78,28 @@ class CustomerController extends Controller
             'payment_id' => $paymentId,
         ]);
     }
+
+    public function authenticate(Request $request): RedirectResponse
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+    
+        // Custom table and authentication logic
+        $user = DB::table('custom_users_table')->where('email', $credentials['email'])->first();
+    
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            // Manually log in the user
+            Auth::loginUsingId($user->id);
+            $request->session()->regenerate();
+    
+            return redirect()->intended('dashboard');
+        }
+    
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    }
+    
 }
