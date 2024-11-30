@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\MessageBag;
 
 
 class CustomerController extends Controller
@@ -14,15 +15,14 @@ class CustomerController extends Controller
     public function registerCustomer(Request $request)
     {
 
-        //validate data (alpha = only letters)
         $vd = $request->validate([
             'fname' => 'required|max:255|alpha',
             'sname' => 'required|max:255|alpha',
             'email' => 'required|email|max:255',
-            'address_number' => 'required|integer|max:255',
+            'address_number' => 'required|integer|digits_between:1, 255',
             'street' => 'required|max:255',
             'postcode' => 'required|max:6',
-            'payment_number' => 'required|integer|max:11',
+            'payment_number' => 'required|digits:11|integer',
             'password' => 'required|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,255}$/',
             'password_confirmation' => 'required'
         ], [
@@ -50,12 +50,22 @@ class CustomerController extends Controller
 
             'payment_number.required' => 'Payment number is required.',
             'payment_number.integer' => 'Payment number must be a number.',
-            'payment_number.max' => 'Payment number cannot exceed 11 characters.',
+            'payment_number.digits' => 'A valid payment number must be 11 characters.',
 
             'password.required' => 'Password is required.',
             'password.regex' => 'The password must be longer then 8 characters contain at least one uppercase letter, one number, and one special character.',
 
         ]);
+
+        //check if emailed is already in the data base
+        $customer = DB::table('customer')->where('customer_email', $request->input('email'))->exists();
+
+        if($customer)
+        {
+            $messageBag = new MessageBag;
+            $messageBag->add('email', 'Email is already in use');
+            return redirect()->back()->withErrors($messageBag)->withInput();
+        }
 
         //creates address table and returns ID
         $addressId = DB::table('address')->insertGetId([
@@ -66,7 +76,7 @@ class CustomerController extends Controller
 
         //does the same 
         $paymentId = DB::table('payment')->insertGetId([
-            'account_number' => $request->input('payment_number'),
+            'account_number' => bcrypt($request->input('payment_number')),
         ]);
 
         DB::table('customer')->insert([
@@ -77,6 +87,8 @@ class CustomerController extends Controller
             'address_id' => $addressId,
             'payment_id' => $paymentId,
         ]);
+
+        return redirect('productPage');
     }
 
     public function authenticate(Request $request): RedirectResponse
@@ -87,7 +99,7 @@ class CustomerController extends Controller
         ]);
     
         // Custom table and authentication logic
-        $user = DB::table('custom_users_table')->where('email', $credentials['email'])->first();
+        $user = DB::table('customer')->where('email', $credentials['email'])->first();
     
         if ($user && Hash::check($credentials['password'], $user->password)) {
             // Manually log in the user

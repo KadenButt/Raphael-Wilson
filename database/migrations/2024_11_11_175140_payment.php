@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payment', function(Blueprint $table){
             $table->id('payment_id')->primary;
-            $table->integer('account_number');
+            $table->string('account_number');
         });
     }
 
