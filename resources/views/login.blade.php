@@ -35,7 +35,7 @@
 
                 <input type = "hidden" name = "submitted" value = "true" />
 
-                <p>Not a user? <a href= "{{ route('customer.register.form') }}">Register here</a></p>
+                <p>Not a user? <a href= "{{ route('register') }}">Register here</a></p>
 
             </form>
             </section>

@@ -11,7 +11,7 @@ Route::get('/', function () {
 
 Route::get('/register', function(){
     return view('register');
-})->name('customer.register.form');
+})->name('register');
 
 Route::post('/register/user', [App\Http\Controllers\CustomerController::class, 'registerCustomer'])->name('customer.register');
  
@@ -22,10 +22,3 @@ Route::get('/login', function(){
 
 Route::post('/login/user', [App\Http\Controllers\CustomerController::class, 'loginCustomer'])->name('customer.login');
 
-// Route::get('/hidden', function(){
-//     echo("hidden");
-// })->middleware('customer');
-
-Route::get('/test', function(){
-    dd(Auth::Check());
-})->name('test');

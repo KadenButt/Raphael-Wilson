@@ -11,6 +11,7 @@ use Illuminate\Support\MessageBag;
 use App\Models\Customer;
 use App\Models\Address;
 use App\Models\Payment;
+use GuzzleHttp\Psr7\Message;
 
 class CustomerController extends Controller
 {
@@ -58,6 +59,14 @@ class CustomerController extends Controller
             'password.regex' => 'The password must be longer then 8 characters contain at least one uppercase letter, one number, and one special character.',
 
         ]);
+
+        $customer = Customer::where('customer_email', $request->input('customer_email'))->first();
+        if($customer != null)
+        {
+            $error = new MessageBag;
+            $error->add('email', 'email is already in use');
+            return redirect()->back()->withErrors($error);
+        } 
 
         $address = Address::create([
             'address_number' => $vd['address_number'],
