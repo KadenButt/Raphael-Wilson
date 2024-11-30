@@ -1,21 +1,31 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/login', function(){
-    return view('login');
-})->name('customer.login');
+//Register 
 
 Route::get('/register', function(){
     return view('register');
 })->name('customer.register.form');
 
 Route::post('/register/user', [App\Http\Controllers\CustomerController::class, 'registerCustomer'])->name('customer.register');
+ 
+//Login
+Route::get('/login', function(){
+    return view('login');
+})->name('login');
 
 Route::post('/login/user', [App\Http\Controllers\CustomerController::class, 'loginCustomer'])->name('customer.login');
 
-//POST routes
+// Route::get('/hidden', function(){
+//     echo("hidden");
+// })->middleware('customer');
+
+Route::get('/test', function(){
+    dd(Auth::Check());
+})->name('test');

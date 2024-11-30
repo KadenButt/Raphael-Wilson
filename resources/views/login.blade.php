@@ -26,7 +26,7 @@
                 <h2>Log in</h2>
             </div>
             <form id="login-form"  method="POST" action="{{ route('customer.login') }}">
-
+                @csrf
                 <input type="email" name="email" placeholder="Email"/>
                 <br><br>
                 <input type="password" name="password" placeholder="Password"/>

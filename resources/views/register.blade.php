@@ -24,21 +24,21 @@
         </div>
         <form id="register-form" method="POST" action="{{ route('customer.register') }}">
             @csrf
-            <input type="text" name="fname" placeholder="First Name">
+            <input type="text" name="customer_fname" placeholder="First Name">
             <br><br>
-            <input type="text" name="sname" placeholder="Last Name">
+            <input type="text" name="customer_sname" placeholder="Last Name">
             <br><br>
-            <input type="email" name="email" placeholder="Email" />
+            <input type="email" name="customer_email" placeholder="Email" />
             <br><br>
             <input type="text" name="address_number" placeholder="Address Number">
             <br><br>
-            <input type="text" name="street" placeholder="Street Name">
+            <input type="text" name="address_street" placeholder="Street Name">
             <br><br>
-            <input type="text" name="postcode" placeholder="Postcode">
+            <input type="text" name="address_postcode" placeholder="Postcode">
             <br><br>
-            <input type="password" name="payment_number" placeholder="Payment Number" />
+            <input type="password" name="account_number" placeholder="Payment Number" />
             <br><br>
-            <input type="password" name="password" placeholder="Password" />
+            <input type="password" name="customer_password" placeholder="Password" />
             <br><br>
             <input type="password" name="password_confirmation" placeholder="Confirm Password" />
             <br><br>
@@ -46,14 +46,14 @@
             <br><br>
             <input type="hidden" name="submitted" value="true" />
 
-            <p>Already a user? <a href="{{ route('customer.login') }}">Log in here</a></p>
+            <p>Already a user? <a href="{{ route('login') }}">Log in here</a></p>
 
         </form>
     </section>
 
     <section id="form-error">
         @if ($errors->any())
-        <div class="alert alert-danger">
+        <div>
             <ul>
                 @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>

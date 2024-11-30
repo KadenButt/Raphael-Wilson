@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\MessageBag;
-
+use App\Models\Customer;
+use App\Models\Address;
+use App\Models\Payment;
 
 class CustomerController extends Controller
 {
@@ -16,14 +18,14 @@ class CustomerController extends Controller
     {
 
         $vd = $request->validate([
-            'fname' => 'required|max:255|alpha',
-            'sname' => 'required|max:255|alpha',
-            'email' => 'required|email|max:255',
+            'customer_fname' => 'required|max:255|alpha',
+            'customer_sname' => 'required|max:255|alpha',
+            'customer_email' => 'required|email|max:255',
             'address_number' => 'required|integer|digits_between:1, 255',
-            'street' => 'required|max:255',
-            'postcode' => 'required|max:6',
-            'payment_number' => 'required|digits:11|integer',
-            'password' => 'required|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,255}$/',
+            'address_street' => 'required|max:255',
+            'address_postcode' => 'required|max:6',
+            'account_number' => 'required|digits:11|integer',
+            'customer_password' => 'required|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,255}$/',
             'password_confirmation' => 'required'
         ], [
             'fname.required' => 'First name is required and cannot be empty.',
@@ -57,61 +59,44 @@ class CustomerController extends Controller
 
         ]);
 
-        //check if emailed is already in the data base
-        $customer = DB::table('customer')->where('customer_email', $request->input('email'))->exists();
-
-        if($customer)
-        {
-            $messageBag = new MessageBag;
-            $messageBag->add('email', 'Email is already in use');
-            return redirect()->back()->withErrors($messageBag)->withInput();
-        }
-
-        //creates address table and returns ID
-        $addressId = DB::table('address')->insertGetId([
-            'address_number' => $request->input('address_number'),
-            'address_street' => $request->input('street'),
-            'address_postcode' => $request->input('postcode'),
+        $address = Address::create([
+            'address_number' => $vd['address_number'],
+            'address_street' => $vd['address_street'],
+            'address_postcode' => $vd['address_postcode'],
+        ]);
+        
+        // Create the Payment record
+        $payment = Payment::create([
+            'account_number' => bcrypt($vd['account_number']), // Encrypt sensitive data
         ]);
 
-        //does the same 
-        $paymentId = DB::table('payment')->insertGetId([
-            'account_number' => bcrypt($request->input('payment_number')),
+        $customer = Customer::create([
+            'customer_email' => $vd['customer_email'],
+            'customer_password' => bcrypt($vd['customer_password']), // Encrypt the password
+            'customer_fname' => $vd['customer_fname'],
+            'customer_sname' => $vd['customer_sname'],
+            'address_id' => $address->address_id,
+            'payment_id' => $payment->payment_id, 
+
         ]);
 
-        DB::table('customer')->insert([
-            'customer_email' => $request->input('email'),
-            'customer_password' => bcrypt($request->input('password')),
-            'customer_fname' => $request->input('fname'),
-            'customer_sname' => $request->input('sname'),
-            'address_id' => $addressId,
-            'payment_id' => $paymentId,
-        ]);
-
-        return redirect('productPage');
+        Auth::login($customer);
+        return redirect('test');
     }
 
-    public function authenticate(Request $request): RedirectResponse
+    public function loginCustomer(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => 'required|email',
+            'password' => 'required|min:8',
         ]);
-    
-        // Custom table and authentication logic
-        $user = DB::table('customer')->where('email', $credentials['email'])->first();
-    
-        if ($user && Hash::check($credentials['password'], $user->password)) {
-            // Manually log in the user
-            Auth::loginUsingId($user->id);
+
+        $customer = Customer::where('customer_email', $credentials['email'])->first();
+        if ($customer && Hash::check($credentials['password'], $customer->customer_password)) {
+            Auth::login($customer);
             $request->session()->regenerate();
-    
-            return redirect()->intended('dashboard');
+            return redirect()->intended('test');
         }
-    
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
     }
-    
+
 }
