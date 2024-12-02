@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('size', function(Blueprint $table)
-        {
-            $table->id('size_id')->primary();
-            $table->enum('size_number', [4,5,6,7,8,9,10]);
+        Schema::create('basket_item', function(Blueprint $table){
+            $table->id('basket_item_id')->primary();
+            $table->foreignId('basket_id')->references('basket_id')->on('basket');
+            $table->foreignId('product_id')->references('product_id')->on('product');
         });
     }
 
@@ -23,7 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('size');
-
+        Schema::dropIfExists('basket_item');
     }
 };
