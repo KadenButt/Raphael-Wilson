@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basket</title>
     <link rel="icon" type="image/png" href="favicon_io/android-chrome-512x512.png">
+
     <style>
         @media (max-width: 768px) {
             #navigation {
@@ -244,8 +245,8 @@
 <body>
     <header id="navigation">
 
-        <a href="home.blade.php">
-            <img src="Raphael-wilson-logo.png" alt="Logo">
+        <a href="{{route('home')}}">
+            <img src="{{ asset('images/place.jpg') }}" alt="Logo">
         </a>
 
         <div class="luxury-text">
@@ -254,10 +255,6 @@
 
         <div class="right-section">
 
-            <div class="nav-buttons">
-                <button id="signup" onclick="window.location.href='register.blade.php'">Sign Up</button>
-                <button id="login" onclick="window.location.href='login.blade.php'">Log In</button>
-            </div>
             <div class="dropdown">
                 <button class="menu-button">
                     <div class="menu-icon"></div>
@@ -265,11 +262,11 @@
                     <div class="menu-icon"></div>
                 </button>
                 <div class="dropdown-menu">
-                    <a href="home.blade.php">Home</a>
-                    <a href="products.blade.php">Products</a>
-                    <a href="contact.blade.php">Contact</a>
-                    <a href="aboutus.blade.php">About us</a>
-                    <a href="basket.blade.php">Basket</a>
+                    <a href="{{route('home')}}">Home</a>
+                    <a href="{{route('products')}}">Products</a>
+                    <a href="{{route('contact')}}">Contact</a>
+                    <a href="{{route('aboutUs')}}">About us</a>
+                    <a href="{{route('basket')}}">Basket</a>
                 </div>
             </div>
         </div>
@@ -315,7 +312,7 @@
 
 
     <div class="total">
-        <h2>Total: £1,499</h2>
+        <h2>Total: £{{$price}}</h2>
         <button class="checkout-button" onclick="window.location.href='checkout.blade.php'">
             <h2>Continue to Checkout</h2>
         </button>

@@ -36,12 +36,13 @@ class BasketController extends Controller
         //get product table
 
         $items = array();
+        $sumPrice = 0;
+
         foreach ($basket_items as $item) {
-            $items[] = Product::where('product_id', $item->product_id)->first();
+            $temp = Product::where('product_id', $item->product_id)->first();
+            $sumPrice += $temp->product_price;
+            $items[]  = $temp;
         }
-
-        //get size
-
         //2D array that hold all the size of each shoe 
         $shoe_size = array();
 
@@ -64,7 +65,7 @@ class BasketController extends Controller
         return view('basket', [
             'items' => $items,
             'sizes' => $shoe_size,
-            'basket' => $basket
+            'price' => $sumPrice,
         ]);
     }
 

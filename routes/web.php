@@ -7,6 +7,21 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+//products
+Route::get('/products', function(){
+    return 'WIP';
+})->name('products');
+
+//contact 
+Route::get('/contact', function(){
+    return 'WIP';
+})->name('contact');
+
+//About Us
+Route::get('/aboutus', function(){
+    return 'WIP';
+})->name('aboutUs');
+
 //Register 
 Route::get('/register', function(){
     return view('register');
