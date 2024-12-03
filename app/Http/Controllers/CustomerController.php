@@ -9,7 +9,6 @@ use Illuminate\Support\MessageBag;
 use App\Models\Customer;
 use App\Models\Address;
 use App\Models\Payment;
-use App\Models\basket;
 
 class CustomerController extends Controller
 {
@@ -108,6 +107,8 @@ class CustomerController extends Controller
             $request->session()->regenerate();
             return redirect()->intended('home');
         }
+
+        return redirect()->back();
     }
 
 }

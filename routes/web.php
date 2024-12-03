@@ -46,11 +46,11 @@ Route::post('/basket/change', [App\Http\Controllers\BasketController::class, 'up
 
 //Order History 
 
-Route::post('/order', [App\Http\Controllers\BasketController::class, 'createOrder'])->middleware('auth')->name('order.create');
+Route::post('/order', [App\Http\Controllers\OrderController::class, 'createOrder'])->middleware('auth')->name('order.create');
 
 ////////////////temp 
 
 //populate 
 
-//Route::get('/populate', [App\Http\Controllers\ProductController::class, 'populateProducts']);
+Route::get('/populate', [App\Http\Controllers\ProductController::class, 'populateProducts']);
 Route::get('/addbasket', [App\Http\Controllers\BasketController::class, 'addBasket'])->middleware('auth');

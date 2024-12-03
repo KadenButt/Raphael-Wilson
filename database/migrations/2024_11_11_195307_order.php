@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('order', function(Blueprint $table){
             $table->id('order_id')->primary();
             $table->date('order_date');
-            $table->enum('order_status', ['in stock', 'low stock', 'out of stock']);
+            $table->enum('order_status', ['Processing', 'Shipped', 'Delivered', 'Cancelled']);
             $table->float('order_total_price');
             $table->foreignId('customer_id')->references('customer_id')->on('customer');
         });

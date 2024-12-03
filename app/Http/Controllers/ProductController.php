@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Category; 
-use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Size;
 use App\Models\sizeItem;

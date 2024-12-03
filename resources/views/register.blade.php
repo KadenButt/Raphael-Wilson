@@ -21,10 +21,7 @@
 
 <div class="right-section">
 
-    <div class="nav-buttons">
-        <button id="signup" onclick="window.location.href='{{ route('register') }}'">Sign Up</button>
-        <button id="login" onclick="window.location.href='{{ route('login') }}'">Log In</button>
-    </div>
+
 
 
     <div class="dropdown">
@@ -37,7 +34,7 @@
             <a href="'{{ route('home') }}'">Home</a>
             <a href="'{{ route('products') }}'">Products</a>
             <a href="'{{ route('contact') }}'">Contact</a>
-            <a href="'{{ route('about') }}'">About us</a>
+            <a href="'{{ route('aboutUs') }}'">About us</a>
             <a href="'{{ route('basket') }}'">Basket</a>
         </div>
     </div>

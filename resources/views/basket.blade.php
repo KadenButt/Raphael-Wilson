@@ -324,6 +324,7 @@
             <button class="checkout-button" type="submit">
                 <h2>Continue to Checkout</h2>
             </button>
+            <input type="hidden" name="total_price" value="{{$price}}" />
         </form>
     </div>
 
