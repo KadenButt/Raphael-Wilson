@@ -58,8 +58,10 @@ class CustomerController extends Controller
 
         ]);
 
-        
+        //check for pre-existing email in the database 
         $customer = Customer::where('customer_email', $request->input('customer_email'))->first();
+
+    
         if($customer != null)
         {
             $error = new MessageBag;
@@ -88,14 +90,6 @@ class CustomerController extends Controller
             'payment_id' => $payment->payment_id, 
 
         ]);
-        
-        //creates basket
-        
-        $basket = Basket::create([
-            'customer_id' => $customer->customer_id,
-        ]);
-        
-
 
         Auth::login($customer);
         return redirect('home');

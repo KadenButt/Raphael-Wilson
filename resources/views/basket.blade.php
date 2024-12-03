@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basket</title>
-    <link rel="icon" type="image/png" href="favicon_io/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" href="{{asset('favicon_io/android-chrome-512x512.png')}}">
 
     <style>
         @media (max-width: 768px) {
@@ -246,7 +246,7 @@
     <header id="navigation">
 
         <a href="{{route('home')}}">
-            <img src="{{ asset('images/place.jpg') }}" alt="Logo">
+            <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
         </a>
 
         <div class="luxury-text">
@@ -277,34 +277,40 @@
     </div>
     <div class="basket-container">
         <table>
-            @foreach($items as $item)
-            <td>
+            @for ($i = 0; $i < count($products); $i++)
+                <td>
                 <div class="basket-contents">
                     <div class="black-shoe">
-                        <img src="data:image/jpeg;base64,{{ base64_encode($item->product_photo) }}" alt="black-shoe">
+                        <img src="data:image/jpeg;base64,{{ base64_encode($products[$i]->product_photo) }}" alt="black-shoe">
                     </div>
-                    <h2>{{ $item->product_name }}</h2>
+                    <h2>{{ $products[$i]->product_name }}</h2>
                     <div class="shoe-description">
                         <p>
-                            {{ $item->product_description }}
+                            {{ $products[$i]->product_description }}
                             <br>
-                            <b>Size: </b> {{ $sizes[ $item->product_id ]}}
+                            <b>Size: </b> {{ $sizes[$i]->size_number }}
                             <br>
-                            <b>Quantity: </b>1
-                            <br>
-                            In stock
+                        <form id="change-quantity" method="POST" action="{{ route('basket.change_quantity')}}">
+                            @csrf
+                            <label for="quantity"><b>Quantity: </b></label>
+                            <input type="number" id="quantity" name="quantity" min="1" value="{{$basket_items[$i]->quantity}}">
+                            <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
+                            <button type="submit" > Change</button>
+                        </form>
+                        <br>
+                        In stock
                         </p>
-                        <h3>£{{ $item->product_price }}</h3>
+                        <h3>£{{ $products[$i]->product_price }}</h3>
                     </div>
                     <div class="delete-button">
-                        <form id="delete-item"  method="POST" action="{{ route('basket.delete') }}">
+                        <form id="delete-item" method="POST" action="{{ route('basket.delete') }}">
                             @csrf
-                            <input type="submit" name="submitted" value="Delete" />
-                            <input type="hidden" name="product_id" value="{{$item->product_id}}" />
+                            <button type="submit" > Delete</button>
+                            <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
                         </form>
                     </div>
-            </td>
-            @endforeach
+                    </td>
+                    @endfor
 
 
         </table>
@@ -313,9 +319,12 @@
 
     <div class="total">
         <h2>Total: £{{$price}}</h2>
-        <button class="checkout-button" onclick="window.location.href='checkout.blade.php'">
-            <h2>Continue to Checkout</h2>
-        </button>
+        <form method="POST" action="{{ route('order.create') }}">
+            @csrf
+            <button class="checkout-button" type="submit">
+                <h2>Continue to Checkout</h2>
+            </button>
+        </form>
     </div>
 
     </div>

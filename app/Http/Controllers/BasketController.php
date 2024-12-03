@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Basket;
 use App\Models\BasketItem;
 use App\Models\Product;
 use App\Models\SizeItem;
 use App\Models\Size;
 use Illuminate\Http\Request;
-
 
 use Illuminate\Support\Facades\Auth;
 
@@ -18,71 +16,95 @@ class BasketController extends Controller
 
     public function deleteBasket(Request $request)
     {
-        $basket = Basket::where('customer_id', Auth::user()->customer_id)->first();
-
-        BasketItem::where([
-            ['basket_id', '=', $basket->basket_id],
-            ['product_id', '=', $request->input('product_id')],
-        ])->first()->delete();;
-
+        BasketItem::where('basket_item_id', $request->input('basket_item_id'))->first()->delete();
         return redirect()->back();
     }
 
     public function listBasket()
     {
-        $basket = Basket::where('customer_id', Auth::user()->customer_id)->first();
-        $basket_items = BasketItem::where('basket_id', $basket->basket_id)->get();
+        $basket_items = BasketItem::where('customer_id', Auth::user()->customer_id)->get();
 
         //get product table
 
-        $items = array();
+        $products = array();
         $sumPrice = 0;
 
-        foreach ($basket_items as $item) {
-            $temp = Product::where('product_id', $item->product_id)->first();
-            $sumPrice += $temp->product_price;
-            $items[]  = $temp;
+        foreach ($basket_items as $basket) {
+            $sizeItem = SizeItem::where('size_item_id', $basket->size_item_id)->first();
+            $product = Product::where('product_id', $sizeItem->product_id)->first();
+            $sumPrice += $product->product_price;
+            $products[]  = $product;
+
         }
         //2D array that hold all the size of each shoe 
         $shoe_size = array();
 
 
-        foreach ($items as $item) {
+        foreach ($products as $item) {
 
             //get size ID for product
             $size_items = SizeItem::where('product_id', $item->product_id)->get();
-            //stores the size of shoe for each product
-            $sizes = array();
-
+            
             foreach ($size_items as $size_item) {
-                $temp = Size::where('size_id', $size_item->size_id)->first();
-                $sizes[] = $temp->size_number;
+                $shoe_size[] = Size::where('size_id', $size_item->size_id)->first();
             }
-            $sizesString = implode(', ', $sizes);
-            $shoe_size[$item->product_id] = $sizesString;
+         
         }
 
+        $itemsBasket = array_map(null, $products, $basket_items->toArray());
+
         return view('basket', [
-            'items' => $items,
+            'products' => $products,
+            'basket_items' => $basket_items, 
             'sizes' => $shoe_size,
             'price' => $sumPrice,
         ]);
     }
 
+    public function updateQuantity(Request $request)
+    {
+        BasketItem::where('basket_item_id', $request->input('basket_item_id'))->update(['quantity' => $request->input('quantity')]);  
+        return redirect()->back();     
+    }
 
 
     ////////////////temp
     public function addBasket()
     {
-        $basket = Basket::where('customer_id', Auth::user()->customer_id)->first();
-        BasketItem::create([
-            'basket_id' => $basket->basket_id,
+
+        $size1 = Size::create([
+            'size_number' => '10'
+        ]);
+
+        $size2 = Size::create([
+            'size_number' => '5 '
+        ]);
+        
+        $sizeItem1 = SizeItem::create([
             'product_id' => 1,
+            'size_id' => $size1->size_id
+        ]);
+
+        $sizeItem2 = SizeItem::create([
+            'product_id' => 2,
+            'size_id' => $size2->size_id
         ]);
 
         BasketItem::create([
-            'basket_id' => $basket->basket_id,
-            'product_id' => 2,
+            'quantity' => 1,
+            'size_item_id' => $sizeItem1->size_item_id,
+            'customer_id' => Auth::user()->customer_id
         ]);
+
+        BasketItem::create([
+            'quantity' => 1,
+            'size_item_id' =>  $sizeItem2->size_item_id,
+            'customer_id' => Auth::user()->customer_id
+        ]);
+
+
     }
+
+
+
 }

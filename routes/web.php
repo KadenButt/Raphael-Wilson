@@ -42,9 +42,11 @@ Route::get('/basket', [App\Http\Controllers\BasketController::class, 'listBasket
 
 Route::post('/basket/delete', [App\Http\Controllers\BasketController::class, 'deleteBasket'])->middleware('auth')->name('basket.delete');
 
+Route::post('/basket/change', [App\Http\Controllers\BasketController::class, 'updateQuantity'])->middleware('auth')->name('basket.change_quantity');
 
+//Order History 
 
-
+Route::post('/order', [App\Http\Controllers\BasketController::class, 'createOrder'])->middleware('auth')->name('order.create');
 
 ////////////////temp 
 
