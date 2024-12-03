@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\MessageBag;
 use App\Models\Customer;
 use App\Models\Address;
 use App\Models\Payment;
-use GuzzleHttp\Psr7\Message;
+use App\Models\basket;
 
 class CustomerController extends Controller
 {
@@ -60,7 +58,10 @@ class CustomerController extends Controller
 
         ]);
 
+        //check for pre-existing email in the database 
         $customer = Customer::where('customer_email', $request->input('customer_email'))->first();
+
+    
         if($customer != null)
         {
             $error = new MessageBag;
@@ -68,13 +69,14 @@ class CustomerController extends Controller
             return redirect()->back()->withErrors($error);
         } 
 
+        //creates customer in data base
+
         $address = Address::create([
             'address_number' => $vd['address_number'],
             'address_street' => $vd['address_street'],
             'address_postcode' => $vd['address_postcode'],
         ]);
         
-        // Create the Payment record
         $payment = Payment::create([
             'account_number' => bcrypt($vd['account_number']), // Encrypt sensitive data
         ]);
@@ -90,7 +92,7 @@ class CustomerController extends Controller
         ]);
 
         Auth::login($customer);
-        return redirect('test');
+        return redirect('home');
     }
 
     public function loginCustomer(Request $request)
@@ -104,7 +106,7 @@ class CustomerController extends Controller
         if ($customer && Hash::check($credentials['password'], $customer->customer_password)) {
             Auth::login($customer);
             $request->session()->regenerate();
-            return redirect()->intended('test');
+            return redirect()->intended('home');
         }
     }
 
