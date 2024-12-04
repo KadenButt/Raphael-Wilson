@@ -16,8 +16,4 @@ class Customer extends Authenticatable
 
     protected $hidden = ['customer_password', 'remember_token'];
 
-    public function getAuthPassword()
-    {
-        return $this->customer_password; // Map the custom password column
-    }
 }

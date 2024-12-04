@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('size', function(Blueprint $table)
         {
             $table->id('size_id')->primary();
-            $table->enum('size', [4,5,6,7,8,9,10]);
+            $table->enum('size_number', [4,5,6,7,8,9,10]);
         });
     }
 
