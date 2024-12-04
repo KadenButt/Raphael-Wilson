@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order', function(Blueprint $table){
-            $table->id('order_id')->primary();
-            $table->date('order_date');
-            $table->enum('order_status', ['Processing', 'Shipped', 'Delivered', 'Cancelled']);
-            $table->float('order_total_price');
+        Schema::create('basket_item', function(Blueprint $table){
+            $table->id('basket_item_id')->primary();
+            $table->integer('quantity');
+            $table->foreignId('size_item_id')->references('size_item_id')->on('size_item');
             $table->foreignId('customer_id')->references('customer_id')->on('customer');
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('basket_item');
     }
 };
