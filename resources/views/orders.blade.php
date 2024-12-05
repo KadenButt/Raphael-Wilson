@@ -20,8 +20,8 @@
 <div class="right-section">
 
     <div class="nav-buttons">
-        <button id="signup" onclick="window.location.href='register.blade.php'">Sign Up</button>
-        <button id="login" onclick="window.location.href='login.blade.php'">Log In</button>
+        <button id="signup" onclick="window.location.href='{{ route('register') }}'">Sign Up</button>
+        <button id="login" onclick="window.location.href='{{ route('login') }}'">Log In</button>
     </div>
 
 
@@ -32,11 +32,11 @@
             <div class="menu-icon"></div>
         </button>
         <div class="dropdown-menu">
-            <a href="home.blade.php">Home</a>
-            <a href="products.blade.php">Products</a>
-            <a href="contact.blade.php">Contact</a>
-            <a href="aboutus.blade.php">About us</a>
-            <a href="basket.blade.php">Basket</a>
+            <a href="'{{ route('home') }}'">Home</a>
+            <a href="'{{ route('products') }}'">Products</a>
+            <a href="'{{ route('contact') }}'">Contact</a>
+            <a href="'{{ route('aboutUs') }}'">About us</a>
+            <a href="'{{ route('basket') }}'">Basket</a>
         </div>
     </div>
 </div>
