@@ -281,14 +281,14 @@
                 <td>
                 <div class="basket-contents">
                     <div class="black-shoe">
-                        <img src="data:image/jpeg;base64,{{ base64_encode($products[$i]->product_photo) }}" alt="black-shoe">
+                        <img src="data:image/jpeg;base64,{{ base64_encode($products[$i]->product_photo) }}" alt="shoe">
                     </div>
                     <h2>{{ $products[$i]->product_name }}</h2>
                     <div class="shoe-description">
                         <p>
                             {{ $products[$i]->product_description }}
                             <br>
-                            <b>Size: </b> {{ $sizes[$i]->size_number }}
+                            <b>Size: </b> {{ $sizes[$i] }}
                             <br>
                         <form id="change-quantity" method="POST" action="{{ route('basket.change_quantity')}}">
                             @csrf

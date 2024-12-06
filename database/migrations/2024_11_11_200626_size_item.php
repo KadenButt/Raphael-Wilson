@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('size_item', function(Blueprint $table){
             $table->id('size_item_id')->primary();
+            $table->enum('size_number', ['4','5','6','7','8','9','10']);
             $table->foreignId('product_id')->references('product_id')->on('product');
-            $table->foreignId('size_id')->references('size_id')->on('size');
+            
         });
     }
 
