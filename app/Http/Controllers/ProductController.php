@@ -18,8 +18,11 @@ class ProductController extends Controller
         ]);
     }
 
-    public function createProduct($reqest)
-    {   
+    public function showProduct($id)
+    { 
+        $product = Product::where('product_id', $id)->first();
+        //dd($product->product_description);
+        return view('productView', ['product' => $product]);
     }
 
 
@@ -62,34 +65,25 @@ class ProductController extends Controller
             'category_id' => $category2->category_id,
         ]);
 
-        //create size 
-        $size1 = Size::create([
+
+        SizeItem::create([
+            'product_id' => $shoe1->product_id,
             'size_number' => '9',
         ]);
 
-        $size2 = Size::create([
+        SizeItem::create([
+            'product_id' => $shoe1->product_id,
             'size_number' => '10',
         ]);
-        
 
         SizeItem::create([
-            'product_id' => $shoe1->product_id,
-            'size_id' => $size1->size_id
-        ]);
-
-        SizeItem::create([
-            'product_id' => $shoe1->product_id,
-            'size_id' => $size2->size_id
+            'product_id' => $shoe2->product_id,
+            'size_number' => '9',
         ]);
 
         SizeItem::create([
             'product_id' => $shoe2->product_id,
-            'size_id' => $size1->size_id
-        ]);
-
-        SizeItem::create([
-            'product_id' => $shoe2->product_id,
-            'size_id' => $size2->size_id
+            'size_number' => '10',
         ]);
 
     }
