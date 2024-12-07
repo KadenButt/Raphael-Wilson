@@ -47,7 +47,7 @@ class BasketController extends Controller
         foreach ($basket_items as $basket) {
             $sizeItem = SizeItem::where('size_item_id', $basket->size_item_id)->first();
             $product = Product::where('product_id', $sizeItem->product_id)->first();
-            $sumPrice += $product->product_price;
+            $sumPrice += $product->product_price * $basket->quantity;
             $products[]  = $product;
 
         }
@@ -65,9 +65,6 @@ class BasketController extends Controller
             }
          
         }
-
-
-        $itemsBasket = array_map(null, $products, $basket_items->toArray());
 
         return view('basket', [
             'products' => $products,
