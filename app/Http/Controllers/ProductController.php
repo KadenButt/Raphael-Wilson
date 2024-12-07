@@ -21,7 +21,6 @@ class ProductController extends Controller
     public function showProduct($id)
     { 
         $product = Product::where('product_id', $id)->first();
-        //dd($product->product_description);
         return view('productView', ['product' => $product]);
     }
 

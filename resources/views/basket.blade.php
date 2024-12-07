@@ -300,7 +300,7 @@
                         <br>
                         In stock
                         </p>
-                        <h3>£{{ $products[$i]->product_price }}</h3>
+                        <h3>£{{ $products[$i]->product_price * $basket_items[$i]->quantity }}</h3>
                     </div>
                     <div class="delete-button">
                         <form id="delete-item" method="POST" action="{{ route('basket.delete') }}">

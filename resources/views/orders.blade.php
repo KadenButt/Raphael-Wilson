@@ -48,53 +48,36 @@
         <h2>Your Orders</h2>
     </div>
 
+    @if(session('success'))
     <div class="order-confirmation">
-        <p>Order made successfully. Your order number is 17346790.</p>
+        <p>{{session('success')}}</p>
     </div>
-       
-<div class="orders-container">
+    @endif 
 
-    <div class="order">
-        <div class="order-photo1">
-            <img src="black-shoe.png" alt="black-shoe">
+    <div class="orders-container">
+    @for ($i = 0; $i < count($orderItems); $i++)
+        <div class="order">
+            <div class="order-photo1">
+                <img src="data:image/jpeg;base64,{{ base64_encode($products[$i]->product_photo) }}" alt="shoe">
+            </div>
+            <div class="order-details">
+                <p><b>{{ $products[$i]->product_name }}</b></p>
+                <br>
+                <p>Order Status: {{ $orders[ $orderItems[$i]->order_id ]->order_status }}</p>
+                <p>Order Number: {{$orderItems[$i]->order_id}}</p>
+                <p>Quantity: {{$orderItems[$i]->order_item_quantity}}
+                <p><b> £{{$products[$i]->product_price * $orderItems[$i]->order_item_quantity}} </b></p>
+            </div>
+            <form id='delete-order' method='POST' action="{{ route('order.delete') }}">
+                @csrf
+                <button id="cancel-button" type='submit'> Cancle Order</button>
+                <input type="hidden" name="order_item_id" value="{{$orderItems[$i]->order_item_id}}" />
+
+            </form>
         </div>
-        <div class="order-details">
-            <p><b>Guzzi dress shoe</b></p>
-            <br>
-            <label for="order-status">Order Status:</label>
-            <select id="order-status" name="order-status">
-                <option value="processing">Processing</option>
-                <option value="dispatched">Dispatched</option>
-                <option value="out-for-delivery">Out for delivery</option>
-                <option value="delivered">Delivered</option>
-            </select>
-            <p>Order Number: 18947590</p>
-            <p><b>Price: £1,499</b></p>
-        </div>
-        <button id="cancel-button" onclick="window.location.href='{{ route('cancel') }}'">Cancel Order</button>
+    @endfor 
     </div>
 
-    
-    <div class="order">
-        <div class="order-photo2">
-            <img src="black-trainer.png" alt="black-trainer">
-        </div>
-        <div class="order-details">
-            <p><b>Prava running shoe</b></p>
-            <br>
-            <label for="order-status">Order Status:</label>
-            <select id="order-status" name="order-status">
-                <option value="processing">Processing</option>
-                <option value="dispatched">Dispatched</option>
-                <option value="out-for-delivery">Out for delivery</option>
-                <option value="delivered">Delivered</option>
-            </select>
-            <p>Order Number: 174938340</p>
-            <p><b>Price: £1,199</b></p>
-        </div>
-        <button id="cancel-button2" onclick="window.location.href='{{ route('cancel') }}'">Cancel Order</button>
-    </div>
-</div>
 
 </body>
 </html>
