@@ -9,8 +9,8 @@
 
 <header id="navigation">
 
-<a href="home.blade.php">
-<img src="Raphael-wilson-logo.png" alt="Logo">
+<a href="{{route('home')}}">
+    <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
 </a>
 
 <div class="luxury-text">
@@ -18,29 +18,24 @@
 </div>
 
 <div class="right-section">
-
-    <div class="nav-buttons">
-        <button id="signup" onclick="window.location.href='{{ route('register') }}'">Sign Up</button>
-        <button id="login" onclick="window.location.href='{{ route('login') }}'">Log In</button>
-    </div>
-
-
     <div class="dropdown">
+
         <button class="menu-button">
             <div class="menu-icon"></div>
             <div class="menu-icon"></div>
             <div class="menu-icon"></div>
         </button>
         <div class="dropdown-menu">
-            <a href="'{{ route('home') }}'">Home</a>
-            <a href="'{{ route('products') }}'">Products</a>
-            <a href="'{{ route('contact') }}'">Contact</a>
-            <a href="'{{ route('aboutUs') }}'">About us</a>
-            <a href="'{{ route('basket') }}'">Basket</a>
+            <a href="{{route('home')}}">Home</a>
+            <a href="{{route('products')}}">Products</a>
+            <a href="{{route('contact')}}">Contact</a>
+            <a href="{{route('aboutUs')}}">About us</a>
+            <a href="{{route('basket')}}">Basket</a>
+            <a href="{{route('logout')}}">Logout</a>
         </div>
     </div>
 </div>
-    </header>
+</header>
 
 <body>
     
@@ -70,7 +65,7 @@
             </div>
             <form id='delete-order' method='POST' action="{{ route('order.delete') }}">
                 @csrf
-                <button id="cancel-button" type='submit'> Cancle Order</button>
+                <button id="cancel-button" type='submit'> Cancel Order</button>
                 <input type="hidden" name="order_item_id" value="{{$orderItems[$i]->order_item_id}}" />
 
             </form>

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category; 
 use App\Models\Product;
-use App\Models\Size;
 use App\Models\sizeItem;
 
 use Illuminate\Support\Facades\URL;
@@ -24,6 +23,25 @@ class ProductController extends Controller
         return view('productView', ['product' => $product]);
     }
 
+    public function showProducts()
+    { 
+        $products = Product::all();
+        $categories = Category::all();
+        return view('products', [
+            'products' => $products,
+            'categories' => $categories
+        ]);
+    }
+
+    public function showCategory($category_id)
+    { 
+        $products = Product::where(['category_id' => $category_id])->get();
+        $categories = Category::all();
+        return view('products', [
+            'products' => $products,
+            'categories' => $categories
+        ]);
+    }
 
 
 

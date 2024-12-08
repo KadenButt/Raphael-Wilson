@@ -11,34 +11,31 @@
 
 <header id="navigation">
 
-    <a href="home.blade.php">
-        <img src="Raphael-wilson-logo.png" alt="Logo">
+    <a href="{{route('home')}}">
+      <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
     </a>
 
     <div class="luxury-text">
-        <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
+      <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
     </div>
 
     <div class="right-section">
+      <div class="dropdown">
 
-
-
-        <div class="dropdown">
-            <button class="menu-button">
-                <div class="menu-icon"></div>
-                <div class="menu-icon"></div>
-                <div class="menu-icon"></div>
-            </button>
-            <div class="dropdown-menu">
-                <a href="{{route('home')}}">Home</a>
-                <a href="{{route('products')}}">Products</a>
-                <a href="{{route('contact')}}">Contact</a>
-                <a href="{{route('aboutUs')}}">About us</a>
-                <a href="{{route('basket')}}">Basket</a>
-            </div>
+        <button class="menu-button">
+          <div class="menu-icon"></div>
+          <div class="menu-icon"></div>
+          <div class="menu-icon"></div>
+        </button>
+        <div class="dropdown-menu">
+          <a href="{{route('home')}}">Home</a>
+          <a href="{{route('products')}}">Products</a>
+          <a href="{{route('contact')}}">Contact</a>
+          <a href="{{route('aboutUs')}}">About us</a>
         </div>
+      </div>
     </div>
-</header>
+  </header>
 
 <body>
 
@@ -63,7 +60,7 @@
             <p>Not a user? <a href="{{ route('register') }}">Register here</a></p>
 
         </form>
-        <img src="Raphael-Wilson.png" alt="side-logo">
+        <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="side-logo">
     </section>
 </body>
 

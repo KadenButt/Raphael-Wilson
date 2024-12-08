@@ -254,8 +254,8 @@
         </div>
 
         <div class="right-section">
-
             <div class="dropdown">
+
                 <button class="menu-button">
                     <div class="menu-icon"></div>
                     <div class="menu-icon"></div>
@@ -267,6 +267,7 @@
                     <a href="{{route('contact')}}">Contact</a>
                     <a href="{{route('aboutUs')}}">About us</a>
                     <a href="{{route('basket')}}">Basket</a>
+                    <a href="{{route('logout')}}">Logout</a>
                 </div>
             </div>
         </div>
@@ -295,7 +296,7 @@
                             <label for="quantity"><b>Quantity: </b></label>
                             <input type="number" id="quantity" name="quantity" min="1" value="{{$basket_items[$i]->quantity}}">
                             <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
-                            <button type="submit" > Change</button>
+                            <button type="submit"> Change</button>
                         </form>
                         <br>
                         In stock
@@ -305,7 +306,7 @@
                     <div class="delete-button">
                         <form id="delete-item" method="POST" action="{{ route('basket.delete') }}">
                             @csrf
-                            <button type="submit" > Delete</button>
+                            <button type="submit"> Delete</button>
                             <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
                         </form>
                     </div>

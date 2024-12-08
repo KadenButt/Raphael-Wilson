@@ -8,11 +8,12 @@ Route::get('/', function () {
 })->name('home');
 
 //products
-Route::get('/products', function(){
-    return 'WIP';
-})->name('products');
+Route::get('/products', [App\Http\Controllers\ProductController::class, 'showProducts'] )->name('products');
+
+Route::get('/products/{category_id}', [App\Http\Controllers\ProductController::class, 'showCategory'] )->name('category');
 
 Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'showProduct'] )->name('product');
+
 
 //Contact 
 Route::get('/contact', function(){
@@ -38,6 +39,11 @@ Route::get('/login', function(){
 
 Route::post('/login/user', [App\Http\Controllers\CustomerController::class, 'loginCustomer'])->name('customer.login');
 
+//logout 
+Route::get('/logout', function(){
+    Auth::logout();
+    return redirect(route('home'));
+})->name('logout');
 
 //Basket
 
