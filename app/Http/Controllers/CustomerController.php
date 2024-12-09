@@ -110,7 +110,7 @@ class CustomerController extends Controller
             //logins in the users and add their detials
             Auth::login($customer);
             $request->session()->regenerate();
-            return redirect()->intended('home');
+            return redirect(route('home'));
         }
 
         return redirect()->back();
