@@ -12,30 +12,33 @@
 <header id="navigation">
 
     <a href="{{route('home')}}">
-      <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
+        <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
     </a>
 
     <div class="luxury-text">
-      <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
+        <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
     </div>
 
     <div class="right-section">
-      <div class="dropdown">
+        <div class="dropdown">
 
-        <button class="menu-button">
-          <div class="menu-icon"></div>
-          <div class="menu-icon"></div>
-          <div class="menu-icon"></div>
-        </button>
-        <div class="dropdown-menu">
-          <a href="{{route('home')}}">Home</a>
-          <a href="{{route('products')}}">Products</a>
-          <a href="{{route('contact')}}">Contact</a>
-          <a href="{{route('aboutUs')}}">About us</a>
+            <button class="menu-button">
+                <div class="menu-icon"></div>
+                <div class="menu-icon"></div>
+                <div class="menu-icon"></div>
+            </button>
+            <div class="dropdown-menu">
+                <a href="{{route('home')}}">Home</a>
+                <a href="{{route('products')}}">Products</a>
+                <a href="{{route('contact')}}">Contact</a>
+                <a href="{{route('aboutUs')}}">About us</a>
+                <a href="{{route('basket')}}">Basket</a>
+                <a href='{{route('order')}}'>Order History</a>
+                <a href="{{route('logout')}}">Logout</a>
+            </div>
         </div>
-      </div>
     </div>
-  </header>
+</header>
 
 <body>
 

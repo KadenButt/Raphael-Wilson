@@ -332,6 +332,7 @@
           <a href="{{route('aboutUs')}}">About us</a>
           @auth
           <a href="{{route('basket')}}">Basket</a>
+          <a href='{{route('order')}}'>Order History</a>
           <a href="{{route('logout')}}">Logout</a>
           @endauth
         </div>
@@ -357,7 +358,8 @@
 
         <div class="contact-form">
             <h2>Get in Touch</h2>
-            <form action="#" method="post">
+            <form action="{{route('contact.submit')}}" method="POST">
+                @csrf
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" placeholder="Your Name" required>
 
@@ -370,6 +372,19 @@
                 <button type="submit">Submit</button>
             </form>
         </div>
+    </div>
+    <div>
+        <section id="form-error">
+            @if ($errors->any())
+            <div>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+        </section>
     </div>
 </body>
 

@@ -31,6 +31,7 @@
             <a href="{{route('contact')}}">Contact</a>
             <a href="{{route('aboutUs')}}">About us</a>
             <a href="{{route('basket')}}">Basket</a>
+            <a href='{{route('order')}}'>Order History</a>
             <a href="{{route('logout')}}">Logout</a>
         </div>
     </div>
@@ -38,7 +39,7 @@
 </header>
 
 <body>
-    
+
     <div class="order-header">
         <h2>Your Orders</h2>
     </div>
@@ -47,7 +48,7 @@
     <div class="order-confirmation">
         <p>{{session('success')}}</p>
     </div>
-    @endif 
+    @endif
 
     <div class="orders-container">
     @for ($i = 0; $i < count($orderItems); $i++)
@@ -70,7 +71,7 @@
 
             </form>
         </div>
-    @endfor 
+    @endfor
     </div>
 
 
@@ -91,7 +92,7 @@
         font-size:30px;
         text-align:center;
     }
-            
+
     .order-confirmation {
         margin-left:5%;
         margin-top:-2%;
@@ -107,13 +108,13 @@
     .order {
         display: flex;
         flex-direction: column;
-        align-items: center; 
+        align-items: center;
         background-color: #ebf3f7;
         padding: 15px;
         padding-bottom: 5px;
         border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
-        width: 220px; 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        width: 220px;
 }
 
     .order img {
@@ -176,12 +177,12 @@
             overflow: hidden; /*so it doesnt overflow the container*/
             color: #ebf3f7;
             font-weight: bold;
-            margin: 0;   
+            margin: 0;
         }
 
         #navigation {
             display: flex;
-            align-items: center; 
+            align-items: center;
             justify-content: space-between;
             background-color: #104904;
             padding: 5px 20px;
@@ -198,11 +199,11 @@
         .right-section {
             display: flex;
             align-items: center;
-            gap: 15px; 
-          
+            gap: 15px;
+
         }
 
-   
+
         .nav-buttons {
             display: flex;
             gap: 10px;
@@ -224,7 +225,7 @@
             background-color: #ebf3f7;
             color: #104904;
             box-shadow: 0 6px 6px rgba(0.2, 0.2, 0.2, 0.2);
-            
+
         }
 
         .dropdown {
@@ -239,9 +240,9 @@
             cursor: pointer;
             background: none;
             border: none;
-            height: 30px; 
+            height: 30px;
             gap: 6px;
-        
+
         }
 
         .menu-icon {
@@ -260,7 +261,7 @@
             box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
             border-radius: 5px;
             overflow: hidden;
-         
+
         }
 
         .dropdown-menu a {
@@ -269,7 +270,7 @@
             color: #104904;
             text-decoration: none;
             font-weight: bold;
-        
+
         }
 
         .dropdown-menu a:hover {

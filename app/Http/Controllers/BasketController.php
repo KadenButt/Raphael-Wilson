@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class BasketController extends Controller
 {
-
+    //adds item from product page to basket
     public function addBasket(Request $request)
     {
         $sizeItem = SizeItem::create([
@@ -19,7 +19,7 @@ class BasketController extends Controller
             'size_number' => $request->input('size')
         ]);
 
-        $basket = BasketItem::create([
+        BasketItem::create([
             'customer_id' => Auth::user()->customer_id,
             'size_item_id' => $sizeItem->size_item_id,
             'quantity' => $request->input('quantity')
@@ -51,7 +51,7 @@ class BasketController extends Controller
             $products[]  = $product;
 
         }
-        //2D array that hold all the size of each shoe 
+        //2D array that hold all the size of each shoe
         $shoe_size = array();
 
 
@@ -59,16 +59,16 @@ class BasketController extends Controller
 
             //get size ID for product
             $size_items = SizeItem::where('product_id', $item->product_id)->get();
-            
+
             foreach ($size_items as $size_item) {
                 $shoe_size[] = $size_item->size_number;
             }
-         
+
         }
 
         return view('basket', [
             'products' => $products,
-            'basket_items' => $basket_items, 
+            'basket_items' => $basket_items,
             'sizes' => $shoe_size,
             'price' => $sumPrice,
         ]);
@@ -76,8 +76,8 @@ class BasketController extends Controller
 
     public function updateQuantity(Request $request)
     {
-        BasketItem::where('basket_item_id', $request->input('basket_item_id'))->update(['quantity' => $request->input('quantity')]);  
-        return redirect()->back();     
+        BasketItem::where('basket_item_id', $request->input('basket_item_id'))->update(['quantity' => $request->input('quantity')]);
+        return redirect()->back();
     }
 
 
