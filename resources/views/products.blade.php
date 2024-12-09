@@ -350,6 +350,7 @@
           <a href="{{route('aboutUs')}}">About us</a>
           @auth
           <a href="{{route('basket')}}">Basket</a>
+          <a href='{{route('order')}}'>Order History</a>
           <a href="{{route('logout')}}">Logout</a>
           @endauth
         </div>

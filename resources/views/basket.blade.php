@@ -267,6 +267,7 @@
                     <a href="{{route('contact')}}">Contact</a>
                     <a href="{{route('aboutUs')}}">About us</a>
                     <a href="{{route('basket')}}">Basket</a>
+                    <a href='{{route('order')}}'>Order History</a>
                     <a href="{{route('logout')}}">Logout</a>
                 </div>
             </div>

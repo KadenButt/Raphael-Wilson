@@ -14,7 +14,7 @@ class CustomerController extends Controller
 {
     public function registerCustomer(Request $request)
     {
-
+        //validate data
         $vd = $request->validate([
             'customer_fname' => 'required|max:255|alpha',
             'customer_sname' => 'required|max:255|alpha',
@@ -57,16 +57,16 @@ class CustomerController extends Controller
 
         ]);
 
-        //check for pre-existing email in the database 
+        //check for pre-existing email in the database
         $customer = Customer::where('customer_email', $request->input('customer_email'))->first();
 
-    
+
         if($customer != null)
         {
             $error = new MessageBag;
             $error->add('email', 'email is already in use');
             return redirect()->back()->withErrors($error);
-        } 
+        }
 
         //creates customer in data base
 
@@ -75,7 +75,7 @@ class CustomerController extends Controller
             'address_street' => $vd['address_street'],
             'address_postcode' => $vd['address_postcode'],
         ]);
-        
+
         $payment = Payment::create([
             'account_number' => bcrypt($vd['account_number']), // Encrypt sensitive data
         ]);
@@ -86,7 +86,7 @@ class CustomerController extends Controller
             'customer_fname' => $vd['customer_fname'],
             'customer_sname' => $vd['customer_sname'],
             'address_id' => $address->address_id,
-            'payment_id' => $payment->payment_id, 
+            'payment_id' => $payment->payment_id,
 
         ]);
 
@@ -96,13 +96,16 @@ class CustomerController extends Controller
 
     public function loginCustomer(Request $request)
     {
+        //validates data
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
-
+        //Check it see if cutomers email is in the database
         $customer = Customer::where('customer_email', $credentials['email'])->first();
+        //checks password
         if ($customer && Hash::check($credentials['password'], $customer->customer_password)) {
+            //logins in the users and add their detials
             Auth::login($customer);
             $request->session()->regenerate();
             return redirect()->intended('home');
