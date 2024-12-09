@@ -37,8 +37,8 @@
           <a href="{{route('contact')}}">Contact</a>
           <a href="{{route('aboutUs')}}">About us</a>
           @auth
-          <a href="{{route('logout')}}">Logout</a>
           <a href="{{route('basket')}}">Basket</a>
+          <a href="{{route('logout')}}">Logout</a>
           @endauth
         </div>
       </div>
