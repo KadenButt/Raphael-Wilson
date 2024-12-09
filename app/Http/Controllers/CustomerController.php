@@ -76,13 +76,15 @@ class CustomerController extends Controller
             'address_postcode' => $vd['address_postcode'],
         ]);
 
+        // encrypt sensitive data
         $payment = Payment::create([
-            'account_number' => bcrypt($vd['account_number']), // Encrypt sensitive data
+            'account_number' => bcrypt($vd['account_number']),
         ]);
 
+        //adds customer to data base
         $customer = Customer::create([
             'customer_email' => $vd['customer_email'],
-            'customer_password' => bcrypt($vd['customer_password']), // Encrypt the password
+            'customer_password' => bcrypt($vd['customer_password']),
             'customer_fname' => $vd['customer_fname'],
             'customer_sname' => $vd['customer_sname'],
             'address_id' => $address->address_id,
@@ -91,7 +93,7 @@ class CustomerController extends Controller
         ]);
 
         Auth::login($customer);
-        return redirect('home');
+        return redirect(route('home'));
     }
 
     public function loginCustomer(Request $request)

@@ -18,5 +18,7 @@ class ContactController extends Controller
             'email.required' => 'Inorder to submit this contact form you must enter your email',
             'message.required' => 'Inorder to submit this contact form you must write a message'
         ]);
+
+        return redirect(route('home'));
     }
 }
