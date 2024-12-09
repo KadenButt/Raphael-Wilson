@@ -14,48 +14,57 @@
     <body>
     <header id="navigation">
 
-        <a href="home.blade.php">
-            <img src="Raphael-wilson-logo.png" alt="Logo">
-        </a>
+        <a href="{{route('home')}}">
+            <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
+          </a>
 
         <div class="luxury-text">
              <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
         </div>
 
         <div class="search-container">
-            <form action="/search" method="GET" class="search-form">
+            <form action="{{route('product.search')}}" method="POST" class="search-form">
+                @csrf
                 <div class="search-wrapper">
                     <button type="submit" class="search-button">
                         <i class="fas fa-search"></i>
                         <span>Search</span>
                     </button>
-                    <input type="text" placeholder="Search" class="search-input">
+                    <input type="text" placeholder="Search" class="search-input" name='product_name'>
                 </div>
             </form>
         </div>
 
-<div class="right-section"> 
 
-    <div class="nav-buttons">
-        <button id="signup" onclick="window.location.href='register.blade.php'">Sign Up</button>
-        <button id="login" onclick="window.location.href='login.blade.php'">Log In</button>
-    </div>
+<div class="right-section">
 
 
-    <div class="dropdown">
-        <button class="menu-button">
-            <div class="menu-icon"></div>
-            <div class="menu-icon"></div>
-            <div class="menu-icon"></div>
-        </button>
-        <div class="dropdown-menu">
-            <a href="home.blade.php">Home</a>
-            <a href="products.blade.php">Products</a>
-            <a href="contact.blade.php">Contact</a>
-            <a href="aboutus.blade.php">About us</a>
-            <a href="basket.blade.php">Basket</a>
+    <div class="right-section">
+        @guest
+        <div class="nav-buttons">
+          <button id="signup" onclick="window.location.href='{{route('register')}}'">Sign Up</button>
+          <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
         </div>
-    </div>
+        @endguest
+        <div class="dropdown">
+
+          <button class="menu-button">
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+          </button>
+          <div class="dropdown-menu">
+            <a href="{{route('home')}}">Home</a>
+            <a href="{{route('products')}}">Products</a>
+            <a href="{{route('contact')}}">Contact</a>
+            <a href="{{route('aboutUs')}}">About us</a>
+            @auth
+            <a href="{{route('basket')}}">Basket</a>
+            <a href='{{route('order')}}'>Order History</a>
+            <a href="{{route('logout')}}">Logout</a>
+            @endauth
+          </div>
+        </div>
 </div>
 </header>
 
@@ -64,16 +73,14 @@
         </div>
 
         <div class="category-container">
-            <div class="category-box">CATEGORY 1</div>
-            <div class="category-box">CATEGORY 2</div>
-            <div class="category-box">CATEGORY 3</div>
+            @foreach($categories as $category)
+            <a href="{{route('category', [$category->category_id])}}">
+                <div class="category-box">{{$category->category_name}}</div>
+            </a>
+            @endforeach
         </div>
 
-        <div class="bottom-categories">
-            <div class="category-box1">CATEGORY 4</div>
-            <div class="category-box1">CATEGORY 5</div>
-        </div>
-      
+
     </body>
 </html>
 

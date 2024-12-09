@@ -35,8 +35,8 @@ class ProductController extends Controller
 
     public function searchProduct(Request $request)
     {
-        $search = Product::where(['product_name', $request->input('product_name')])->first();
-        if($search->isEmpty())
+        $search = Product::where('product_name', $request->input('product_name'))->first();
+        if(!$search)
         {
             return redirect()->back();
         }

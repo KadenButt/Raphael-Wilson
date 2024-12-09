@@ -3,9 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [App\Http\Controllers\HomePageController::class, 'homePage'])->name('home');
 
 //products
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'showProducts'] )->name('products');
@@ -14,7 +12,7 @@ Route::get('/products/{category_id}', [App\Http\Controllers\ProductController::c
 
 Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'showProduct'] )->name('product');
 
-Route::post('/product/search', [App\Http\Controllers\ProductController::class, 'searchProduct'] )->name('searchProduct');
+Route::post('/product/search', [App\Http\Controllers\ProductController::class, 'searchProduct'] )->name('product.search');
 
 
 //Contact
