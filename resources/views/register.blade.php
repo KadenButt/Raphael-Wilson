@@ -64,6 +64,8 @@
             <br><br>
             <input type="password" name="password_confirmation" placeholder="Confirm Password" />
             <br><br>
+            <input type="text" name="security_question" placeholder="What is your mother's maiden name?">
+            <br><br>
             <input type="submit" name="submitted" value="Register" />
             <br>
             <input type="hidden" name="submitted" value="true" />
