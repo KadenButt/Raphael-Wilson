@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class BasketController extends Controller
 {
     //adds item from product page to basket
-    public function addBasket(Request $request)
+    public static function addBasket(Request $request)
     {
         $sizeItem = SizeItem::create([
             'product_id' => $request->input('product_id'),

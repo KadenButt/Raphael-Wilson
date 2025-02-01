@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\HTTP;
 use Illuminate\Support\MessageBag;
+use App\Http\Controllers\BasketController;
 use App\Models\Customer;
 use App\Models\Address;
 use App\Models\Payment;
@@ -109,8 +111,17 @@ class CustomerController extends Controller
         if ($customer && Hash::check($credentials['password'], $customer->customer_password)) {
             //logins in the users and add their detials
             Auth::login($customer);
+
             $request->session()->regenerate();
-            return redirect(route('home'));
+            $previousPostUrl = session('prev_route');
+
+            //dd($previousPostUrl);
+            if ($previousPostUrl == 'basket.add') {
+                $previousRequestData = session('previous_post_data', []);
+                $previousRequest = new Request($previousRequestData);
+                BasketController::addBasket($previousRequest);
+                return redirect(route('product', [$previousRequest->input('product_id')]));
+            }
         }
 
         return redirect()->back();

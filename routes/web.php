@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ValidateUserBasket;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -55,7 +56,7 @@ Route::post('/basket/delete', [App\Http\Controllers\BasketController::class, 'de
 
 Route::post('/basket/change', [App\Http\Controllers\BasketController::class, 'updateQuantity'])->middleware('auth')->name('basket.change_quantity');
 
-Route::post('/basket/add', [App\Http\Controllers\BasketController::class, 'addBasket'])->middleware('auth')->name('basket.add');
+Route::post('/basket/add', [App\Http\Controllers\BasketController::class, 'addBasket'])->middleware(ValidateUserBasket::class)->name('basket.add');
 
 //Order
 
