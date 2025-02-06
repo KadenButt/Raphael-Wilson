@@ -11,6 +11,48 @@
 
 <header id="navigation">
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const adminCheckbox = document.querySelector('input[name="admin"]');
+    const userCheckbox = document.querySelector('input[name="user"]');
+    const customerForm = document.getElementById("register-form");
+    const adminForm = document.getElementById("admin-register-form");
+
+    function toggleAddressFields() {
+        customerForm.style.display = "block";
+        adminForm.style.display = "none";
+
+        if (adminCheckbox.checked) {
+            // Show admin form, hide customer form
+            customerForm.style.display = "none";
+            adminForm.style.display = "block";
+
+            // Uncheck user checkbox if it exists
+         
+            adminCheckbox.checked = false;
+            
+        } else if(userCheckbox.checked) {
+            // Show customer form, hide admin form
+            customerForm.style.display = "block";
+            adminForm.style.display = "none";
+
+            // Uncheck admin checkbox if needed
+        
+            userCheckbox.checked = false;
+            
+        }
+    }
+
+    // Add event listeners only if the elements exist
+    if (adminCheckbox) adminCheckbox.addEventListener("change", toggleAddressFields);
+    if (userCheckbox) userCheckbox.addEventListener("change", toggleAddressFields);
+
+    // Initialize on page load
+    toggleAddressFields();
+});
+
+</script>
+
 <a href="{{route('home')}}">
     <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
 </a>
@@ -21,7 +63,6 @@
 
 <div class="right-section">
     <div class="dropdown">
-
         <button class="menu-button">
             <div class="menu-icon"></div>
             <div class="menu-icon"></div>
@@ -44,6 +85,9 @@
         <div class="register-header">
             <h2>Register</h2>
         </div>
+
+
+        <!-- Form for the customer login -->
         <form id="register-form" method="POST" action="{{ route('customer.register') }}">
             @csrf
             <input type="text" name="customer_fname" placeholder="First Name">
@@ -52,6 +96,7 @@
             <br><br>
             <input type="email" name="customer_email" placeholder="Email" />
             <br><br>
+
             <input type="text" name="address_number" placeholder="Address Number">
             <br><br>
             <input type="text" name="address_street" placeholder="Street Name">
@@ -60,18 +105,48 @@
             <br><br>
             <input type="password" name="account_number" placeholder="Payment Number" />
             <br><br>
+            
             <input type="password" name="customer_password" placeholder="Password" />
             <br><br>
             <input type="password" name="password_confirmation" placeholder="Confirm Password" />
             <br><br>
             <input type="submit" name="submitted" value="Register" />
             <br>
+            
+            <label for="admin">Register As Admin</label><br>
+            <input type="checkbox" name="admin" >
+            
             <input type="hidden" name="submitted" value="true" />
-
             <p>Already a user? <a href="{{ route('login') }}">Log in here</a></p>
-
         </form>
-        <img src="Raphael-Wilson.png" alt="side-logo">
+
+        <!-- Form for the admin login -->
+        <form id="admin-register-form" method="POST" action="{{ route('customer.register') }}">
+            @csrf
+            <input type="text" name="customer_fname" placeholder="First Name">
+            <br><br>
+            <input type="text" name="customer_sname" placeholder="Last Name">
+            <br><br>
+            <input type="email" name="customer_email" placeholder="Email" />
+            <br><br>
+            
+            <input type="password" name="customer_password" placeholder="Password" />
+            <br><br>
+            <input type="password" name="password_confirmation" placeholder="Confirm Password" />
+            <br><br>
+            <input type="submit" name="submitted" value="Register" />
+            <br>
+            
+            <label for="user">Register As A User</label><br>
+            <input type="checkbox" name="user" >
+            
+            <input type="hidden" name="submitted" value="true" />
+            <p>Already a user? <a href="{{ route('login') }}">Log in here</a></p>
+        </form>
+
+
+
+        <img src="{{asset('favicon_io/android-chrome-192x192.png')}}" alt="side-logo">
     </section>
 
 
