@@ -170,7 +170,7 @@
             display: none;
             position: absolute;
             right: 0;
-            top: 120%;
+            top: 100%;
             background-color: white;
             box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
             border-radius: 5px;

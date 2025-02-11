@@ -51,6 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleAddressFields();
 });
 
+
+
 </script>
 
 <a href="{{route('home')}}">
@@ -86,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <h2>Register</h2>
         </div>
 
-
+        <div class="register-container">
         <!-- Form for the customer login -->
         <form id="register-form" method="POST" action="{{ route('customer.register') }}">
             @csrf
@@ -110,44 +112,46 @@ document.addEventListener("DOMContentLoaded", function () {
             <br><br>
             <input type="password" name="password_confirmation" placeholder="Confirm Password" />
             <br><br>
+            <input type="text" name="security_question" placeholder="What is your mother's maiden name?">
+            <br><br>
             <input type="submit" name="submitted" value="Register" />
-            <br>
-            
-            <label for="admin">Register As Admin</label><br>
-            <input type="checkbox" name="admin" >
-            
+            <br><br>
+
+                <input type="checkbox" name="admin" >
+                <label for="admin">Register As Admin</label>
+        
             <input type="hidden" name="submitted" value="true" />
             <p>Already a user? <a href="{{ route('login') }}">Log in here</a></p>
         </form>
-
+    </div>
+    </section>
         <!-- Form for the admin login -->
         <form id="admin-register-form" method="POST" action="{{ route('customer.register') }}">
             @csrf
-            <input type="text" name="customer_fname" placeholder="First Name">
+            <input type="text" name="admin_fname" placeholder="First Name">
             <br><br>
-            <input type="text" name="customer_sname" placeholder="Last Name">
+            <input type="text" name="admin_sname" placeholder="Last Name">
             <br><br>
-            <input type="email" name="customer_email" placeholder="Email" />
+            <input type="email" name="admin_email" placeholder="Email" />
+            <br><br>
+            <input type="password" name="admin_password" placeholder="Password" />
+            <br><br>
+            <input type="password" name="admin_password_confirmation" placeholder="Confirm Password" />
+            <br><br>
+            <input type="submit" name="admin_register" value="Register" />
             <br><br>
             
-            <input type="password" name="customer_password" placeholder="Password" />
-            <br><br>
-            <input type="password" name="password_confirmation" placeholder="Confirm Password" />
-            <br><br>
-            <input type="submit" name="submitted" value="Register" />
-            <br>
-            
-            <label for="user">Register As A User</label><br>
             <input type="checkbox" name="user" >
+            <label for="user">Register As A User</label>
             
             <input type="hidden" name="submitted" value="true" />
             <p>Already a user? <a href="{{ route('login') }}">Log in here</a></p>
+
         </form>
 
-
-
-        <img src="{{asset('favicon_io/android-chrome-192x192.png')}}" alt="side-logo">
-    </section>
+        <div class="side-logo-admin">
+            <img src="{{asset('favicon_io/android-chrome-192x192.png')}}" alt="side-logo-admin">
+        </div>
 
 
 
@@ -268,7 +272,7 @@ document.addEventListener("DOMContentLoaded", function () {
             display: none;
             position: absolute;
             right: 0;
-            top: 120%;
+            top: 100%;
             background-color: white;
             box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
             border-radius: 5px;
@@ -294,19 +298,59 @@ document.addEventListener("DOMContentLoaded", function () {
             display: block;
         }
         
-        #register-form {
-            padding-top:10px;
+        .register-container {
+            display: flex;
+            align-items: stretch;
+           
+        }
+
+        .side-logo-admin {
+            display: flex;
+            align-items: bottom;
+            justify-content:center;
+            flex:1;
+        }
+
+
+        .side-logo-admin img {
+            height: 100%;
+            width: auto; 
+            max-width:100%;
+            object-fit:contain;
+        }
+
+        #register-form, #admin-register-form {
+            padding-top:25px;
             padding: right -30px;
             margin-left: 5%;
             background-color: #104904;
             border-radius:20px;
             width:40%;
+            min-height: 550px;
+        }
+
+        #register-form p a, #admin-register-form p a {
+            color:#ebf3f7;
+            font-weight: bold;
         }
         
-        #register p {
+        #register p,#admin-register-form p{
             color:white;
             margin-left:5%;
             padding:10px;
+        }
+        
+        .admin-register{
+            color:white;
+            
+        }
+
+        input[type="checkbox"] + label {
+            color: white;
+            
+        }
+        input[type="checkbox"] {
+            margin-left:5%;
         }
 
         #register h2 {
@@ -326,7 +370,29 @@ document.addEventListener("DOMContentLoaded", function () {
         box-sizing:border-box;
     }
 
+    input[name="admin_fname"], input[name="admin_sname"],
+    input[name="admin_email"], input[name="admin_password"],
+    input[name="admin_password_confirmation"] {
+        border-radius: 20px;
+        background-color: white;
+        border-radius: 20px;
+        padding: 15px;
+        width: 70%;
+        box-sizing: border-box;
+}
+
     input[type="submit"] {
+        margin-left:5%;
+        cursor:pointer;
+        background-color: white;
+        border-radius:20px;
+        box-sizing:border-box;
+        padding:10px;
+        font-weight:bold;
+        font-size:15px;
+    }
+
+    input[name="admin_register"] {
         margin-left:5%;
         cursor:pointer;
         background-color: white;
@@ -346,8 +412,13 @@ document.addEventListener("DOMContentLoaded", function () {
     img[alt="side-logo"] {
             width:540px;
             margin-left:55%;
-            margin-top:-44%;
             margin-bottom:6%;
         }
 
+    img[alt="side-logo-admin"] {
+        width:420px;
+        margin-left:55%;
+        margin-top:-44%;
+    }
+    
 </style>
