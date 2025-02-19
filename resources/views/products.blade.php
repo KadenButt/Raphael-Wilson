@@ -4,7 +4,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Products</title>
 <link rel="icon" type="image/png" href="favicon_io/android-chrome-512x512.png">
-<link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
 <style>
     @media (max-width: 768px) {
@@ -47,37 +46,6 @@
         margin: 0;
     }
 
-    .basket-text {
-        text-align: center;
-        font-size: 30px;
-    }
-
-    .basket-contents {
-        text-align: left;
-        position: relative;
-        border-radius: 20px;
-        background-color: #104904;
-        color: #ebf3f7;
-        margin-top: 5%;
-        margin-left: 20px;
-        margin-right: 40%;
-        width: 100%;
-        max-width: 400px;
-        padding: 15px;
-        padding-bottom: 5px;
-        box-sizing: border-box;
-    }
-
-    .basket-contents h2 {
-        margin-top: 0%;
-    }
-
-    .basket-container {
-        display: flex;
-        align-items: flex-start;
-        flex-wrap: nowrap;
-        position: relative;
-    }
 
     .black-shoe {
         margin-top: 5%;
@@ -194,50 +162,6 @@
         display: block;
     }
 
-    button.link {
-        background: none;
-        border: none;
-        color: #ebf3f7;
-        cursor: pointer;
-    }
-
-    .total {
-        text-align: left;
-        position: absolute;
-        border-radius: 20px;
-        background-color: #104904;
-        color: #ebf3f7;
-        top: auto;
-        bottom: 5%;
-        right: 10%;
-        width: 80%;
-        max-width: 300px;
-        padding: 10px;
-        padding-bottom: 5px;
-        box-sizing: border-box;
-    }
-
-    .checkout-button {
-        display: block;
-        margin: 10px auto 0;
-        padding: 5px 15px;
-        background-color: white;
-        color: #104904;
-        font-weight: bold;
-        font-size: 16px;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        text-align: center;
-    }
-
-    .checkout-button:hover {
-        background-color: #ebf3f7;
-        color: #104904;
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-    }
-
     .search-box {
         width: 300px;
         margin: 50px auto 0;
@@ -291,15 +215,20 @@
     }
 
     div.gallery {
+        background-color:#104904;
+        color: white;
         border: 1px solid #ccc;
         margin-top: 50px;
+        border-radius:20px;
     }
 
     div.gallery:hover {
-        border: 1px solid #777;
+        border: 1px solid black;
     }
 
     div.gallery img {
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
         width: 100%;
         height: 200px;
     }
@@ -310,11 +239,11 @@
     }
 
     .responsive {
-        padding: 0 6px;
+        padding: 0 52px;
         float: left;
-        width: 24.99999%;
-        margin-bottom: 40px;
-    }
+        width: 25%;
+}
+
 </style>
 </head>
 
@@ -369,20 +298,20 @@
 
     <label for="redirectSelect">Choose a category</label>
     <select id="redirectSelect" onchange="redirectToPage()">
-        <option value="">Choose Category</option>
+        <option name="">Choose Category</option>
         <option value="{{route('products')}}">All</option>
 
         @foreach($categories as $category)
         <option value="{{ route('category', [$category->category_id]) }}">{{ $category->category_name }}</option>
         @endforeach
     </select>
-
+<br>
     @foreach($products as $product)
     <a href="{{route('product', [$product->product_id])}}">
     <div class="responsive" id="product-list">
         <div class="gallery" data-keywords="{{$product->product_name}}">
                 <img src="data:image/jpeg;base64,{{ base64_encode($product->product_photo) }}" alt="Retro Sandals" width="600" height="400">
-                <div class="desc"> {{$product->product_name}} <br> Sizes 4-10 <br> £{{$product->product_price}} <br>
+                <div class="desc"> <b>{{$product->product_name}}</b> <br> Sizes 4-10 <br> £{{$product->product_price}} <br>
             </div>
         </div>
     </div>

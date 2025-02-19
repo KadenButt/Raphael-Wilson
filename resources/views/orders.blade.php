@@ -58,7 +58,6 @@
             </div>
             <div class="order-details">
                 <p><b>{{ $products[$i]->product_name }}</b></p>
-                <br>
                 <p>Order Status: {{ $orders[ $orderItems[$i]->order_id ]->order_status }}</p>
                 <p>Order Number: {{$orderItems[$i]->order_id}}</p>
                 <p>Quantity: {{$orderItems[$i]->order_item_quantity}}
@@ -99,42 +98,54 @@
     }
 
     .orders-container {
-        display:flex;
+        display:grid;
+        flex-wrap: wrap;
+        position:relative;
+        grid-template-columns: repeat(3, 1fr);
         gap: 20px;
-        justify-content: center;
-        margin-top:20px;
+        margin-top:-1%;
     }
 
     .order {
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: #ebf3f7;
-        padding: 15px;
         padding-bottom: 5px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        width: 220px;
+        margin:0;
+        
 }
 
     .order img {
-        width: 180px;
+        width: 100%;
         height: auto;
-        object-fit: cover;
-        margin-bottom: 10px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        display:block;
+        margin:0;
+        padding:0;
     }
 
+    .order-photo1 {
+        width: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
 
    .order-details {
         color: #ebf3f7;
         background-color: #104904;
-        border-radius:20px;
-        width: 100%;
-        padding:10px;
+        border-bottom-left-radius:20px;
+        border-bottom-right-radius:20px;
+        width: 60%;
         text-align:center;
+        margin:0;
    }
 
-   #cancel-button, #cancel-button2{
+   #cancel-button{
         margin-top: 10px;
         font-weight:bold;
         border: none;
@@ -146,21 +157,12 @@
         transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-    #cancel-button:hover, #cancel-button2:hover {
+    #cancel-button:hover{
         background-color: #ebf3f7;
         color: #104904;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
-
-   .order-details2 {
-        margin-left: 50%;
-        color: #ebf3f7;
-        background-color: #104904;
-        align-items:center;
-        border-radius:20px;
-        width: 160px;
-        padding:10px;
-        }
+ 
 
     body {
             margin: 0;
@@ -261,6 +263,7 @@
             box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
             border-radius: 5px;
             overflow: hidden;
+            z-index:1000;
 
         }
 

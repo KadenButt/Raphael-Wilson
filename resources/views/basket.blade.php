@@ -17,6 +17,7 @@
             .basket-container {
                 align-items: center;
                 flex-direction: column;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .black-shoe img {
@@ -49,49 +50,42 @@
         }
 
         .basket-text {
+            margin-top:-2%;
             text-align: center;
             font-size: 30px;
         }
-
+        
         .basket-contents {
-            text-align: left;
+            text-align: center;
             position: relative;
             border-radius: 20px;
             background-color: #104904;
             color: #ebf3f7;
-            margin-top: 5%;
-            margin-left: 20px;
-            margin-right: 40%;
-            width: 100%;
+            width:80%;
             max-width: 400px;
-            padding: 15px;
             padding-bottom: 5px;
             box-sizing: border-box;
+            margin: 20px auto;
         }
 
-        .basket-contents h2 {
-            margin-top: 0%;
+        .basket-contents h3 {
+            margin-top: 0;
+            margin-bottom: 0;
         }
 
         .basket-container {
-            display: flex;
-            align-items: flex-start;
-            flex-wrap: nowrap;
+            margin-top:-3%;
+            display:grid;
+            grid-template-columns: repeat(3, 1fr);
+            flex-wrap: wrap;
             position: relative;
         }
-
-        .black-shoe {
-            margin-top: 5%;
-            margin-left: 5%;
-            width: 200px;
-            height: auto;
-            object-fit: cover;
-        }
-
+ 
         .black-shoe img {
-            width: 200px;
-            height: auto;
-            object-fit: cover;
+            width: 100%;
+            height:250px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
         }
 
         #navigation {
@@ -204,21 +198,18 @@
         }
 
         .total {
-            text-align: left;
-            position: absolute;
+            width: 340px;
+            grid-column: 3 / 4; /* Place the checkout button in the 3rd column */
+            text-align: center;
+            margin-left: 10%;
+            margin-bottom:10%;
             border-radius: 20px;
             background-color: #104904;
             color: #ebf3f7;
-            top: auto;
-            bottom: 5%;
-            right: 10%;
-            width: 80%;
-            max-width: 300px;
             padding: 10px;
-            padding-bottom: 5px;
             box-sizing: border-box;
+            align-self:center; /* Align to the top of the grid row */
         }
-
         .checkout-button {
             display: block;
             margin: 10px auto 0;
@@ -228,7 +219,7 @@
             font-weight: bold;
             font-size: 16px;
             border: none;
-            border-radius: 50px;
+            border-radius: 20px;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
             text-align: center;
@@ -239,6 +230,7 @@
             color: #104904;
             box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
         }
+
     </style>
 </head>
 
@@ -278,20 +270,16 @@
         <h1>Basket</h1>
     </div>
     <div class="basket-container">
-        <table>
             @for ($i = 0; $i < count($products); $i++)
-                <td>
                 <div class="basket-contents">
                     <div class="black-shoe">
                         <img src="data:image/jpeg;base64,{{ base64_encode($products[$i]->product_photo) }}" alt="shoe">
                     </div>
-                    <h2>{{ $products[$i]->product_name }}</h2>
+                    <h3>{{ $products[$i]->product_name }}</h3>
                     <div class="shoe-description">
                         <p>
-                            {{ $products[$i]->product_description }}
-                            <br>
                             <b>Size: </b> {{ $sizes[$i] }}
-                            <br>
+                        </p>
                         <form id="change-quantity" method="POST" action="{{ route('basket.change_quantity')}}">
                             @csrf
                             <label for="quantity"><b>Quantity: </b></label>
@@ -299,11 +287,12 @@
                             <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
                             <button type="submit"> Change</button>
                         </form>
-                        <br>
-                        In stock
-                        </p>
+                        
+                        <p>In stock</p>
+                       
                         <h3>£{{ $products[$i]->product_price * $basket_items[$i]->quantity }}</h3>
                     </div>
+                    <br>
                     <div class="delete-button">
                         <form id="delete-item" method="POST" action="{{ route('basket.delete') }}">
                             @csrf
@@ -311,15 +300,9 @@
                             <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
                         </form>
                     </div>
-                    </td>
-                    @endfor
-
-
-        </table>
-    </div>
-
-
-    <div class="total">
+                
+            </div>    @endfor
+            <div class="total">
         <h2>Total: £{{$price}}</h2>
         <form method="POST" action="{{ route('order.create') }}">
             @csrf
@@ -329,6 +312,8 @@
             <input type="hidden" name="total_price" value="{{$price}}" />
         </form>
     </div>
+</div>
+
 
     </div>
 
