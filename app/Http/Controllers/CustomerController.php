@@ -25,7 +25,8 @@ class CustomerController extends Controller
             'address_postcode' => 'required|max:6',
             'account_number' => 'required|digits:11|integer',
             'customer_password' => 'required|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,255}$/',
-            'password_confirmation' => 'required'
+            'password_confirmation' => 'required',
+            'security_question' => 'required'
         ], [
             'fname.required' => 'First name is required and cannot be empty.',
             'fname.max' => 'First name cannot exceed 255 characters.',
@@ -52,6 +53,8 @@ class CustomerController extends Controller
             'payment_number.required' => 'Payment number is required.',
             'payment_number.integer' => 'Payment number must be a number.',
             'payment_number.digits' => 'A valid payment number must be 11 characters.',
+
+            'security_question' => 'Pasword is required. ',
 
             'password.required' => 'Password is required.',
             'password.regex' => 'The password must be longer then 8 characters contain at least one uppercase letter, one number, and one special character.',
@@ -90,6 +93,7 @@ class CustomerController extends Controller
             'customer_sname' => $vd['customer_sname'],
             'address_id' => $address->address_id,
             'payment_id' => $payment->payment_id,
+            'customer_question' => $vd['security_question']
 
         ]);
 

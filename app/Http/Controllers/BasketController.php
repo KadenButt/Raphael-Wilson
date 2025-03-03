@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BasketItem;
+use App\Models\Basket;
 use App\Models\Product;
-use App\Models\SizeItem;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -14,14 +14,15 @@ class BasketController extends Controller
     //adds item from product page to basket
     public static function addBasket(Request $request)
     {
-        $sizeItem = SizeItem::create([
+        $item = Item::create([
             'product_id' => $request->input('product_id'),
             'size_number' => $request->input('size')
         ]);
 
-        BasketItem::create([
+
+        Basket::create([
             'customer_id' => Auth::user()->customer_id,
-            'size_item_id' => $sizeItem->size_item_id,
+            'item_id' => $item->item_id,
             'quantity' => $request->input('quantity')
         ]);
 
@@ -31,13 +32,13 @@ class BasketController extends Controller
 
     public function deleteBasket(Request $request)
     {
-        BasketItem::where('basket_item_id', $request->input('basket_item_id'))->first()->delete();
+        Basket::where('basket_item_id', $request->input('item_id'))->first()->delete();
         return redirect()->back();
     }
 
     public function listBasket()
     {
-        $basket_items = BasketItem::where('customer_id', Auth::user()->customer_id)->get();
+        $basket_items = Basket::where('customer_id', Auth::user()->customer_id)->get();
 
         //get product table
 
@@ -45,8 +46,8 @@ class BasketController extends Controller
         $sumPrice = 0;
 
         foreach ($basket_items as $basket) {
-            $sizeItem = SizeItem::where('size_item_id', $basket->size_item_id)->first();
-            $product = Product::where('product_id', $sizeItem->product_id)->first();
+            $item = Item::where('item_id', $basket->item_id)->first();
+            $product = Product::where('product_id', $item->product_id)->first();
             $sumPrice += $product->product_price * $basket->quantity;
             $products[]  = $product;
 
@@ -58,10 +59,10 @@ class BasketController extends Controller
         foreach ($products as $item) {
 
             //get size ID for product
-            $size_items = SizeItem::where('product_id', $item->product_id)->get();
+            $items = Item::where('product_id', $item->product_id)->get();
 
-            foreach ($size_items as $size_item) {
-                $shoe_size[] = $size_item->size_number;
+            foreach ($items as $item) {
+                $shoe_size[] = $item->size_number;
             }
 
         }
@@ -76,7 +77,7 @@ class BasketController extends Controller
 
     public function updateQuantity(Request $request)
     {
-        BasketItem::where('basket_item_id', $request->input('basket_item_id'))->update(['quantity' => $request->input('quantity')]);
+        Basket::where('basket_item_id', $request->input('basket_item_id'))->update(['quantity' => $request->input('quantity')]);
         return redirect()->back();
     }
 
@@ -85,23 +86,23 @@ class BasketController extends Controller
     public function addBasketTemp()
     {
 
-        $sizeItem1 = SizeItem::create([
+        $sizeItem1 = Item::create([
             'product_id' => 1,
             'size_number' => '10'
         ]);
 
-        $sizeItem2 = SizeItem::create([
+        $sizeItem2 = Item::create([
             'product_id' => 2,
             'size_number' => '9'
         ]);
 
-        BasketItem::create([
+        Basket::create([
             'quantity' => 1,
             'size_item_id' => $sizeItem1->size_item_id,
             'customer_id' => Auth::user()->customer_id
         ]);
 
-        BasketItem::create([
+        Basket::create([
             'quantity' => 1,
             'size_item_id' =>  $sizeItem2->size_item_id,
             'customer_id' => Auth::user()->customer_id

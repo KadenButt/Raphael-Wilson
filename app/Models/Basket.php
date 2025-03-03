@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BasketItem extends Model
+class Basket extends Model
 {
-    protected $table = 'basket_item';
+    protected $table = 'basket';
     protected $primaryKey = 'basket_item_id'; 
     public $timestamps = false;
-    protected $fillable = ['customer_id', 'size_item_id', 'quantity'];
+    protected $fillable = ['customer_id', 'item_id', 'quantity'];
 
 }

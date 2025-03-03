@@ -267,7 +267,7 @@
                     <a href="{{route('contact')}}">Contact</a>
                     <a href="{{route('aboutUs')}}">About us</a>
                     <a href="{{route('basket')}}">Basket</a>
-                    <a href='{{route('order')}}'>Order History</a>
+                    <a href="{{route('order')}}">Order History</a>
                     <a href="{{route('logout')}}">Logout</a>
                 </div>
             </div>
@@ -308,7 +308,7 @@
                         <form id="delete-item" method="POST" action="{{ route('basket.delete') }}">
                             @csrf
                             <button type="submit"> Delete</button>
-                            <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
+                            <input type="hidden" name="item_id" value="{{$basket_items[$i]->basket_item_id}}" />
                         </form>
                     </div>
                     </td>
