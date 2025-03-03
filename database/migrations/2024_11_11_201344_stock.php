@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('stock', function(Blueprint $table){
             $table->id('stock_id')->primary();
             $table->integer('stock_number');
-            $table->date('stock_last_updated');
-            $table->foreignId('size_item_id')->references('size_item_id')->on('size_item');
+            $table->foreignId('item_id')->references('item_id')->on('item');
         }); 
     }
 

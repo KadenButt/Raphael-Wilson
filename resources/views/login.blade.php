@@ -63,6 +63,7 @@
             <p>Not a user? <a href="{{ route('register') }}">Register here</a></p> 
             <a href="{{ route('forgotpw') }}">Forgot Password</a></p>
 
+            
         </form>
         <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="side-logo">
     </section>

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('customer_password');
             $table->string('customer_fname');  
             $table->string('customer_sname');
+            $table->string('customer_question');
             $table->foreignId('address_id')->references('address_id')->on('address');
             $table->foreignId('payment_id')->references('payment_id')->on('payment');
 

@@ -28,12 +28,19 @@ Route::get('/aboutus', function(){
     return view('about');
 })->name('aboutUs');
 
-//Register
+////Register
+
 Route::get('/register', function(){
     return view('register');
 })->name('register');
 
+//user
 Route::post('/register/user', [App\Http\Controllers\CustomerController::class, 'registerCustomer'])->name('customer.register');
+
+//admin
+Route::post('/admin/user', [App\Http\Controllers\AdminController::class, 'adminCustomer'])->name('admin.register');
+
+
 
 //Login
 Route::get('/login', function(){
