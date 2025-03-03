@@ -38,7 +38,7 @@
           <a href="{{route('aboutUs')}}">About us</a>
           @auth
           <a href="{{route('basket')}}">Basket</a>
-          <a href='{{route('order')}}'>Order History</a>
+          <a href="{{route('order')}}">Order History</a>
           <a href="{{route('logout')}}">Logout</a>
           @endauth
         </div>
@@ -282,7 +282,7 @@
         display: none;
         position: absolute;
         right: 0;
-        top: 120%;
+        top: 100%;
         background-color: white;
         box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
         border-radius: 5px;

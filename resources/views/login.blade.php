@@ -33,7 +33,7 @@
                 <a href="{{route('contact')}}">Contact</a>
                 <a href="{{route('aboutUs')}}">About us</a>
                 <a href="{{route('basket')}}">Basket</a>
-                <a href='{{route('order')}}'>Order History</a>
+                <a href="{{route('order')}}">Order History</a>
                 <a href="{{route('logout')}}">Logout</a>
             </div>
         </div>
@@ -60,7 +60,8 @@
 
             <input type="hidden" name="submitted" value="true" />
 
-            <p>Not a user? <a href="{{ route('register') }}">Register here</a></p>
+            <p>Not a user? <a href="{{ route('register') }}">Register here</a></p> 
+            <a href="{{ route('forgotpw') }}">Forgot Password</a></p>
 
         </form>
         <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="side-logo">
@@ -174,7 +175,7 @@
         display: none;
         position: absolute;
         right: 0;
-        top: 120%;
+        top: 100%;
         background-color: white;
         box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
         border-radius: 5px;
@@ -243,7 +244,7 @@
 
     #login-form p {
         color: white;
-        margin-left: 5%;
+        
         font-size: 15px
     }
 
