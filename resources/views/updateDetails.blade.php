@@ -44,26 +44,39 @@
         <div class="details-header">
             <h2>Update Details</h2>
         </div>
-        <form id="details-form" method="POST" action="{{ route('customer.details') }}">
-            <input type="text" name="customer_fname" placeholder="First Name">
+        <form id="details-form" method="POST" action="{{ route('customer.update') }}">
+            @csrf
+            <input type="text" name="customer_fname" value="{{$customer->customer_fname;}}">
             <br><br>
-            <input type="text" name="customer_sname" placeholder="Last Name">
+            <input type="text" name="customer_sname" value="{{$customer->customer_sname;}}">
             <br><br>
-            <input type="email" name="customer_email" placeholder="Email" />
+            <input type="email" name="customer_email" value="{{$customer->customer_email;}}" />
             <br><br>
-            <input type="text" name="address_number" placeholder="Address Number">
+            <input type="text" name="address_number" value="{{$address->address_number;}}">
             <br><br>
-            <input type="text" name="address_street" placeholder="Street Name">
+            <input type="text" name="address_street" value="{{$address->address_street}}">
             <br><br>
-            <input type="text" name="address_postcode" placeholder="Postcode">
+            <input type="text" name="address_postcode" value="{{$address->address_postcode}}">
             <br><br>
-            <input type="password" name="account_number" placeholder="Payment Number" />
+            <input type="password" name="account_number" value="{{$payment->account_number}}" />
             <br><br>
             <input type="submit" name="submitted" value="Update" />
             <br>
             <input type="hidden" name="submitted" value="true" />
         </form>
-            <img src="Raphael-Wilson.png" alt="side-logo">
+        <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="side-logo">
+
+        <section id="form-error">
+        @if ($errors->any())
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+    </section>
     </body>
     </html>
 

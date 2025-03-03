@@ -41,6 +41,9 @@ Route::get('/login', function(){
 
 Route::post('/login/user', [App\Http\Controllers\CustomerController::class, 'loginCustomer'])->name('customer.login');
 
+//forgot password
+Route::get("/forgotpassword", function(){dd('todo');})->name('forgotpw');
+
 //logout
 Route::get('/logout', function(){
     Auth::logout();
@@ -64,6 +67,13 @@ Route::get('/order', [App\Http\Controllers\OrderController::class, 'listOrder'])
 Route::post('/order', [App\Http\Controllers\OrderController::class, 'createOrder'])->middleware('auth')->name('order.create');
 
 Route::post('/order/delete', [App\Http\Controllers\OrderController::class, 'deleteOrder'])->middleware('auth')->name('order.delete');
+
+//display for to change user details
+Route::get('/user/details', [App\Http\Controllers\CustomerController::class, 'showDetails'])->middleware("auth")->name('customer.details');
+
+//udpates user details
+Route::post('/user/details/change', [App\Http\Controllers\CustomerController::class, 'updateCustomer'])->middleware("auth")->name('customer.update');
+
 
 
 ////////////////temp
