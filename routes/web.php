@@ -38,7 +38,7 @@ Route::get('/register', function(){
 Route::post('/register/user', [App\Http\Controllers\CustomerController::class, 'registerCustomer'])->name('customer.register');
 
 //admin
-Route::post('/admin/user', [App\Http\Controllers\AdminController::class, 'adminCustomer'])->name('admin.register');
+Route::post('/admin/user', [App\Http\Controllers\AdminController::class, 'registerAdmin'])->name('admin.register');
 
 
 
@@ -80,3 +80,9 @@ Route::post('/order/delete', [App\Http\Controllers\OrderController::class, 'dele
 
 Route::get('/populate', [App\Http\Controllers\ProductController::class, 'populateProducts']);
 Route::get('/addbaskett', [App\Http\Controllers\BasketController::class, 'addBasketTemp'])->middleware('auth');
+
+Route::get('/check', function(){
+    dd(Auth::guard('admin')->check());
+
+})->middleware('auth:admin');;
+

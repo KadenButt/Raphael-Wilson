@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\MessageBag;
 use App\Http\Controllers\BasketController;
 use App\Models\Customer;
+use App\Models\Admin;
 use App\Models\Address;
 use App\Models\Payment;
 
 class CustomerController extends Controller
 {
+
+
     public function registerCustomer(Request $request)
     {
         //validate data
@@ -60,9 +63,10 @@ class CustomerController extends Controller
 
         //check for pre-existing email in the database
         $customer = Customer::where('customer_email', $request->input('customer_email'))->first();
+        $admin = Admin::where('admin_email', $request->input('admin_email'))->first();
 
 
-        if($customer != null)
+        if($admin != null && $customer != null)
         {
             $error = new MessageBag;
             $error->add('email', 'email is already in use');

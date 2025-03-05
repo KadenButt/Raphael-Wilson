@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
     </section>
         <!-- Form for the admin login -->
-        <form id="admin-register-form" method="POST" action="{{ route('customer.register') }}">
+        <form id="admin-register-form" method="POST" action="{{ route('admin.register') }}">
             @csrf
             <input type="text" name="admin_fname" placeholder="First Name">
             <br><br>
