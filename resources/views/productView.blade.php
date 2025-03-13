@@ -77,13 +77,19 @@
                     <h3>£{{$product->product_price}}</h3>
             </div>
         </div>
-        <button class="basket-button" onclick="window.location.href='{{ route('basket') }}'">
-            <h2>Add to Basket</h2>
-        </button>
-        <input type="hidden" name="product_id" value="{{$product->product_id}}" />
-        </form>
 
+        <div class="basket-add-container">
+
+        <div class="basket-confirmation">
+        <p>Added to basket</p>
     </div>
+
+    <button class="basket-button" onclick="window.location.href='{{ route('basket') }}'">
+        <h2>Add to Basket</h2>
+    </button>
+    
+</div>
+</div>
 
 
 </body>
@@ -181,8 +187,21 @@
         object-fit: cover;
     }
 
-    .basket-button {
+    .basket-add-container {
+        display: flex;
+        align-items: center;
+        gap: 30px;
         position: absolute;
+        bottom: -15%;
+        right: 15%;
+}
+
+    .basket-confirmation {
+        color:rgb(0, 123, 8);
+        font-size: 20px;
+    }
+
+    .basket-button {
         bottom: -15%;
         right: 15%;
         display: inline-block;
