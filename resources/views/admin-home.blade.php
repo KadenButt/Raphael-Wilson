@@ -74,16 +74,23 @@
 
 <style> 
 
+.logo-box img{
+    display:flex;
+    margin:auto;
+    width:40%;
+    height:auto;
+}
+
 .logo-box {
     margin:auto;
     margin-top:1%;
     background-color: #104904;
-    width:65%;
-    padding:10%;
+    width:75%;
     border-radius:10px;
 }
 
 .admin-buttons-container {
+    margin-top:-2%;
     display:grid;
     justify-items: center;
     align-items:center;
