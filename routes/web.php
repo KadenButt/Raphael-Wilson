@@ -66,6 +66,27 @@ Route::post('/order', [App\Http\Controllers\OrderController::class, 'createOrder
 
 Route::post('/order/delete', [App\Http\Controllers\OrderController::class, 'deleteOrder'])->middleware('auth')->name('order.delete');
 
+//admin
+Route::get('/admin/home', function()
+{
+    return view('admin-home');
+});
+
+Route::get('/admin/stock', function()
+{
+    return dd('to-do');
+})->name('stock');
+
+Route::get('/admin/orders', function()
+{
+    return dd('to-do');
+})->name('orders');
+
+Route::get('/admin/customers', function()
+{
+    return dd('to-do');
+})->name('customers');
+
 
 ////////////////temp
 
