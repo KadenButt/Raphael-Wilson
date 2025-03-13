@@ -33,6 +33,8 @@
             <a href="{{route('basket')}}">Basket</a>
             <a href='{{route('order')}}'>Order History</a>
             <a href="{{route('logout')}}">Logout</a>
+            <a href="{{route('wishlist')}}">Wishlist</a>
+
         </div>
     </div>
 </div>

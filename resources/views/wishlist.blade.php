@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <title>Contact Us</title>
+  <title>My Wishlist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="{{ asset('favicon_io/android-chrome-512x512.png') }}">
 
@@ -13,13 +13,13 @@
     html, body {
       margin: 0;
       padding: 0;
-      /* Ensure full viewport height with flex layout */
+      /* Ensure the page takes the full viewport height and use flex layout */
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      color: white;
+      background-color: #ebf3f7; /* Light mode background */
+      color: #104904;          /* Light mode text */
       transition: background-color 0.3s, color 0.3s;
     }
     body.dark {
@@ -50,17 +50,17 @@
     .luxury-text {
       flex-grow: 1;
       text-align: center;
-      font-family: Arial, sans-serif;
-      white-space: nowrap;
-      overflow: hidden;
-      color: white;
       font-weight: bold;
       margin: 0;
+      color: #ebf3f7;
+      white-space: nowrap;
+      overflow: hidden;
     }
     .right-section {
       display: flex;
       align-items: center;
       gap: 15px;
+      flex-shrink: 0;
     }
     .nav-buttons {
       display: flex;
@@ -142,77 +142,94 @@
     }
 
     /*************************************************
-     * 3) Contact Us Container
+     * 3) Wishlist Container & Header
      *************************************************/
-    .container {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #004d00;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    .wishlist-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
       flex: 1; /* Take remaining vertical space */
     }
-    h1, h2 {
+    .wishlist-header {
       text-align: center;
-      color: white;
-    }
-    .contact-info,
-    .social-media,
-    .contact-form {
-      margin: 20px 0;
-    }
-    .contact-info p,
-    .social-media a {
-      margin: 5px 0;
-      color: white;
-    }
-    .contact-info a,
-    .social-media a {
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-    }
-    .social-media {
-      text-align: center;
-    }
-    .social-media a:hover {
-      color: #f2f2f2;
-    }
-    .contact-form label {
-      display: block;
-      margin-bottom: 5px;
-      color: white;
-    }
-    .contact-form input,
-    .contact-form textarea {
-      width: calc(100% - 40px);
-      max-width: 700px;
-      margin: 0 auto 15px;
-      display: block;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: white;
-      color: #333;
-      box-sizing: border-box;
-    }
-    .contact-form button {
-      padding: 10px 20px;
-      background-color: #003300;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      display: block;
-      margin: 20px auto 0;
-    }
-    .contact-form button:hover {
-      background-color: #002200;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      color: #104904;
+      margin-top: 1rem;
     }
 
     /*************************************************
-     * 4) Footer
+     * 4) Cards Grid & Cards
+     *************************************************/
+    .wishlist-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+    .wishlist-card {
+      background-color: #104904;
+      color: #ebf3f7;
+      border-radius: 20px;
+      max-width: 280px;
+      text-align: center;
+      padding: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+    .wishlist-card:hover {
+      transform: translateY(-4px);
+    }
+    .wishlist-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+    .wishlist-product-name {
+      font-size: 1.25rem;
+      margin: 0.5rem 0;
+      font-weight: bold;
+    }
+    .wishlist-product-price {
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+    .wishlist-btns {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .btn-remove,
+    .btn-move-to-cart {
+      padding: 10px 20px;
+      background-color: white;
+      color: #104904;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .btn-remove:hover,
+    .btn-move-to-cart:hover {
+      background-color: #ebf3f7;
+      color: #104904;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+    .wishlist-empty {
+      text-align: center;
+      font-style: italic;
+      color: #777;
+      margin-top: 2rem;
+    }
+
+    /*************************************************
+     * 5) Footer
      *************************************************/
     footer {
       background-color: #104904;
@@ -222,26 +239,35 @@
       margin-top: auto;
       transition: background-color 0.3s, color 0.3s;
     }
+    /* Dark mode override for footer */
     body.dark footer {
       background-color: #000;
       color: #eee;
     }
+
+    @media (max-width: 768px) {
+      .wishlist-card {
+        max-width: 90%;
+      }
+    }
   </style>
 </head>
-
 <body>
+  <!-- Navigation Bar -->
   <header id="navigation">
+    <!-- Logo -->
     <a href="{{ route('home') }}">
       <img src="{{ asset('favicon_io/android-chrome-512x512.png') }}" alt="Logo">
     </a>
+    <!-- Title -->
     <div class="luxury-text">
-      <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
+      <h1 style="font-weight: normal; margin: 0;">My Wishlist</h1>
     </div>
     <div class="right-section">
       @guest
       <div class="nav-buttons">
-        <button id="signup" onclick="window.location.href='{{ route('register') }}'">Sign Up</button>
-        <button id="login" onclick="window.location.href='{{ route('login') }}'">Log In</button>
+        <button onclick="window.location.href='{{ route('register') }}'">Sign Up</button>
+        <button onclick="window.location.href='{{ route('login') }}'">Log In</button>
       </div>
       @endguest
       <div class="dropdown" id="dropdownParent">
@@ -254,7 +280,7 @@
           <a href="{{ route('home') }}">Home</a>
           <a href="{{ route('products') }}">Products</a>
           <a href="{{ route('contact') }}">Contact</a>
-          <a href="{{ route('aboutUs') }}">About us</a>
+          <a href="{{ route('aboutUs') }}">About Us</a>
           <a href="{{ route('wishlist') }}">Wishlist</a>
           @auth
             <a href="{{ route('basket') }}">Basket</a>
@@ -268,46 +294,15 @@
     </div>
   </header>
 
-  <div class="container">
-    <h1>Contact Us</h1>
-    <div class="contact-info">
-      <h2>Our Details</h2>
-      <p><strong>Email:</strong> <a href="mailto:raphaelwilsonfootwear@gmail.com">raphaelwilsonfootwear@gmail.com</a></p>
-      <p><strong>Phone:</strong> <a href="tel:+44745572003">+44745572003</a></p>
-      <p><strong>Address:</strong> The Priory Queensway St, B4 6FP</p>
+  <!-- Wishlist Main Content -->
+  <div class="wishlist-container">
+    <h1 class="wishlist-header">My Wishlist</h1>
+    <div class="wishlist-items" id="wishlistItems">
+      <!-- Wishlist items will be dynamically inserted here by JavaScript -->
     </div>
-    <div class="social-media">
-      <h2>Follow Us</h2>
-      <a href="https://www.instagram.com/raphaelwilsonfootwear" target="_blank">Instagram</a>
-    </div>
-    <div class="contact-form">
-      <h2>Get in Touch</h2>
-      <form action="{{ route('contact.submit') }}" method="POST">
-        @csrf
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" placeholder="Your Name" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Your Email" required>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </div>
-  <div>
-    <section id="form-error">
-      @if ($errors->any())
-      <div>
-        <ul>
-          @foreach ($errors->all() as $error)
-          <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-      @endif
-    </section>
   </div>
 
+  <!-- Footer -->
   <footer>
     <p>&copy; 2025 Shoe Website. All rights reserved.</p>
   </footer>
@@ -331,6 +326,49 @@
     document.getElementById('menuToggleBtn').addEventListener('click', function() {
       document.getElementById('dropdownParent').classList.toggle('open');
     });
+
+    // Wishlist JavaScript
+    let wishlistData = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const wishlistContainer = document.getElementById('wishlistItems');
+
+    function renderWishlist() {
+      wishlistContainer.innerHTML = '';
+      if (wishlistData.length === 0) {
+        wishlistContainer.innerHTML = '<p class="wishlist-empty">Your wishlist is currently empty.</p>';
+        return;
+      }
+      wishlistData.forEach(item => {
+        const itemCard = document.createElement('div');
+        itemCard.classList.add('wishlist-card');
+        itemCard.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <h3 class="wishlist-product-name">${item.name}</h3>
+          <p class="wishlist-product-price">£${Number(item.price).toFixed(2)}</p>
+          <div class="wishlist-btns">
+            <button class="btn-remove">Remove</button>
+            <button class="btn-move-to-cart">Move to Cart</button>
+          </div>
+        `;
+        const removeBtn = itemCard.querySelector('.btn-remove');
+        removeBtn.addEventListener('click', () => {
+          removeFromWishlist(item.id);
+        });
+        const moveToCartBtn = itemCard.querySelector('.btn-move-to-cart');
+        moveToCartBtn.addEventListener('click', () => {
+          alert('Item moved to cart (this is a demo).');
+          removeFromWishlist(item.id);
+        });
+        wishlistContainer.appendChild(itemCard);
+      });
+    }
+
+    function removeFromWishlist(id) {
+      wishlistData = wishlistData.filter(product => product.id !== id);
+      localStorage.setItem('wishlist', JSON.stringify(wishlistData));
+      renderWishlist();
+    }
+
+    renderWishlist();
   </script>
 </body>
 </html>

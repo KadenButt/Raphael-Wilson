@@ -1,39 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us</title>
-  <link rel="icon" type="image/png" href="favicon_io/android-chrome-512x512.png">
+  <title>@yield('title', 'My Website')</title>
+  <link rel="icon" type="image/png" href="{{ asset('favicon_io/android-chrome-512x512.png') }}">
+
   <style>
-    /* Base / Global Styles */
+    /*************************************************
+     * 1) Base / Global Styles
+     *************************************************/
     html, body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background-color: #ebf3f7;
-      color: #104904;
-      text-align: center;
+      background-color: #ebf3f7; /* Light mode background */
+      color: #104904;          /* Light mode text color */
       transition: background-color 0.3s, color 0.3s;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
+    /* Dark mode styles when .dark is applied on body */
     body.dark {
       background-color: #111;
       color: #eee;
     }
 
-    /* Navigation Bar */
+    /*************************************************
+     * 2) Navigation Bar 
+     *************************************************/
     #navigation {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background-color: #104904;
+      background-color: #104904; /* light mode nav background */
       padding: 5px 20px;
       box-sizing: border-box;
       overflow: visible;
     }
+    /* In dark mode, you might want a slightly different nav background */
     body.dark #navigation {
       background-color: #222;
     }
@@ -45,17 +48,17 @@
     .luxury-text {
       flex-grow: 1;
       text-align: center;
-      font-family: Arial, sans-serif;
-      white-space: nowrap;
-      overflow: hidden;
-      color: #ebf3f7;
       font-weight: bold;
       margin: 0;
+      color: #ebf3f7;
+      white-space: nowrap;
+      overflow: hidden;
     }
     .right-section {
       display: flex;
       align-items: center;
       gap: 15px;
+      flex-shrink: 0;
     }
     .nav-buttons {
       display: flex;
@@ -70,7 +73,7 @@
       font-weight: bold;
       font-size: 15px;
       color: #104904;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.3s, color 0.3s;
     }
     .nav-buttons button:hover {
       background-color: #ebf3f7;
@@ -97,6 +100,7 @@
       height: 6px;
       border-radius: 2px;
     }
+    /* Dropdown menu is hidden by default */
     .dropdown-menu {
       display: none;
       position: absolute;
@@ -118,65 +122,43 @@
     }
     .dropdown-menu a:hover {
       background-color: #ebf3f7;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.3s;
     }
-    .dropdown:hover .dropdown-menu {
-      display: block;
-    }
-    /* Use click-to-toggle rather than hover */
+    /* When the dropdown has the "open" class, show the menu */
     .dropdown.open .dropdown-menu {
       display: block;
     }
-    /* Dark Mode Toggle Button Style */
-    #themeToggleBtn {
-      margin-left: 10px;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
 
-    /* About Us Page Content */
-    .about-text {
+    /*************************************************
+     * 3) Content & Footer
+     *************************************************/
+    .content {
+      padding: 2rem;
+    }
+    footer {
+      background-color: #104904;
+      color: #ebf3f7;
       text-align: center;
-      font-size: 30px;
-      margin: 20px 0;
-    }
-    main {
-      flex: 1; /* Take remaining vertical space */
-    }
-    #explanaition p {
-      padding: 0 20px;
-      font-size: 18px;
-      line-height: 1.5;
-    }
-    #benefits {
-      margin: 40px 0;
-    }
-    #benefits h2 {
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-    .benefit p {
-      font-size: 18px;
-      margin: 10px 0;
+      padding: 1rem;
+      margin-top: 2rem;
     }
   </style>
 </head>
-
 <body>
   <header id="navigation">
+    <!-- Logo -->
     <a href="{{ route('home') }}">
       <img src="{{ asset('favicon_io/android-chrome-512x512.png') }}" alt="Logo">
     </a>
+    <!-- Title -->
     <div class="luxury-text">
-      <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
+      <h1 style="font-weight: normal; margin: 0;">@yield('header-title', 'My Website')</h1>
     </div>
     <div class="right-section">
       @guest
         <div class="nav-buttons">
-          <button id="signup" onclick="window.location.href='{{ route('register') }}'">Sign Up</button>
-          <button id="login" onclick="window.location.href='{{ route('login') }}'">Log In</button>
+          <button onclick="window.location.href='{{ route('register') }}'">Sign Up</button>
+          <button onclick="window.location.href='{{ route('login') }}'">Log In</button>
         </div>
       @endguest
       <div class="dropdown" id="dropdownParent">
@@ -189,7 +171,7 @@
           <a href="{{ route('home') }}">Home</a>
           <a href="{{ route('products') }}">Products</a>
           <a href="{{ route('contact') }}">Contact</a>
-          <a href="{{ route('aboutUs') }}">About us</a>
+          <a href="{{ route('aboutUs') }}">About Us</a>
           <a href="{{ route('wishlist') }}">Wishlist</a>
           @auth
             <a href="{{ route('basket') }}">Basket</a>
@@ -199,48 +181,32 @@
         </div>
       </div>
       <!-- Dark Mode Toggle Button -->
-      <button id="themeToggleBtn">Toggle Dark Mode</button>
+      <button id="themeToggleBtn" style="margin-left: 10px; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
+        Toggle Dark Mode
+      </button>
     </div>
   </header>
 
-  <div class="about-text">
-    <h1>About Us</h1>
+  <!-- Page Content -->
+  <div class="content">
+    @yield('content')
   </div>
-
-  <main>
-    <section id="explanaition">
-      <p>
-        Raphael Wilson is a branded luxury footwear business. We sell to successful and wealthy individuals with an eye for designer footwear, focusing on smart shoes, boots, heels, trainers, and more from prominent luxury brands.
-      </p>
-    </section>
-
-    <section id="benefits">
-      <h2>Why Shop With Us?</h2>
-      <div class="benefit">
-        <p>Feel confident within yourself</p>
-      </div>
-      <div class="benefit">
-        <p>Get a personalised shopping experience</p>
-      </div>
-      <div class="benefit">
-        <p>Shop for all your favourite brands</p>
-      </div>
-    </section>
-  </main>
 
   <footer>
     <p>&copy; 2025 Shoe Website. All rights reserved.</p>
   </footer>
 
   <script>
-    // Dark Mode Toggle with Persistence
+    // Dark Mode Toggle and Persistence
     const themeToggleBtn = document.getElementById('themeToggleBtn');
+    // On page load, check localStorage for theme preference
     if (localStorage.getItem('theme') === 'dark') {
       document.body.classList.add('dark');
     }
     themeToggleBtn.addEventListener('click', function() {
       document.body.classList.toggle('dark');
-      if (document.body.classList.contains('dark')) {
+      // Save the preference
+      if(document.body.classList.contains('dark')){
         localStorage.setItem('theme', 'dark');
       } else {
         localStorage.setItem('theme', 'light');
@@ -249,7 +215,8 @@
 
     // Dropdown toggle for hamburger menu
     document.getElementById('menuToggleBtn').addEventListener('click', function() {
-      document.getElementById('dropdownParent').classList.toggle('open');
+      const dropdown = document.getElementById('dropdownParent');
+      dropdown.classList.toggle('open');
     });
   </script>
 </body>

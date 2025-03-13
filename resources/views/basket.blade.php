@@ -269,6 +269,7 @@
                     <a href="{{route('basket')}}">Basket</a>
                     <a href="{{route('order')}}">Order History</a>
                     <a href="{{route('logout')}}">Logout</a>
+                    <a href=>Wishlist</a>
                 </div>
             </div>
         </div>

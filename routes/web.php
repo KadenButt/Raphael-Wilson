@@ -65,6 +65,14 @@ Route::post('/order', [App\Http\Controllers\OrderController::class, 'createOrder
 
 Route::post('/order/delete', [App\Http\Controllers\OrderController::class, 'deleteOrder'])->middleware('auth')->name('order.delete');
 
+//wishlist
+
+
+Route::get('/wishlist', function () {
+    return view('wishlist'); // your Blade file name, e.g. wishlist.blade.php
+})->name('wishlist');
+
+
 
 ////////////////temp
 
@@ -72,3 +80,5 @@ Route::post('/order/delete', [App\Http\Controllers\OrderController::class, 'dele
 
 Route::get('/populate', [App\Http\Controllers\ProductController::class, 'populateProducts']);
 Route::get('/addbaskett', [App\Http\Controllers\BasketController::class, 'addBasketTemp'])->middleware('auth');
+
+
