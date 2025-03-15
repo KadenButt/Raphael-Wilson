@@ -9,10 +9,11 @@
     <title>Log in</title>
 </head>
 
+
 <header id="navigation">
 
-    <a href="home.blade.php">
-        <img src="Raphael-wilson-logo.png" alt="Logo">
+    <a href="{{route('home')}}">
+        <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
     </a>
 
     <div class="luxury-text">
@@ -20,10 +21,8 @@
     </div>
 
     <div class="right-section">
-
-
-
         <div class="dropdown">
+
             <button class="menu-button">
                 <div class="menu-icon"></div>
                 <div class="menu-icon"></div>
@@ -34,7 +33,6 @@
                 <a href="{{route('products')}}">Products</a>
                 <a href="{{route('contact')}}">Contact</a>
                 <a href="{{route('aboutUs')}}">About us</a>
-                <a href="{{route('basket')}}">Basket</a>
             </div>
         </div>
     </div>
@@ -48,6 +46,7 @@
         <div id="login-header">
             <h2>Log In</h2>
         </div>
+
         <form id="login-form" method="POST" action="{{ route('customer.login') }}">
             @csrf
             <h3>Email</h3>
@@ -60,10 +59,19 @@
 
             <input type="hidden" name="submitted" value="true" />
 
+<<<<<<< HEAD
+            <p>Not a user? <a href="{{ route('register') }}">Register here</a></p> 
+            <a href="{{ route('forgotpw') }}">Forgot Password</a></p>
+
+            
+=======
             <p>Not a user? <a href="{{ route('register') }}">Register here</a></p>
 
+>>>>>>> admin-login
         </form>
-        <img src="Raphael-Wilson.png" alt="side-logo">
+    
+
+        <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="side-logo">
     </section>
 </body>
 
@@ -174,7 +182,7 @@
         display: none;
         position: absolute;
         right: 0;
-        top: 120%;
+        top: 100%;
         background-color: white;
         box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
         border-radius: 5px;
@@ -243,7 +251,7 @@
 
     #login-form p {
         color: white;
-        margin-left: 5%;
+        
         font-size: 15px
     }
 

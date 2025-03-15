@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id('order_item_id')->primary();
             $table->integer('order_item_quantity');
             $table->float('order_item_price');
-            $table->foreignId('size_item_id')->references('size_item_id')->on('size_item');
+            $table->foreignId('item_id')->references('item_id')->on('item');
             $table->foreignId('order_id')->references('order_id')->on('order');
         });
     }

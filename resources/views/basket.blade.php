@@ -170,7 +170,7 @@
             display: none;
             position: absolute;
             right: 0;
-            top: 120%;
+            top: 100%;
             background-color: white;
             box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
             border-radius: 5px;
@@ -254,8 +254,8 @@
         </div>
 
         <div class="right-section">
-
             <div class="dropdown">
+
                 <button class="menu-button">
                     <div class="menu-icon"></div>
                     <div class="menu-icon"></div>
@@ -267,6 +267,9 @@
                     <a href="{{route('contact')}}">Contact</a>
                     <a href="{{route('aboutUs')}}">About us</a>
                     <a href="{{route('basket')}}">Basket</a>
+                    <a href="{{route('order')}}">Order History</a>
+                    <a href="{{route('customer.details')}}">Change Customer Details</a>
+                    <a href="{{route('logout')}}">Logout</a>
                 </div>
             </div>
         </div>
@@ -281,32 +284,32 @@
                 <td>
                 <div class="basket-contents">
                     <div class="black-shoe">
-                        <img src="data:image/jpeg;base64,{{ base64_encode($products[$i]->product_photo) }}" alt="black-shoe">
+                        <img src="data:image/jpeg;base64,{{ base64_encode($products[$i]->product_photo) }}" alt="shoe">
                     </div>
                     <h2>{{ $products[$i]->product_name }}</h2>
                     <div class="shoe-description">
                         <p>
                             {{ $products[$i]->product_description }}
                             <br>
-                            <b>Size: </b> {{ $sizes[$i]->size_number }}
+                            <b>Size: </b> {{ $sizes[$i] }}
                             <br>
                         <form id="change-quantity" method="POST" action="{{ route('basket.change_quantity')}}">
                             @csrf
                             <label for="quantity"><b>Quantity: </b></label>
                             <input type="number" id="quantity" name="quantity" min="1" value="{{$basket_items[$i]->quantity}}">
                             <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
-                            <button type="submit" > Change</button>
+                            <button type="submit"> Change</button>
                         </form>
                         <br>
                         In stock
                         </p>
-                        <h3>£{{ $products[$i]->product_price }}</h3>
+                        <h3>£{{ $products[$i]->product_price * $basket_items[$i]->quantity }}</h3>
                     </div>
                     <div class="delete-button">
                         <form id="delete-item" method="POST" action="{{ route('basket.delete') }}">
                             @csrf
-                            <button type="submit" > Delete</button>
-                            <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
+                            <button type="submit"> Delete</button>
+                            <input type="hidden" name="item_id" value="{{$basket_items[$i]->basket_item_id}}" />
                         </form>
                     </div>
                     </td>

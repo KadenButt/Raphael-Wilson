@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('basket_item', function(Blueprint $table){
+        Schema::create('basket', function(Blueprint $table){
             $table->id('basket_item_id')->primary();
             $table->integer('quantity');
-            $table->foreignId('size_item_id')->references('size_item_id')->on('size_item');
+            $table->foreignId('item_id')->references('item_id')->on('item');
             $table->foreignId('customer_id')->references('customer_id')->on('customer');
         });
     }
