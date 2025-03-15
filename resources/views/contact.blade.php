@@ -301,44 +301,48 @@
 </head>
 
 <body>
-<header id="navigation">
+    <header id="navigation">
 
-    <a href="{{route('home')}}">
-      <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
-    </a>
+        <a href="{{route('home')}}">
+            <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
+        </a>
 
-    <div class="luxury-text">
-      <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
-    </div>
-
-    <div class="right-section">
-      @guest
-      <div class="nav-buttons">
-        <button id="signup" onclick="window.location.href='{{route('register')}}'">Sign Up</button>
-        <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
-      </div>
-      @endguest
-      <div class="dropdown">
-
-        <button class="menu-button">
-          <div class="menu-icon"></div>
-          <div class="menu-icon"></div>
-          <div class="menu-icon"></div>
-        </button>
-        <div class="dropdown-menu">
-          <a href="{{route('home')}}">Home</a>
-          <a href="{{route('products')}}">Products</a>
-          <a href="{{route('contact')}}">Contact</a>
-          <a href="{{route('aboutUs')}}">About us</a>
-          @auth
-          <a href="{{route('basket')}}">Basket</a>
-          <a href='{{route('order')}}'>Order History</a>
-          <a href="{{route('logout')}}">Logout</a>
-          @endauth
+        <div class="luxury-text">
+            <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
         </div>
-      </div>
-    </div>
-  </header>
+
+        <div class="right-section">
+            @guest
+            <div class="nav-buttons">
+                <button id="signup" onclick="window.location.href='{{route('register')}}'">Sign Up</button>
+                <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
+            </div>
+            @endguest
+            <div class="dropdown">
+
+                <button class="menu-button">
+                    <div class="menu-icon"></div>
+                    <div class="menu-icon"></div>
+                    <div class="menu-icon"></div>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="{{route('home')}}">Home</a>
+                    <a href="{{route('products')}}">Products</a>
+                    <a href="{{route('contact')}}">Contact</a>
+                    <a href="{{route('aboutUs')}}">About us</a>
+                    @auth
+                    <a href="{{route('basket')}}">Basket</a>
+                    <a href="{{route('order')}}">Order History</a>
+                    <a href="{{route('customer.details')}}">Change Customer Details</a>
+                    @if(session('admin'))
+                    <a href="{{ route('admin.home') }}">Admin Home</a>
+                    @endif
+                    <a href="{{route('logout')}}">Logout</a>
+                    @endauth
+                </div>
+            </div>
+        </div>
+    </header>
 
 
     <div class="container">
