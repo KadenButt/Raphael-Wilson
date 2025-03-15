@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\ValidateUserBasket;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,12 +29,19 @@ Route::get('/aboutus', function(){
     return view('about');
 })->name('aboutUs');
 
-//Register
+////Register
+
 Route::get('/register', function(){
     return view('register');
 })->name('register');
 
+//user
 Route::post('/register/user', [App\Http\Controllers\CustomerController::class, 'registerCustomer'])->name('customer.register');
+
+//admin
+
+Route::get('/admin/test', function(){dd('todo');})->middleware(AdminMiddleware::class);
+
 
 //Login
 Route::get('/login', function(){
@@ -46,6 +55,7 @@ Route::get("/forgotpassword", function(){dd('todo');})->name('forgotpw');
 
 //logout
 Route::get('/logout', function(){
+
     Auth::logout();
     return redirect(route('home'));
 })->name('logout');
@@ -58,7 +68,7 @@ Route::post('/basket/delete', [App\Http\Controllers\BasketController::class, 'de
 
 Route::post('/basket/change', [App\Http\Controllers\BasketController::class, 'updateQuantity'])->middleware('auth')->name('basket.change_quantity');
 
-Route::post('/basket/add', [App\Http\Controllers\BasketController::class, 'addBasket'])->middleware('auth')->name('basket.add');
+Route::post('/basket/add', [App\Http\Controllers\BasketController::class, 'addBasket'])->middleware(ValidateUserBasket::class)->name('basket.add');
 
 //Order
 
@@ -82,3 +92,9 @@ Route::post('/user/details/change', [App\Http\Controllers\CustomerController::cl
 
 Route::get('/populate', [App\Http\Controllers\ProductController::class, 'populateProducts']);
 Route::get('/addbaskett', [App\Http\Controllers\BasketController::class, 'addBasketTemp'])->middleware('auth');
+
+Route::get('/check', function(){
+    dd(Auth::guard('admin')->check());
+
+})->middleware('auth:admin');;
+

@@ -11,6 +11,8 @@
 
 <header id="navigation">
 
+
+
 <a href="{{route('home')}}">
     <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
 </a>
@@ -21,7 +23,6 @@
 
 <div class="right-section">
     <div class="dropdown">
-
         <button class="menu-button">
             <div class="menu-icon"></div>
             <div class="menu-icon"></div>
@@ -44,6 +45,8 @@
         <div class="register-header">
             <h2>Register</h2>
         </div>
+
+        <div class="register-container">
         <form id="register-form" method="POST" action="{{ route('customer.register') }}">
             @csrf
             <input type="text" name="customer_fname" placeholder="First Name">
@@ -52,6 +55,7 @@
             <br><br>
             <input type="email" name="customer_email" placeholder="Email" />
             <br><br>
+
             <input type="text" name="address_number" placeholder="Address Number">
             <br><br>
             <input type="text" name="address_street" placeholder="Street Name">
@@ -60,6 +64,7 @@
             <br><br>
             <input type="password" name="account_number" placeholder="Payment Number" />
             <br><br>
+            
             <input type="password" name="customer_password" placeholder="Password" />
             <br><br>
             <input type="password" name="password_confirmation" placeholder="Confirm Password" />
@@ -67,14 +72,15 @@
             <input type="text" name="security_question" placeholder="What is your mother's maiden name?">
             <br><br>
             <input type="submit" name="submitted" value="Register" />
-            <br>
+            <br><br>
+
             <input type="hidden" name="submitted" value="true" />
-
             <p>Already a user? <a href="{{ route('login') }}">Log in here</a></p>
-
         </form>
-        <img src="Raphael-Wilson.png" alt="side-logo">
-    </section>
+    </div>
+        <div class="side-logo-admin">
+            <img src="{{asset('favicon_io/android-chrome-192x192.png')}}" alt="side-logo-admin">
+        </div>
 
 
 
@@ -221,19 +227,59 @@
             display: block;
         }
         
-        #register-form {
-            padding-top:10px;
+        .register-container {
+            display: flex;
+            align-items: stretch;
+           
+        }
+
+        .side-logo-admin {
+            display: flex;
+            align-items: bottom;
+            justify-content:center;
+            flex:1;
+        }
+
+
+        .side-logo-admin img {
+            height: 100%;
+            width: auto; 
+            max-width:100%;
+            object-fit:contain;
+        }
+
+        #register-form, #admin-register-form {
+            padding-top:25px;
             padding: right -30px;
             margin-left: 5%;
             background-color: #104904;
             border-radius:20px;
             width:40%;
+            min-height: 550px;
+        }
+
+        #register-form p a, #admin-register-form p a {
+            color:#ebf3f7;
+            font-weight: bold;
         }
         
-        #register p {
+        #register p,#admin-register-form p{
             color:white;
             margin-left:5%;
             padding:10px;
+        }
+        
+        .admin-register{
+            color:white;
+            
+        }
+
+        input[type="checkbox"] + label {
+            color: white;
+            
+        }
+        input[type="checkbox"] {
+            margin-left:5%;
         }
 
         #register h2 {
@@ -253,7 +299,29 @@
         box-sizing:border-box;
     }
 
+    input[name="admin_fname"], input[name="admin_sname"],
+    input[name="admin_email"], input[name="admin_password"],
+    input[name="admin_password_confirmation"] {
+        border-radius: 20px;
+        background-color: white;
+        border-radius: 20px;
+        padding: 15px;
+        width: 70%;
+        box-sizing: border-box;
+}
+
     input[type="submit"] {
+        margin-left:5%;
+        cursor:pointer;
+        background-color: white;
+        border-radius:20px;
+        box-sizing:border-box;
+        padding:10px;
+        font-weight:bold;
+        font-size:15px;
+    }
+
+    input[name="admin_register"] {
         margin-left:5%;
         cursor:pointer;
         background-color: white;
@@ -273,8 +341,13 @@
     img[alt="side-logo"] {
             width:540px;
             margin-left:55%;
-            margin-top:-44%;
             margin-bottom:6%;
         }
 
+    img[alt="side-logo-admin"] {
+        width:420px;
+        margin-left:55%;
+        margin-top:-44%;
+    }
+    
 </style>

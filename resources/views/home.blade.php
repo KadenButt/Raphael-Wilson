@@ -86,6 +86,19 @@
 
 <style>
 
+
+.dropdown-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
+        border-radius: 5px;
+        overflow: hidden;
+        z-index: 1000;
+    }
+
 .luxury-text {
         flex-grow: 1;
         text-align: center;
@@ -99,17 +112,7 @@
         margin: 0;
     }
 
-.dropdown-menu {
-        display: none;
-        position: absolute;
-        right: 0;
-        top: 100%;
-        background-color: white;
-        box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
-        border-radius: 5px;
-        overflow: hidden;
-        z-index: 1000;
-    }
+
 
 
 .search-container {

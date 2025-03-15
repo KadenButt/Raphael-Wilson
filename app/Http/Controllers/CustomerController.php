@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\MessageBag;
+use App\Http\Controllers\BasketController;
 use App\Models\Customer;
+use App\Models\Admin;
 use App\Models\Address;
 use App\Models\Payment;
 
 class CustomerController extends Controller
 {
+
+
     public function registerCustomer(Request $request)
     {
         //validate data
@@ -24,7 +28,8 @@ class CustomerController extends Controller
             'address_postcode' => 'required|max:6',
             'account_number' => 'required|digits:11|integer',
             'customer_password' => 'required|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,255}$/',
-            'password_confirmation' => 'required'
+            'password_confirmation' => 'required',
+            'security_question' => 'required'
         ], [
             'fname.required' => 'First name is required and cannot be empty.',
             'fname.max' => 'First name cannot exceed 255 characters.',
@@ -52,6 +57,8 @@ class CustomerController extends Controller
             'payment_number.integer' => 'Payment number must be a number.',
             'payment_number.digits' => 'A valid payment number must be 11 characters.',
 
+            'security_question' => 'Pasword is required. ',
+
             'password.required' => 'Password is required.',
             'password.regex' => 'The password must be longer then 8 characters contain at least one uppercase letter, one number, and one special character.',
 
@@ -59,9 +66,10 @@ class CustomerController extends Controller
 
         //check for pre-existing email in the database
         $customer = Customer::where('customer_email', $request->input('customer_email'))->first();
+        $admin = Admin::where('admin_email', $request->input('admin_email'))->first();
 
 
-        if($customer != null)
+        if($admin != null || $customer != null)
         {
             $error = new MessageBag;
             $error->add('email', 'email is already in use');
@@ -81,7 +89,7 @@ class CustomerController extends Controller
             'account_number' => bcrypt($vd['account_number']),
         ]);
 
-        //adds customer to data base
+        //adds  to data base
         $customer = Customer::create([
             'customer_email' => $vd['customer_email'],
             'customer_password' => bcrypt($vd['customer_password']),
@@ -89,7 +97,8 @@ class CustomerController extends Controller
             'customer_sname' => $vd['customer_sname'],
             'address_id' => $address->address_id,
             'payment_id' => $payment->payment_id,
-
+            'customer_question' => $vd['security_question'],
+            'admin' => false,
         ]);
 
         Auth::login($customer);
@@ -104,14 +113,26 @@ class CustomerController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
-        //Check it see if cutomers email is in the database
+
+        //Checks to see if email is in the database
         $customer = Customer::where('customer_email', $credentials['email'])->first();
+
+ 
         //checks password
         if ($customer && Hash::check($credentials['password'], $customer->customer_password)) {
             //logins in the users and add their detials
             Auth::login($customer);
+
             $request->session()->regenerate();
-            return redirect(route('home'));
+            $previousPostUrl = session('prev_route');
+
+            //return to basket if redirected from there
+            if ($previousPostUrl == 'basket.add') {
+                $previousRequestData = session('previous_post_data', []);
+                $previousRequest = new Request($previousRequestData);
+                BasketController::addBasket($previousRequest);
+                return redirect(route('product', [$previousRequest->input('product_id')]));
+            }
         }
 
         return redirect()->back();
