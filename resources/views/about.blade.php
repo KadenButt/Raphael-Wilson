@@ -145,7 +145,7 @@
 </head>
 
 <body>
-<header id="navigation">
+  <header id="navigation">
 
     <a href="{{route('home')}}">
       <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
@@ -178,6 +178,11 @@
           <a href="{{route('basket')}}">Basket</a>
           <a href="{{route('order')}}">Order History</a>
           <a href="{{route('customer.details')}}">Change Customer Details</a>
+          @auth
+          @if(session('admin'))
+          <a href="{{ route('admin.home') }}">Admin Home</a>
+          @endif
+          @endauth
           <a href="{{route('logout')}}">Logout</a>
 
           @endauth

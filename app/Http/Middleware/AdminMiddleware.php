@@ -22,6 +22,7 @@ class AdminMiddleware
         if (Auth::check()) {
             $customer = Customer::where('customer_id', Auth::user()->customer_id)->first();
             if ($customer->admin) {
+                session(['admin' => true]);
                 return $next($request);
             }
         }
