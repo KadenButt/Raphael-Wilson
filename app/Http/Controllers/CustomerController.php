@@ -86,7 +86,7 @@ class CustomerController extends Controller
 
         // encrypt sensitive data
         $payment = Payment::create([
-            'account_number' => bcrypt($vd['account_number']),
+            'account_number' => $vd['account_number'],
         ]);
 
         //adds  to data base
@@ -133,6 +133,7 @@ class CustomerController extends Controller
                 BasketController::addBasket($previousRequest);
                 return redirect(route('product', [$previousRequest->input('product_id')]));
             }
+            return redirect(route('home'));
         }
 
         return redirect()->back();
@@ -190,18 +191,31 @@ class CustomerController extends Controller
 
 
         ]);
-        dd("hworking");
-        $customer = Customer::where('customer_id', Auth::id())->first();
-        $address = Address::where('address_id', $customer->address_id)->first();
-        $payment = Payment::where('payment_id', $customer->payment_id)->first();
-        
-        $databaseCompare = [$customer->customer_fname, $customer->customer_sname, $customer->customer_email, $address->address_number, $address->address_street, $address->address_postcode, $payment->account_number];
-        dd($databaseCompare);
-        //check for a change 
-        if($request->only(['customer_fname', 'customer_sname', 'customer_email',]))
-        {
-            return true;
-        }
+
+    $customer = Customer::where('customer_id', Auth::id())->first();
+    $address = Address::where('address_id', $customer->address_id)->first();
+    $payment = Payment::where('payment_id', $customer->payment_id)->first();
+
+    $address->update([
+        'address_number' => $vd['address_number'],
+        'address_street' => $vd['address_street'],
+        'address_postcode' => $vd['address_postcode'],
+    ]);
+
+    $payment->update([
+        'account_number' => $vd['account_number'],
+    ]);
+
+    $customer->update([
+        'customer_email' => $vd['customer_email'],
+        'customer_fname' => $vd['customer_fname'],
+        'customer_sname' => $vd['customer_sname'],
+        'address_id' => $address->address_id,
+        'payment_id' => $payment->payment_id,
+    ]);
+
+    return redirect()->back();
+
 
     }
 }

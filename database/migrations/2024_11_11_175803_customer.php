@@ -48,6 +48,7 @@ return new class extends Migration
             'customer_sname' => 'root',
             'address_id' => $address->address_id,
             'payment_id' => $payment->payment_id,
+            'customer_question' => 'toor',
             'admin' => true,    
         ]);
     }
