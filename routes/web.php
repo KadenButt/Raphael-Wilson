@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ValidateUserBasket;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +39,8 @@ Route::get('/register', function(){
 Route::post('/register/user', [App\Http\Controllers\CustomerController::class, 'registerCustomer'])->name('customer.register');
 
 //admin
-Route::post('/admin/user', [App\Http\Controllers\AdminController::class, 'adminCustomer'])->name('admin.register');
 
+Route::get('/admin/test', function(){dd('todo');})->middleware(AdminMiddleware::class);
 
 
 //Login
@@ -51,6 +52,7 @@ Route::post('/login/user', [App\Http\Controllers\CustomerController::class, 'log
 
 //logout
 Route::get('/logout', function(){
+
     Auth::logout();
     return redirect(route('home'));
 })->name('logout');
@@ -80,3 +82,9 @@ Route::post('/order/delete', [App\Http\Controllers\OrderController::class, 'dele
 
 Route::get('/populate', [App\Http\Controllers\ProductController::class, 'populateProducts']);
 Route::get('/addbaskett', [App\Http\Controllers\BasketController::class, 'addBasketTemp'])->middleware('auth');
+
+Route::get('/check', function(){
+    dd(Auth::guard('admin')->check());
+
+})->middleware('auth:admin');;
+
