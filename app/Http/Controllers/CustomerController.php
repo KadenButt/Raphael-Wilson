@@ -66,7 +66,7 @@ class CustomerController extends Controller
         $admin = Admin::where('admin_email', $request->input('admin_email'))->first();
 
 
-        if($admin != null && $customer != null)
+        if($admin != null || $customer != null)
         {
             $error = new MessageBag;
             $error->add('email', 'email is already in use');
@@ -86,7 +86,7 @@ class CustomerController extends Controller
             'account_number' => bcrypt($vd['account_number']),
         ]);
 
-        //adds customer to data base
+        //adds  to data base
         $customer = Customer::create([
             'customer_email' => $vd['customer_email'],
             'customer_password' => bcrypt($vd['customer_password']),
@@ -94,7 +94,7 @@ class CustomerController extends Controller
             'customer_sname' => $vd['customer_sname'],
             'address_id' => $address->address_id,
             'payment_id' => $payment->payment_id,
-
+            'admin' => false,
         ]);
 
         Auth::login($customer);
@@ -108,8 +108,11 @@ class CustomerController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
-        //Check it see if cutomers email is in the database
+
+        //Checks to see if email is in the database
         $customer = Customer::where('customer_email', $credentials['email'])->first();
+
+ 
         //checks password
         if ($customer && Hash::check($credentials['password'], $customer->customer_password)) {
             //logins in the users and add their detials
@@ -118,7 +121,7 @@ class CustomerController extends Controller
             $request->session()->regenerate();
             $previousPostUrl = session('prev_route');
 
-            //dd($previousPostUrl);
+            //return to basket if redirected from there
             if ($previousPostUrl == 'basket.add') {
                 $previousRequestData = session('previous_post_data', []);
                 $previousRequest = new Request($previousRequestData);

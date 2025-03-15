@@ -13,7 +13,7 @@ class Customer extends Authenticatable
 
     public $timestamps = false;
 
-    protected $fillable = ['customer_email', 'customer_password', 'customer_fname', 'customer_sname', 'address_id', 'payment_id'];
+    protected $fillable = ['customer_email', 'customer_password', 'customer_fname', 'customer_sname', 'address_id', 'payment_id', 'admin'];
 
     protected $hidden = ['customer_password', 'remember_token'];
 

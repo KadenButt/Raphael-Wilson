@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ValidateUserBasket;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +39,8 @@ Route::get('/register', function(){
 Route::post('/register/user', [App\Http\Controllers\CustomerController::class, 'registerCustomer'])->name('customer.register');
 
 //admin
-Route::post('/admin/user', [App\Http\Controllers\AdminController::class, 'registerAdmin'])->name('admin.register');
 
+Route::get('/admin/test', function(){dd('todo');})->middleware(AdminMiddleware::class);
 
 
 //Login
@@ -51,6 +52,7 @@ Route::post('/login/user', [App\Http\Controllers\CustomerController::class, 'log
 
 //logout
 Route::get('/logout', function(){
+
     Auth::logout();
     return redirect(route('home'));
 })->name('logout');

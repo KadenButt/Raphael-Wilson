@@ -9,6 +9,7 @@
     <title>Log in</title>
 </head>
 
+
 <header id="navigation">
 
     <a href="{{route('home')}}">
@@ -48,6 +49,7 @@
         <div id="login-header">
             <h2>Log In</h2>
         </div>
+
         <form id="login-form" method="POST" action="{{ route('customer.login') }}">
             @csrf
             <h3>Email</h3>
@@ -61,8 +63,10 @@
             <input type="hidden" name="submitted" value="true" />
 
             <p>Not a user? <a href="{{ route('register') }}">Register here</a></p>
-            
+
         </form>
+    
+
         <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="side-logo">
     </section>
 </body>

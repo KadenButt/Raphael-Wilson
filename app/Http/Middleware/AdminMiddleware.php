@@ -2,12 +2,14 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Customer;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class Admin
+
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,10 +18,13 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check() && Auth::user()->role == 'admin')
-        {
-            return $next($request);
+
+        if (Auth::check()) {
+            $customer = Customer::where('customer_id', Auth::user()->customer_id)->first();
+            if ($customer->admin) {
+                return $next($request);
+            }
         }
-        return redirect('home');
+        return redirect()->back();
     }
 }
