@@ -58,16 +58,10 @@
             <input type="submit" name="submitted" value="Log In" />
 
             <input type="hidden" name="submitted" value="true" />
-
-<<<<<<< HEAD
             <p>Not a user? <a href="{{ route('register') }}">Register here</a></p> 
             <a href="{{ route('forgotpw') }}">Forgot Password</a></p>
 
             
-=======
-            <p>Not a user? <a href="{{ route('register') }}">Register here</a></p>
-
->>>>>>> admin-login
         </form>
     
 

@@ -69,8 +69,7 @@ class CustomerController extends Controller
         $admin = Admin::where('admin_email', $request->input('admin_email'))->first();
 
 
-        if($admin != null || $customer != null)
-        {
+        if ($admin != null || $customer != null) {
             $error = new MessageBag;
             $error->add('email', 'email is already in use');
             return redirect()->back()->withErrors($error);
@@ -97,7 +96,7 @@ class CustomerController extends Controller
             'customer_sname' => $vd['customer_sname'],
             'address_id' => $address->address_id,
             'payment_id' => $payment->payment_id,
-            'customer_question' => $vd['security_question'],
+            'customer_question' => bcrypt($vd['security_question']),
             'admin' => false,
         ]);
 
@@ -117,7 +116,7 @@ class CustomerController extends Controller
         //Checks to see if email is in the database
         $customer = Customer::where('customer_email', $credentials['email'])->first();
 
- 
+
         //checks password
         if ($customer && Hash::check($credentials['password'], $customer->customer_password)) {
             //logins in the users and add their detials
@@ -135,7 +134,6 @@ class CustomerController extends Controller
             }
             return redirect(route('home'));
         }
-
         return redirect()->back();
     }
 
@@ -149,7 +147,6 @@ class CustomerController extends Controller
             'address' => $address,
             'payment' => $payment,
         ]);
-        
     }
 
     public function updateCustomer(Request $request)
@@ -192,30 +189,80 @@ class CustomerController extends Controller
 
         ]);
 
-    $customer = Customer::where('customer_id', Auth::id())->first();
-    $address = Address::where('address_id', $customer->address_id)->first();
-    $payment = Payment::where('payment_id', $customer->payment_id)->first();
+        $customer = Customer::where('customer_id', Auth::id())->first();
+        $address = Address::where('address_id', $customer->address_id)->first();
+        $payment = Payment::where('payment_id', $customer->payment_id)->first();
 
-    $address->update([
-        'address_number' => $vd['address_number'],
-        'address_street' => $vd['address_street'],
-        'address_postcode' => $vd['address_postcode'],
-    ]);
+        $address->update([
+            'address_number' => $vd['address_number'],
+            'address_street' => $vd['address_street'],
+            'address_postcode' => $vd['address_postcode'],
+        ]);
 
-    $payment->update([
-        'account_number' => $vd['account_number'],
-    ]);
+        $payment->update([
+            'account_number' => $vd['account_number'],
+        ]);
 
-    $customer->update([
-        'customer_email' => $vd['customer_email'],
-        'customer_fname' => $vd['customer_fname'],
-        'customer_sname' => $vd['customer_sname'],
-        'address_id' => $address->address_id,
-        'payment_id' => $payment->payment_id,
-    ]);
+        $customer->update([
+            'customer_email' => $vd['customer_email'],
+            'customer_fname' => $vd['customer_fname'],
+            'customer_sname' => $vd['customer_sname'],
+            'address_id' => $address->address_id,
+            'payment_id' => $payment->payment_id,
+        ]);
 
-    return redirect()->back();
+        return redirect()->back();
+    }
+
+    public function changePassword(Request $request)
+    {
+
+        $vd = $request->validate([
+            'customer_email' => 'required|email|max:255',
+            'security_answer' => 'required',
+            'customer_password' => 'required|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,255}$/',
+            'password_confirmation' => 'required',
+        ], [
+
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Please provide a valid email address.',
+            'email.max' => 'Email cannot exceed 255 characters.',
+
+            'security_answser' => 'The security answer is required. ',
+
+            'password.required' => 'Password is required.',
+            'password.regex' => 'The password must be longer then 8 characters contain at least one uppercase letter, one number, and one special character.',
+
+        ]);
+
+        //get customer from database making sure customer id matches to the correct email
+        $customer = Customer::where([
+            'customer_id' => Auth::user()->customer_id,
+            'customer_email' => $vd['customer_email'],
+        ])->first();
+
+        //checks if a customer isnt empty
+        if ($customer == null) {
+            $error = new MessageBag;
+            $error->add('email', 'incorrect value added');
+            return redirect()->back()->withErrors($error);
+        }
+
+        //check to see if passwords match
+        if($vd['customer_password'] != $vd['password_confirmation'])
+        {
+            $error = new MessageBag;
+            $error->add('passwords', 'Password do not match');
+            return redirect()->back()->withErrors($error);
+        }
 
 
+        if (Hash::check(request()->input('security_answer'), $customer->customer_question)) {
+            //dd($vd['customer_password']);
+            $customer->update([
+                'customer_password' => bcrypt($vd['customer_password'])
+            ]);
+            dd('$2y$12$WF0eyStdThItWCTbdOG.geeLW7Mv15JTMj/XRBIy5VPyaGXq3c7/2' == $customer->customer_password);
+        }
     }
 }

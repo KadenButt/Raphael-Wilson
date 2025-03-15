@@ -10,29 +10,35 @@
     </head>
 
     <header id="navigation">
-        <a href="home.blade.php">
-            <img src="Raphael-wilson-logo.png" alt="Logo">
-            </a>
-            
-            <div class="luxury-text">
-                <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
-            </div>
-                <div class="dropdown">
-                    <button class="menu-button">
-                        <div class="menu-icon"></div>
-                        <div class="menu-icon"></div>
-                        <div class="menu-icon"></div>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="'{{ route('home') }}'">Home</a>
-                        <a href="'{{ route('products') }}'">Products</a>
-                        <a href="'{{ route('contact') }}'">Contact</a>
-                        <a href="'{{ route('about') }}'">About us</a>
-                        <a href="'{{ route('basket') }}'">Basket</a>
-                    </div>
+
+        <a href="{{route('home')}}">
+            <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
+        </a>
+
+        <div class="luxury-text">
+            <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
+        </div>
+
+        <div class="right-section">
+            <div class="dropdown">
+
+                <button class="menu-button">
+                    <div class="menu-icon"></div>
+                    <div class="menu-icon"></div>
+                    <div class="menu-icon"></div>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="{{route('home')}}">Home</a>
+                    <a href="{{route('products')}}">Products</a>
+                    <a href="{{route('contact')}}">Contact</a>
+                    <a href="{{route('aboutUs')}}">About us</a>
+                    <a href="{{route('basket')}}">Basket</a>
+                    <a href="{{route('order')}}">Order History</a>
+                    <a href="{{route('customer.details')}}">Change Customer Details</a>
+                    <a href="{{route('logout')}}">Logout</a>
                 </div>
             </div>
-    
+        </div>
     </header>
 
     <body>
@@ -43,28 +49,27 @@
             <div id="forgotPword-header">
                 <h2>Forgot Password</h2>
             </div>
-            <form id="forgotPword-form"  method="POST" action="{}">
+            <form id="forgotPword-form"  method="POST" action="{{route('customer.changePassword')}}">
                 @csrf
                 <h3>Email</h3>
-                <input type="email" name="email" />
+                <input type="email" name="customer_email" />
                 <br>
                 <h3>Security Answer</h3>
                 <input type="text" name="security_answer" />
                 <br>
                 <h3>New Password</h3>
-                <input type="password" name="password"/>
+                <input type="password" name="customer_password"/>
                 <br>
                 <h3>Confirm new password</h3>
-                <input type="password" name="password_confirm" />
+                <input type="password" name="password_confirmation" />
                 <br><br>
-                <input type="submit" name="submitted" value="true"/>
-
+                <input type="submit" name="submitted" value="Change"/>
                 <input type = "hidden" name = "submitted" value = "true" />
 
                 <p>Not a user? <a href= "{{ route('register') }}">Register here</a></p>
                 <p>Want to Log in? <a href= "{{ route('login') }}">Log in here</a></p>
             </form>
-            <img src="Raphael-Wilson.png" alt="side-logo">
+            <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="side-logo">
             </section>
 
             <section id="form-error">

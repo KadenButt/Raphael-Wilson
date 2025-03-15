@@ -67,6 +67,8 @@
         </form>
         <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="side-logo">
 
+        <a href="{{route('customer.forgotpw')}}">Change Password</a>
+
         <section id="form-error">
         @if ($errors->any())
         <div>
