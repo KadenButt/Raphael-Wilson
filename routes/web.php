@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ValidateUserBasket;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -28,22 +29,38 @@ Route::get('/aboutus', function(){
     return view('about');
 })->name('aboutUs');
 
-//Register
+////Register
+
 Route::get('/register', function(){
     return view('register');
 })->name('register');
 
-Route::post('/register/user', [App\Http\Controllers\CustomerController::class, 'registerCustomer'])->name('customer.register');
+//register customer
+Route::post('/register/customer', [App\Http\Controllers\CustomerController::class, 'registerCustomer'])->name('customer.register');
+
+//admin
+
+Route::get('/admin/test', function(){dd('todo');})->middleware(AdminMiddleware::class);
+
 
 //Login
 Route::get('/login', function(){
     return view('login');
 })->name('login');
 
-Route::post('/login/user', [App\Http\Controllers\CustomerController::class, 'loginCustomer'])->name('customer.login');
+Route::post('/login/customer', [App\Http\Controllers\CustomerController::class, 'loginCustomer'])->name('customer.login');
+
+//forgot password
+Route::get("/customer/forgotpassword", function(){
+    return view('forgotPword');
+})->middleware('auth')->name('customer.forgotpw');
+
+//change password
+Route::post('/customer/changepassword', [App\Http\Controllers\CustomerController::class, 'changePassword'])->middleware('auth')->name('customer.changePassword');
 
 //logout
 Route::get('/logout', function(){
+
     Auth::logout();
     return redirect(route('home'));
 })->name('logout');
@@ -65,6 +82,7 @@ Route::get('/order', [App\Http\Controllers\OrderController::class, 'listOrder'])
 Route::post('/order', [App\Http\Controllers\OrderController::class, 'createOrder'])->middleware('auth')->name('order.create');
 
 Route::post('/order/delete', [App\Http\Controllers\OrderController::class, 'deleteOrder'])->middleware('auth')->name('order.delete');
+
 
 //admin
 Route::get('/admin/home', function()
@@ -88,9 +106,24 @@ Route::get('/admin/customers', function()
 })->name('customers');
 
 
+//display for to change user details
+Route::get('/user/details', [App\Http\Controllers\CustomerController::class, 'showDetails'])->middleware("auth")->name('customer.details');
+
+//udpates user details
+Route::post('/user/details/change', [App\Http\Controllers\CustomerController::class, 'updateCustomer'])->middleware("auth")->name('customer.update');
+
+>>>>>>> development
+
+
 ////////////////temp
 
 //populate
 
 Route::get('/populate', [App\Http\Controllers\ProductController::class, 'populateProducts']);
 Route::get('/addbaskett', [App\Http\Controllers\BasketController::class, 'addBasketTemp'])->middleware('auth');
+
+Route::get('/check', function(){
+    dd(Auth::guard('admin')->check());
+
+})->middleware('auth:admin');;
+

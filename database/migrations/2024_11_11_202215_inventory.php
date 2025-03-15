@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('inventory', function(Blueprint $table){
             $table->id('inventory_id')->primary();
             $table->date('inventory_changes_date');
-            $table->date('inventory_changes_number');
-            $table->foreignId('size_item_id')->references('size_item_id')->on('size_item');
+            $table->integer('inventory_changes_number');
+            $table->foreignId('item_id')->references('item_id')->on('item');
             $table->foreignId('admin_id')->references('admin_id')->on('admin');
         });
     }
