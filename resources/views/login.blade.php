@@ -59,7 +59,7 @@
 
             <input type="hidden" name="submitted" value="true" />
             <p>Not a user? <a href="{{ route('register') }}">Register here</a></p> 
-            <a href="{{ route('forgotpw') }}">Forgot Password</a></p>
+            <a href="{{ route('customer.forgotpw') }}">Forgot Password</a></p>
 
             
         </form>

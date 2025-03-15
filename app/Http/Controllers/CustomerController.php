@@ -132,6 +132,11 @@ class CustomerController extends Controller
                 BasketController::addBasket($previousRequest);
                 return redirect(route('product', [$previousRequest->input('product_id')]));
             }
+
+            if($customer->admin)
+            {
+                return redirect(route('admin.home'));
+            }
             return redirect(route('home'));
         }
         return redirect()->back();
