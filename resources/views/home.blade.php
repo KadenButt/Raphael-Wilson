@@ -9,6 +9,13 @@
     <title>Raphael Wilson</title>
     <link rel="icon" type="image/png" href="favicon_io/android-chrome-512x512.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+      body {
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+    </style>
+
     </head>
 
     <body>
@@ -46,6 +53,22 @@
           <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
         </div>
         @endguest
+
+
+        <button id="themeToggleBtn" 
+                style="padding: 10px; 
+                       border-radius: 4px; 
+                       font-weight: bold; 
+                       background-color: #fff; 
+                       color: #104904; 
+                       border: 2px solid #104904; 
+                       cursor: pointer;
+                       transition: background-color 0.3s ease, color 0.3s ease;">
+              Dark Mode
+            </button>
+
+
+
         <div class="dropdown">
 
           <button class="menu-button">
@@ -58,6 +81,7 @@
             <a href="{{route('products')}}">Products</a>
             <a href="{{route('contact')}}">Contact</a>
             <a href="{{route('aboutUs')}}">About us</a>
+            
             @auth
             <a href="{{route('basket')}}">Basket</a>
             <a href='{{route('order')}}'>Order History</a>
@@ -79,6 +103,75 @@
             </a>
             @endforeach
         </div>
+
+
+        <style>
+      body.dark {
+        background-color: #111 !important;
+        color: #eee !important;
+      }
+      body.dark #navigation {
+        background-color: #222 !important;
+      }
+      body.dark .menu-icon {
+        background-color: #999 !important;
+      }
+      body.dark .dropdown-menu {
+        background-color: #333 !important;
+        color: #fff !important;
+      }
+      body.dark .dropdown-menu a {
+        color: #fff !important;
+      }
+      body.dark .search-button {
+        background-color: #333 !important;
+        border: 1px solid #666 !important;
+      }
+      body.dark .search-input {
+        border: 1px solid #666 !important;
+        background-color: #444 !important;
+        color: #fff !important;
+      }
+      body.dark .category-box {
+        background-color: #333 !important;
+        color: #fff !important;
+        border: 1px solid #666 !important;
+      }
+      body.dark .category-box:hover {
+        background-color: #444 !important;
+        color: #fff !important;
+        box-shadow: 0 8px 16px rgba(255,255,255,0.2);
+      }
+      
+    </style>
+    
+
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const body = document.body;
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+        // If user had dark mode on before, keep it on
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            body.classList.toggle('dark');
+            if (body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    });
+    </script>
+
+
+
+
+
 
 
     </body>

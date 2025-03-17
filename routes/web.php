@@ -15,6 +15,9 @@ Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'sho
 
 Route::post('/product/search', [App\Http\Controllers\ProductController::class, 'searchProduct'] )->name('product.search');
 
+Route::post('/products/store', [App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
+
+
 
 //Contact
 Route::get('/contact', function(){
@@ -65,6 +68,18 @@ Route::get('/order', [App\Http\Controllers\OrderController::class, 'listOrder'])
 Route::post('/order', [App\Http\Controllers\OrderController::class, 'createOrder'])->middleware('auth')->name('order.create');
 
 Route::post('/order/delete', [App\Http\Controllers\OrderController::class, 'deleteOrder'])->middleware('auth')->name('order.delete');
+
+// newproducts
+Route::get('/newproducts', function () {
+    return view('newproducts'); // The name of your Blade file without .blade.php
+})->name('newproducts');
+
+
+
+// Admin Stock Page
+Route::get('/adminstock', function() {
+    return view('adminstock'); // or your own controller method
+})->name('adminstock');
 
 
 ////////////////temp
