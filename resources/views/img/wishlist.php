@@ -1,20 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>About Us</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-   </head>
-  <body>
-    <header id="main-header">
 
-<<<<<<< Updated upstream
-      <h1>About Us</h1>
-=======
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us</title>
+  <title>Wishlist</title>
   <link rel="icon" type="image/png" href="favicon_io/android-chrome-512x512.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
@@ -24,25 +14,15 @@
         align-items: center;
       }
     }
->>>>>>> Stashed changes
 
-    </header>
-    <main>
-      <section id="explanaition">
-        <p>
-          Raphael Wilson is a branded luxury footwear business, we sell to successful and wealthy individuals with an eye for designer footwear. Focusesing on designer footwear including smart shoes, boots, heels, trainers, and more from prominent luxury brands.
-        </p>
-      </section>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ebf3f7;
+      color: #104904;
+      text-align: center;
+    }
 
-<<<<<<< Updated upstream
-      <section id="benefits">
-        <h2>Why Shop With Us?</h2>
-        <div class="benefit">
-
-          <p>
-           Feel confident within yourself
-          </p>
-=======
     .luxury-text {
       flex-grow: 1;
       text-align: center;
@@ -52,11 +32,6 @@
       color: #ebf3f7;
       font-weight: bold;
       margin: 0;
-    }
-
-    .about-text {
-      text-align: center;
-      font-size: 30px;
     }
 
     #navigation {
@@ -157,10 +132,69 @@
     .dropdown:hover .dropdown-menu {
       display: block;
     }
+
+    /* Wishlist-specific styles */
+    .heart-logo {
+      font-size: 48px;
+      color: #0d9722;
+      margin-bottom: 20px;
+    }
+
+    .wishlist-container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    select, button {
+      padding: 10px;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .remove-button {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .remove-button:hover {
+      background-color: #cc0000;
+    }
   </style>
 </head>
 
 <body>
+  <!-- Navigation Bar -->
   <header id="navigation">
     <a href="{{route('home')}}">
       <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="Logo">
@@ -189,60 +223,63 @@
           <a href="{{route('contact')}}">Contact</a>
           <a href="{{route('aboutUs')}}">About us</a>
           
-          
           @auth
           <a href="{{route('basket')}}">Basket</a>
           <a href='{{route('order')}}'>Order History</a>
           <a href="{{route('logout')}}">Logout</a>
           @endauth
->>>>>>> Stashed changes
         </div>
-        <div class="benefit">
-
-          <p>
-            Get a personalised shopping experience
-          </p>
-        </div>
-        <div class="benefit">
-
-<<<<<<< Updated upstream
-          <p>
-            Shop for all your faviorite brands
-          </p>
-        </div>
-      </section>
-    </main>
-
-  </body>
-</html>
-
-=======
-  <main>
-    <section id="explanaition">
-      <p>
-        Raphael Wilson is a branded luxury footwear business, we sell to successful and wealthy individuals with an eye for designer footwear. Focusing on designer footwear including smart shoes, boots, heels, trainers, and more from prominent luxury brands.
-      </p>
-    </section>
-
-    <section id="benefits">
-      <h2>Why Shop With Us?</h2>
-      <div class="benefit">
-        <p>
-          Feel confident within yourself
-        </p>
       </div>
-      <div class="benefit">
-        <p>
-          Get a personalised shopping experience
-        </p>
-      </div>
-      <div class="benefit">
-        <p>
-          Shop for all your faviorite brands
-        </p>
-      </div>
-    </section>
-  </main>
+    </div>
+  </header>
+
+  <!-- Wishlist Content -->
+  <div class="heart-logo">
+    <i class="fa fa-heart"></i>
+  </div>
+
+  <div class="wishlist-container">
+    <h2>My Wishlist</h2>
+    <div class="input-group">
+      <select id="item-dropdown">
+        <option value="">Select an item</option>
+        <option value="Red Royal High Heel Shoe">Red Royal High Heel Shoe</option>
+        <option value="Blue Banquet Heels">Blue Banquet Heels</option>
+        <option value="Green Garden Shoes">Green Garden Shoes</option>
+        <option value="Yellow Shoe">Yellow Shoe</option>
+      </select>
+      <button onclick="addToWishlist()">Add to Wishlist</button>
+    </div>
+    
+    <h3>Wishlist Items:</h3>
+    <ul id="wishlist-items"></ul>
+  </div>
+
+  <script>
+    // Function to add selected item to the wishlist
+    function addToWishlist() {
+      const dropdown = document.getElementById('item-dropdown');
+      const selectedItem = dropdown.value;
+      const wishlistItems = document.getElementById('wishlist-items');
+
+      if (selectedItem) {
+        const li = document.createElement('li');
+        li.textContent = selectedItem;
+
+        // Add a remove button
+        const removeButton = document.createElement('button');
+        removeButton.className = 'remove-button';
+        removeButton.textContent = 'Remove';
+        removeButton.onclick = function() {
+          wishlistItems.removeChild(li);
+        };
+
+        li.appendChild(removeButton);
+        wishlistItems.appendChild(li);
+        dropdown.value = ''; // Reset dropdown
+      }
+    }
+  </script>
 </body>
+
 </html>
->>>>>>> Stashed changes
