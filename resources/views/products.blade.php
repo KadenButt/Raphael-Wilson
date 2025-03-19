@@ -219,12 +219,14 @@
     }
 
     div.gallery {
-        background-color:#104904;
+        background-color: #104904;
         color: white;
         border: 1px solid #ccc;
         margin-top: 50px;
-        border-radius:20px;
+        border-radius: 20px;
         transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+
+
     }
 
     div.gallery:hover {
@@ -248,58 +250,63 @@
         padding: 0 52px;
         float: left;
         width: 25%;
-}
+    }
 
-body.dark {
+    body.dark {
         background-color: #111 !important;
         color: #eee !important;
     }
+
     body.dark #navigation {
         background-color: #222 !important;
     }
+
     body.dark .menu-icon {
         background-color: #999 !important;
     }
+
     body.dark .dropdown-menu {
         background-color: #333 !important;
         color: #fff !important;
     }
+
     body.dark .dropdown-menu a {
         color: #fff !important;
     }
+
     body.dark div.gallery {
         background-color: #333 !important;
         color: #fff !important;
         border: 1px solid #666 !important;
     }
+
     body.dark div.desc {
         color: #fff !important;
     }
-
 </style>
 </head>
 
 <body>
-<header id="navigation">
+    <header id="navigation">
 
-    <a href="{{route('home')}}">
-      <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
-    </a>
+        <a href="{{route('home')}}">
+            <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
+        </a>
 
-    <div class="luxury-text">
-      <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
-    </div>
+            <div class="luxury-text">
+            <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
+            </div>
 
-    <div class="right-section">
-      @guest
-      <div class="nav-buttons">
-        <button id="signup" onclick="window.location.href='{{route('register')}}'">Sign Up</button>
-        <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
-      </div>
-      @endguest
+            <div class="right-section">
+                @guest
+                <div class="nav-buttons">
+                    <button id="signup" onclick="window.location.href='{{route('register')}}'">Sign Up</button>
+                    <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
+                </div>
+                @endguest
 
-      <button id="themeToggleBtn" 
-        style="padding: 10px 10px; 
+                <button id="themeToggleBtn"
+                    style="padding: 10px 10px; 
                border-radius: 4px; 
                font-weight: bold; 
                background-color: #fff; 
@@ -308,30 +315,63 @@ body.dark {
                cursor: pointer;
                transition: background-color 0.3s ease, color 0.3s ease;
                ">
-        DARK MODE
-      </button>
-      <div class="dropdown">
+                    DARK MODE
+                </button>
+                <div class="dropdown">
 
-        <button class="menu-button">
-          <div class="menu-icon"></div>
-          <div class="menu-icon"></div>
-          <div class="menu-icon"></div>
-        </button>
-        <div class="dropdown-menu">
-          <a href="{{route('home')}}">Home</a>
-          <a href="{{route('products')}}">Products</a>
-          <a href="{{route('contact')}}">Contact</a>
-          <a href="{{route('aboutUs')}}">About us</a>
-          
-          @auth
-          <a href="{{route('basket')}}">Basket</a>
-          <a href='{{route('order')}}'>Order History</a>
-          <a href="{{route('logout')}}">Logout</a>
-          @endauth
-        </div>
-      </div>
-    </div>
-  </header>
+                    <button class="menu-button">
+                        <div class="menu-icon"></div>
+                        <div class="menu-icon"></div>
+                        <div class="menu-icon"></div>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="{{route('home')}}">Home</a>
+                        <a href="{{route('products')}}">Products</a>
+                        <a href="{{route('contact')}}">Contact</a>
+                        <a href="{{route('aboutUs')}}">About us</a>
+
+                        @auth
+                        <a href="{{route('basket')}}">Basket</a>
+                        <a href='{{route('order')}}'>Order History</a>
+                        <a href="{{route('logout')}}">Logout</a>
+                        @endauth
+                        
+                        <div class="luxury-text">
+                            <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
+                        </div>
+
+                        <div class="right-section">
+                            @guest
+                            <div class="nav-buttons">
+                                <button id="signup" onclick="window.location.href='{{route('register')}}'">Sign Up</button>
+                                <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
+                            </div>
+                            @endguest
+                            <div class="dropdown">
+
+                                <button class="menu-button">
+                                    <div class="menu-icon"></div>
+                                    <div class="menu-icon"></div>
+                                    <div class="menu-icon"></div>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a href="{{route('home')}}">Home</a>
+                                    <a href="{{route('products')}}">Products</a>
+                                    <a href="{{route('contact')}}">Contact</a>
+                                    <a href="{{route('aboutUs')}}">About us</a>
+                                    @auth
+                                    <a href="{{route('basket')}}">Basket</a>
+                                    <a href="{{route('order')}}">Order History</a>
+                                    <a href="{{route('customer.details')}}">Change Customer Details</a>
+                                    @if(session('admin'))
+                                    <a href="{{ route('admin.home') }}">Admin Home</a>
+                                    @endif
+                                    <a href="{{route('logout')}}">Logout</a>
+                                    @endauth
+                                </div>
+                            </div>
+                        </div>
+    </header>
 
     <div class="search-box">
         <div class="row">
@@ -351,16 +391,16 @@ body.dark {
         <option value="{{ route('category', [$category->category_id]) }}">{{ $category->category_name }}</option>
         @endforeach
     </select>
-<br>
+    <br>
     @foreach($products as $product)
     <a href="{{route('product', [$product->product_id])}}">
-    <div class="responsive" id="product-list">
-        <div class="gallery" data-keywords="{{$product->product_name}}">
+        <div class="responsive" id="product-list">
+            <div class="gallery" data-keywords="{{$product->product_name}}">
                 <img src="data:image/jpeg;base64,{{ base64_encode($product->product_photo) }}" alt="Retro Sandals" width="600" height="400">
                 <div class="desc"> <b>{{$product->product_name}}</b> <br> Sizes 4-10 <br> £{{$product->product_price}} <br>
+                </div>
             </div>
         </div>
-    </div>
     </a>
     @endforeach
 
@@ -369,8 +409,8 @@ body.dark {
 <script>
     let availableKeywords = [
         <?php
-        foreach($products as $product)
-            echo '\''.$product->product_name . '\',';
+        foreach ($products as $product)
+            echo '\'' . $product->product_name . '\',';
         ?>
     ];
 
@@ -421,7 +461,7 @@ body.dark {
         if (selectedValue) {
             window.location.href = selectedValue;
         }
-    }
+    } 
 
     document.addEventListener('DOMContentLoaded', function() {
         const body = document.body;
@@ -441,4 +481,5 @@ body.dark {
             }
         });
     });
+</script>
 </script>

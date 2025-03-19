@@ -3,12 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width , initial-scale=1.0">
-    <link rel="icon" type="image" href="favicon_io\android-chrome-512x512.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Details</title>
+    <link rel="icon" type="image/png" href="{{asset('favicon_io/android-chrome-512x512.png')}}">
 
-    <title>Log in</title>
 </head>
-
 
 <header id="navigation">
 
@@ -33,40 +32,58 @@
                 <a href="{{route('products')}}">Products</a>
                 <a href="{{route('contact')}}">Contact</a>
                 <a href="{{route('aboutUs')}}">About us</a>
+                <a href="{{route('basket')}}">Basket</a>
+                <a href="{{route('order')}}">Order History</a>
+                <a href="{{route('customer.details')}}">Change Customer Details</a>
+                <a href="{{ route('admin.home') }}">Admin Home</a>
+                <a href="{{route('logout')}}">Logout</a>
             </div>
         </div>
     </div>
 </header>
 
 <body>
-
-
-
-    <section id="login">
-        <div id="login-header">
-            <h2>Log In</h2>
+    <section id="update-details">
+        <div class="details-header">
+            <h2>Update Customer Details</h2>
         </div>
-
-        <form id="login-form" method="POST" action="{{ route('customer.login') }}">
+        <form id="details-form" method="POST" action="{{ route('admin.update') }}">
             @csrf
-            <h3>Email</h3>
-            <input type="email" name="email" />
-            <br>
-            <h3>Password</h3>
-            <input type="password" name="password" />
+            <input type="text" name="customer_fname" value="{{$customer->customer_fname;}}">
             <br><br>
-            <input type="submit" name="submitted" value="Log In" />
-
+            <input type="text" name="customer_sname" value="{{$customer->customer_sname;}}">
+            <br><br>
+            <input type="email" name="customer_email" value="{{$customer->customer_email;}}" />
+            <br><br>
+            <input type="text" name="address_number" value="{{$address->address_number;}}">
+            <br><br>
+            <input type="text" name="address_street" value="{{$address->address_street}}">
+            <br><br>
+            <input type="text" name="address_postcode" value="{{$address->address_postcode}}">
+            <br><br>
+            <input type="password" name="account_number" value="{{$payment->account_number}}" />
+            <br><br>
+            <input type="submit" name="submitted" value="Update" />
+            <br>
             <input type="hidden" name="submitted" value="true" />
-            <p>Not a user? <a href="{{ route('register') }}">Register here</a></p> 
-            <a href="{{ route('customer.forgotpw') }}">Forgot Password</a></p>
-
-            
+            <br>
+            <input type="hidden" name="customer_id" value="{{$customer->customer_id}}" />
         </form>
-    
-
         <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="side-logo">
-    </section>
+
+        <a href="{{route('customer.forgotpw')}}">Change Password</a>
+
+        <section id="form-error">
+            @if ($errors->any())
+            <div>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+        </section>
 </body>
 
 </html>
@@ -85,7 +102,6 @@
         background-color: #ebf3f7;
         color: #104904;
     }
-
 
     .luxury-text {
         flex-grow: 1;
@@ -202,23 +218,42 @@
         display: block;
     }
 
-    #login-header {
-        font-size: 40px;
-        margin-left: 23%;
-        margin-top: -40px;
+    #details-form {
+        padding-top: 10px;
+        padding: right -30px;
+        padding-bottom: 10px;
+        margin-left: 5%;
+        background-color: #104904;
+        border-radius: 20px;
+        width: 40%;
     }
 
-    input[name="email"],
-    input[name="password"] {
+    #update-details p {
+        color: white;
+        margin-left: 5%;
+        padding: 10px;
+    }
+
+    #update-details h2 {
+        font-size: 40px;
+        margin-left: 19%;
+        margin-top: 1%;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        margin-left: 5%;
         border-radius: 20px;
         background-color: white;
         border-radius: 20px;
-        padding: 15px;
-        width: 100%;
+        padding: 5px;
+        width: 60%;
         box-sizing: border-box;
     }
 
     input[type="submit"] {
+        margin-left: 5%;
         cursor: pointer;
         background-color: white;
         border-radius: 20px;
@@ -234,35 +269,10 @@
         box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
     }
 
-    #login-form {
-        background-color: #104904;
-        border-radius: 20px;
-        margin-right: 50%;
-        margin-left: 10%;
-        margin-bottom: 5%;
-        padding: 15px;
-    }
-
-    #login-form p {
-        color: white;
-        
-        font-size: 15px
-    }
-
-    #login-form h3 {
-        color: #ebf3f7;
-        margin-left: 2%;
-        font-size: 25px
-    }
-
-    #login img {
-        size: 40px;
-    }
-
     img[alt="side-logo"] {
         width: 400px;
-        margin-left: 60%;
-        margin-top: -40%;
-        margin-bottom: 6%;
+        margin-left: 55%;
+        margin-top: -44%;
+        margin-bottom: 0.7%
     }
 </style>

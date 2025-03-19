@@ -9,5 +9,5 @@ class OrderItem extends Model
     protected $table = 'order_item';
     protected $primaryKey = 'order_item_id'; 
     public $timestamps = false;
-    protected $fillable = ['order_item_quantity', 'order_item_price', 'size_item_id', 'order_id'];
+    protected $fillable = ['order_item_quantity', 'order_item_price', 'item_id', 'order_id'];
 }

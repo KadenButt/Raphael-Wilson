@@ -10,41 +10,45 @@
 <header id="navigation">
 
     <a href="{{route('home')}}">
-      <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
+        <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
     </a>
 
     <div class="luxury-text">
-      <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
+        <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
     </div>
 
     <div class="right-section">
-      @guest
-      <div class="nav-buttons">
-        <button id="signup" onclick="window.location.href='{{route('register')}}'">Sign Up</button>
-        <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
-      </div>
-      @endguest
-      <div class="dropdown">
-
-        <button class="menu-button">
-          <div class="menu-icon"></div>
-          <div class="menu-icon"></div>
-          <div class="menu-icon"></div>
-        </button>
-        <div class="dropdown-menu">
-          <a href="{{route('home')}}">Home</a>
-          <a href="{{route('products')}}">Products</a>
-          <a href="{{route('contact')}}">Contact</a>
-          <a href="{{route('aboutUs')}}">About us</a>
-          @auth
-          <a href="{{route('basket')}}">Basket</a>
-          <a href='{{route('order')}}'>Order History</a>
-          <a href="{{route('logout')}}">Logout</a>
-          @endauth
+        @guest
+        <div class="nav-buttons">
+            <button id="signup" onclick="window.location.href='{{route('register')}}'">Sign Up</button>
+            <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
         </div>
-      </div>
+        @endguest
+        <div class="dropdown">
+
+            <button class="menu-button">
+                <div class="menu-icon"></div>
+                <div class="menu-icon"></div>
+                <div class="menu-icon"></div>
+            </button>
+            <div class="dropdown-menu">
+                <a href="{{route('home')}}">Home</a>
+                <a href="{{route('products')}}">Products</a>
+                <a href="{{route('contact')}}">Contact</a>
+                <a href="{{route('aboutUs')}}">About us</a>
+                @auth
+                <a href="{{route('basket')}}">Basket</a>
+                <a href="{{route('order')}}">Order History</a>
+                <a href="{{route('customer.details')}}">Change Customer Details</a>
+                @if(session('admin'))
+                <a href="{{ route('admin.home') }}">Admin Home</a>
+                @endif
+                <a href="{{route('logout')}}">Logout</a>
+                @endauth
+            </div>
+        </div>
     </div>
-  </header>
+</header>
 
 <body>
 
@@ -61,7 +65,7 @@
 
                     <br><br>
                 <form method="POST" action="{{ route('basket.add') }}">
-                @csrf
+                    @csrf
                     <label for="size"><b>Size:</b></label>
                     <input type="number" id="size" name="size" min="4" max="10" value="5">
                     <br><br>
@@ -75,21 +79,22 @@
                     Dispatched by: Raphael Wilson
                     </p>
                     <h3>£{{$product->product_price}}</h3>
+                    <input type="hidden" name="product_id" value="{{$product->product_id}}" />
+                    <button type="submit" class="basket-button">
+                        <h2>Add to Basket</h2>
+                    </button>
             </div>
         </div>
 
         <div class="basket-add-container">
+            @if(session('success'))
+            <div class="basket-confirmation">
+                <p>Added to basket</p>
+            </div>
+            @endif
 
-        <div class="basket-confirmation">
-        <p>Added to basket</p>
+        </div>
     </div>
-
-    <button class="basket-button" onclick="window.location.href='{{ route('basket') }}'">
-        <h2>Add to Basket</h2>
-    </button>
-    
-</div>
-</div>
 
 
 </body>
@@ -194,10 +199,10 @@
         position: absolute;
         bottom: -15%;
         right: 15%;
-}
+    }
 
     .basket-confirmation {
-        color:rgb(0, 123, 8);
+        color: rgb(0, 123, 8);
         font-size: 20px;
     }
 

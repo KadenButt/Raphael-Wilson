@@ -11,49 +11,7 @@
 
 <header id="navigation">
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const adminCheckbox = document.querySelector('input[name="admin"]');
-    const userCheckbox = document.querySelector('input[name="user"]');
-    const customerForm = document.getElementById("register-form");
-    const adminForm = document.getElementById("admin-register-form");
 
-    function toggleAddressFields() {
-        customerForm.style.display = "block";
-        adminForm.style.display = "none";
-
-        if (adminCheckbox.checked) {
-            // Show admin form, hide customer form
-            customerForm.style.display = "none";
-            adminForm.style.display = "block";
-
-            // Uncheck user checkbox if it exists
-         
-            adminCheckbox.checked = false;
-            
-        } else if(userCheckbox.checked) {
-            // Show customer form, hide admin form
-            customerForm.style.display = "block";
-            adminForm.style.display = "none";
-
-            // Uncheck admin checkbox if needed
-        
-            userCheckbox.checked = false;
-            
-        }
-    }
-
-    // Add event listeners only if the elements exist
-    if (adminCheckbox) adminCheckbox.addEventListener("change", toggleAddressFields);
-    if (userCheckbox) userCheckbox.addEventListener("change", toggleAddressFields);
-
-    // Initialize on page load
-    toggleAddressFields();
-});
-
-
-
-</script>
 
 <a href="{{route('home')}}">
     <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
@@ -75,8 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <a href="{{route('products')}}">Products</a>
             <a href="{{route('contact')}}">Contact</a>
             <a href="{{route('aboutUs')}}">About us</a>
-            <a href="{{route('logout')}}">Logout</a>
-            <a href="{{route('basket')}}">Basket</a>
         </div>
     </div>
 </div>
@@ -89,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
 
         <div class="register-container">
-        <!-- Form for the customer login -->
         <form id="register-form" method="POST" action="{{ route('customer.register') }}">
             @csrf
             <input type="text" name="customer_fname" placeholder="First Name">
@@ -117,38 +72,10 @@ document.addEventListener("DOMContentLoaded", function () {
             <input type="submit" name="submitted" value="Register" />
             <br><br>
 
-                <input type="checkbox" name="admin" >
-                <label for="admin">Register As Admin</label>
-        
             <input type="hidden" name="submitted" value="true" />
             <p>Already a user? <a href="{{ route('login') }}">Log in here</a></p>
         </form>
     </div>
-    </section>
-        <!-- Form for the admin login -->
-        <form id="admin-register-form" method="POST" action="{{ route('customer.register') }}">
-            @csrf
-            <input type="text" name="admin_fname" placeholder="First Name">
-            <br><br>
-            <input type="text" name="admin_sname" placeholder="Last Name">
-            <br><br>
-            <input type="email" name="admin_email" placeholder="Email" />
-            <br><br>
-            <input type="password" name="admin_password" placeholder="Password" />
-            <br><br>
-            <input type="password" name="admin_password_confirmation" placeholder="Confirm Password" />
-            <br><br>
-            <input type="submit" name="admin_register" value="Register" />
-            <br><br>
-            
-            <input type="checkbox" name="user" >
-            <label for="user">Register As A User</label>
-            
-            <input type="hidden" name="submitted" value="true" />
-            <p>Already a user? <a href="{{ route('login') }}">Log in here</a></p>
-
-        </form>
-
         <div class="side-logo-admin">
             <img src="{{asset('favicon_io/android-chrome-192x192.png')}}" alt="side-logo-admin">
         </div>

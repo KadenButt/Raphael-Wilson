@@ -6,16 +6,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\BasketItem;
+use App\Models\Basket;
 use App\Models\Product;
-use App\Models\sizeItem;
+use App\Models\Item;
 
 class OrderController extends Controller
 {
     public function createOrder(Request $request)
     {
         //if basket is empty will not allow user to create an order
-        if(count(BasketItem::all()) <= 0)
+        if(count(Basket::all()) <= 0)
         {
             return redirect()->back();
         }
@@ -29,22 +29,23 @@ class OrderController extends Controller
         ]);
 
         //gets all items within a basket
-        $basket_items = BasketItem::where('customer_id', Auth::user()->customer_id)->get();
+        $basket_items = Basket::where('customer_id', Auth::user()->customer_id)->get();
 
         //for each basket_item it will add the the order_item
-        foreach ($basket_items as $item)
+        foreach ($basket_items as $basket_item)
         {
-            $sizeItem = SizeItem::where('size_item_id', $item->size_item_id)->first();
-            $product = Product::where('product_id', $sizeItem->product_id)->first();
+            //dd($basket_item->item_id);
+            $item = Item::where('item_id', $basket_item->item_id)->first();
+            $product = Product::where('product_id', $item->product_id)->first();
             OrderItem::create([
-                'order_item_quantity' => $item->quantity,
+                'order_item_quantity' => $basket_item->quantity,
                 'order_item_price' => $product->product_price,
-                'size_item_id' => $item->size_item_id,
+                'item_id' => $item->item_id,
                 'order_id' => $order->order_id
             ]);
 
             //remove from basket
-            BasketItem::where('basket_item_id', $item->basket_item_id)->first()->delete();
+            Basket::where('basket_item_id', $basket_item->basket_item_id)->first()->delete();
 
         }
 
@@ -92,10 +93,10 @@ class OrderController extends Controller
 
 
             //Gets Product of each item
-            foreach($orderItems as $item)
+            foreach($orderItems as $order_item)
             {
-                $sizeItem = SizeItem::where('size_item_id', $item->size_item_id)->first();
-                $products[] = Product::where('product_id', $sizeItem->product_id)->first();
+                $item = Item::where('item_id', $order_item->item_id)->first();
+                $products[] = Product::where('product_id', $item->product_id)->first();
             }
 
         }
