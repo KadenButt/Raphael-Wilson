@@ -79,18 +79,19 @@
                     Dispatched by: Raphael Wilson
                     </p>
                     <h3>£{{$product->product_price}}</h3>
+                    <input type="hidden" name="product_id" value="{{$product->product_id}}" />
+                    <button type="submit" class="basket-button">
+                        <h2>Add to Basket</h2>
+                    </button>
             </div>
         </div>
 
         <div class="basket-add-container">
-
+            @if(session('success'))
             <div class="basket-confirmation">
                 <p>Added to basket</p>
             </div>
-
-            <button class="basket-button" onclick="window.location.href='{{ route('basket') }}'">
-                <h2>Add to Basket</h2>
-            </button>
+            @endif
 
         </div>
     </div>

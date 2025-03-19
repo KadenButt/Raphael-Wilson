@@ -109,9 +109,16 @@ Route::middleware('admin')->group(function () {
         return dd('to-do');
     })->name('orders');
 
-    Route::get('/admin/customers', function () {
-        return dd('to-do');
-    })->name('customers');
+    //admin customer controls 
+    Route::get('/admin/customers', [App\Http\Controllers\AdminController::class, 'listCustomer'])->name('admin.customers');
+    Route::post('/admin/customers/add', [App\Http\Controllers\AdminController::class, 'addAdmin'])->name('admin.add');
+    Route::post('/admin/customers/remove', [App\Http\Controllers\AdminController::class, 'removeAdmin'])->name('admin.remove');
+    Route::get('/admin/customers/edit/{customer_id}', [App\Http\Controllers\AdminController::class, 'editCustomer'])->name('admin.edit');
+    Route::post('/admin/customers/update', [App\Http\Controllers\AdminController::class, 'updateCustomer'])->name('admin.update');
+    Route::get('/admin/orders/{customer_id}', [App\Http\Controllers\AdminController::class, 'customerOrders'])->name('admin.orders'); 
+    Route::post('/admin/delete/{customer_id}', [App\Http\Controllers\AdminController::class, 'deleteCustomer'])->name('admin.delete'); 
+
+
 });
 
 

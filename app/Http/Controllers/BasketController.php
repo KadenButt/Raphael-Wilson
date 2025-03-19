@@ -26,7 +26,7 @@ class BasketController extends Controller
             'quantity' => $request->input('quantity')
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'worlking');
     }
 
 

@@ -66,10 +66,8 @@ class CustomerController extends Controller
 
         //check for pre-existing email in the database
         $customer = Customer::where('customer_email', $request->input('customer_email'))->first();
-        $admin = Admin::where('admin_email', $request->input('admin_email'))->first();
 
-
-        if ($admin != null || $customer != null) {
+        if ($customer != null) {
             $error = new MessageBag;
             $error->add('email', 'email is already in use');
             return redirect()->back()->withErrors($error);
@@ -101,7 +99,7 @@ class CustomerController extends Controller
         ]);
 
         Auth::login($customer);
-        session(['id' => $customer->id]);
+        session(['admin' => false]);
         return redirect(route('home'));
     }
 
@@ -135,8 +133,10 @@ class CustomerController extends Controller
 
             if($customer->admin)
             {
+                session(['admin' => true]);
                 return redirect(route('admin.home'));
             }
+            session(['admin' => false]);
             return redirect(route('home'));
         }
         return redirect()->back();
@@ -197,6 +197,15 @@ class CustomerController extends Controller
         $customer = Customer::where('customer_id', Auth::id())->first();
         $address = Address::where('address_id', $customer->address_id)->first();
         $payment = Payment::where('payment_id', $customer->payment_id)->first();
+
+        //check for duplicate email 
+        $customer_check = Customer::where(['customer_email' => $vd['customer_email']])->first();
+        if($customer_check != null)
+        {
+            $error = new MessageBag;
+            $error->add('email', 'email is already in use');
+            return redirect()->back()->withErrors($error);
+        }
 
         $address->update([
             'address_number' => $vd['address_number'],

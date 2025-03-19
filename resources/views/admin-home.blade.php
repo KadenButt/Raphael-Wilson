@@ -65,7 +65,7 @@
         <div class="customers-container">
             <h1>Customers</h1>
             <div class="link-container">
-                <a href="{{route('customers')}}">View all customers <span class="arrow">&rsaquo;</span> </a>
+                <a href="{{route('admin.customers')}}">View all customers <span class="arrow">&rsaquo;</span> </a>
             </div>
         </div>
     </div>
