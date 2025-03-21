@@ -96,7 +96,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-//adming routes 
+//adming routes
 Route::middleware('admin')->group(function () {
 
     Route::get('/admin/home', function () {
@@ -112,20 +112,21 @@ Route::middleware('admin')->group(function () {
         return dd('to-do');
     })->name('orders');
 
-    //admin customer controls 
+    //admin customer controls
     Route::get('/admin/customers', [App\Http\Controllers\AdminController::class, 'listCustomer'])->name('admin.customers');
     Route::post('/admin/customers/add', [App\Http\Controllers\AdminController::class, 'addAdmin'])->name('admin.add');
     Route::post('/admin/customers/remove', [App\Http\Controllers\AdminController::class, 'removeAdmin'])->name('admin.remove');
     Route::get('/admin/customers/edit/{customer_id}', [App\Http\Controllers\AdminController::class, 'editCustomer'])->name('admin.edit');
     Route::post('/admin/customers/update', [App\Http\Controllers\AdminController::class, 'updateCustomer'])->name('admin.update');
-    Route::get('/admin/orders/{customer_id}', [App\Http\Controllers\AdminController::class, 'customerOrders'])->name('admin.orders'); 
-    Route::post('/admin/delete/{customer_id}', [App\Http\Controllers\AdminController::class, 'deleteCustomer'])->name('admin.delete'); 
+    Route::get('/admin/orders/{customer_id}', [App\Http\Controllers\AdminController::class, 'customerOrders'])->name('admin.orders');
+    Route::post('/admin/delete/{customer_id}', [App\Http\Controllers\AdminController::class, 'deleteCustomer'])->name('admin.delete');
 
     //addmin product controlls
     Route::get('/admin/product/new', [App\Http\Controllers\AdminController::class, 'newProduct'])->name('admin.proudct.new');
     Route::post('/admin/product/create', [App\Http\Controllers\AdminController::class, 'createProduct'])->name('admin.product.create');
 
-
+    //admin ordres
+    Route::get ('/admin/orders', [App\Http\Controllers\AdminController::class, 'orders'])->name('admin.ordersAll');
 });
 
 

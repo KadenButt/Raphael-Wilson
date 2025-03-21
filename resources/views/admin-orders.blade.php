@@ -48,13 +48,16 @@
 
         <div class="order">
             <div class="order-photo1">
-                <img src="{{image}}" alt="shoe">
+                <ul>
+                    <li>First item</li>
+                    <li>Second item</li>
+                    <li>Third item</li>
+                </ul>
             </div>
             <div class="order-details">
                 <p><b>CustomerID: </b></p>
                 <p>Price: </p>
                 <label for="order-status">Order Status:</label>
-
                 <select name="order-status" id="order-status">
                 <option value="Processing">Processing</option>
                 <option value="Shipped">Shipped</option>
@@ -64,23 +67,23 @@
                 <p>Order Number: </p>
                 <p>ProductID: </p>
             </div>
-            
+
             <div class="order-actions">
             <form id='delete-order' method='POST' action="{{ route('order.delete') }}">
-                
+
                 <button id="cancel-button" type='submit'> Cancel Order</button>
-                <input type="hidden" name="order_item_id" value="{{$orderItems[$i]->order_item_id}}" />
+                <input type="hidden" name="order_item_id" value="" />
 
             </form>
 
             <form id='process-order' method='POST' action="{{ route('order.delete') }}">
-                
+
                 <button id="process-button" type='submit'> Process Order</button>
-                <input type="hidden" name="order_item_id" value="{{$orderItems[$i]->order_item_id}}" />
+                <input type="hidden" name="order_item_id" value="" />
 
             </form>
             </div>
-        </div>     
+        </div>
 </div>
 
 </body>
@@ -121,7 +124,7 @@
         align-items: center;
         padding-bottom: 5px;
         margin:0;
-        
+
 }
 
     .order img {
@@ -176,7 +179,7 @@
         color: #104904;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
- 
+
 
     body {
             margin: 0;

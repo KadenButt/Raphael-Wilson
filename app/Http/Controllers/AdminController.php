@@ -293,4 +293,10 @@ class AdminController extends Controller
 
 
     }
+
+    public function orders(Request $request)
+    {
+        $orders= Order::all();
+        return view('admin-orders', ['orderItems' => $orders]);
+    }
 }

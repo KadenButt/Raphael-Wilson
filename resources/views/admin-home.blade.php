@@ -58,7 +58,7 @@
         <div class="order-container">
             <h1>Orders</h1>
             <div class="link-container">
-                <a href="{{route('orders')}}">View all orders <span class="arrow">&rsaquo;</span> </a>
+                <a href="{{route('admin.ordersAll')}}">View all orders <span class="arrow">&rsaquo;</span> </a>
             </div>
         </div>
 
