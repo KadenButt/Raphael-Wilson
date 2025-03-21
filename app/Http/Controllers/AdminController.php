@@ -186,7 +186,7 @@ class AdminController extends Controller
         if ($customer->admin) {
             //check if deleting thier own account
             if (Auth::user()->customer_id != $customer_id) {
-                //Delete orders and order items 
+                //Delete orders and order items
                 $orders = Order::where('customer_id', $customer_id)->get();
                 foreach ($orders as $order) {
                     OrderItem::where('order_id', $order->order_id)->delete();
@@ -208,7 +208,7 @@ class AdminController extends Controller
                 $error->add('admin', 'You cannot delete your own account');
             }
         } else {
-            //Delete orders and order items 
+            //Delete orders and order items
             $orders = Order::where('customer_id', $customer_id)->get();
             foreach ($orders as $order) {
                 OrderItem::where('order_id', $order->order_id)->delete();
@@ -245,11 +245,11 @@ class AdminController extends Controller
     {
         $vd = $request->validate([
             'shoe_name' => 'required|max:255|alpha',
-            'category' => 'required|integer',       
-            'quantity' => 'required|integer',       
-            'price' => 'required|numeric',        
-            'description' => 'required',           
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:64', 
+            'category' => 'required|integer',
+            'quantity' => 'required|integer',
+            'price' => 'required|numeric',
+            'description' => 'required',
+            'photo' => 'required|image|mimes:jpeg,png,jpg|max:10000',
         ], [
             'shoe_name.required' => 'The shoe name is required.',
             'shoe_name.alpha' => 'The shoe name must contain only letters.',
@@ -262,34 +262,34 @@ class AdminController extends Controller
             'description.required' => 'The description is required.',
             'photo.required' => 'The photo is required.',
             'photo.image' => 'The file must be an image.',
-            'photo.mimes' => 'The image must be a file of type: jpeg, png, jpg, or gif.',
-            'photo.max' => 'The image must not exceed 64KB in size.',
+            'photo.mimes' => 'The image must be a file of type: jpeg, png, jpg.',
+            'photo.max' => 'The image must not exceed 10MB in size.',
         ]);
 
         $blob = file_get_contents($vd['photo']->getRealPath());
 
         $product = Product::create([
-            'product_name' => $vd['shoe_name'], 
+            'product_name' => $vd['shoe_name'],
             'product_photo' => $blob,
-            'product_description' => $vd['description'], 
-            'product_price' => $vd['price'], 
+            'product_description' => $vd['description'],
+            'product_price' => $vd['price'],
             'category_id' => $vd['category']
         ]);
 
         for($x = 4;  $x < 14; $x++)
         {
             Item::create([
-                'product_id' => $product->product_id, 
+                'product_id' => $product->product_id,
                 'size_number' => (string)$x,
                 'stock_number' => $vd['quantity'],
-                'stock_changes_date' => date("Y-m-d"), 
-                'stock_changes_number' => 0, 
+                'stock_changes_date' => date("Y-m-d"),
+                'stock_changes_number' => 0,
                 'customer_id' => Auth::user()->customer_id
             ]);
         }
         return redirect()->back()->with('success', 'Product Created');
 
-        
+
 
 
     }

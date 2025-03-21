@@ -15,7 +15,7 @@ return new class extends Migration
         {
             $table->id('product_id')->primary();
             $table->string('product_name');
-            $table->binary('product_photo');
+            $table->longText('product_photo')->charset('binary');
             $table->string('product_description');
             $table->float('product_price');
             $table->foreignId('category_id')->references('category_id')->on('category');

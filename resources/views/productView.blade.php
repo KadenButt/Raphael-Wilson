@@ -72,11 +72,12 @@
                     <label for="quantity"><b>Quantity:</b></label>
                     <input type="number" id="quantity" name="quantity" min="1" value="1">
                     <br><br>
-                    In stock
+                    @if($outStock  == "")
+                    Items in stock
+                    @else
+                    Sizes {{$outStock}} are currently out of stock
+                    @endif
                     <br><br>
-                    Sold by: Raphael Wilson
-                    <br><br>
-                    Dispatched by: Raphael Wilson
                     </p>
                     <h3>£{{$product->product_price}}</h3>
                     <input type="hidden" name="product_id" value="{{$product->product_id}}" />
