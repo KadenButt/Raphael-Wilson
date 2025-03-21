@@ -121,13 +121,14 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/orders/{customer_id}', [App\Http\Controllers\AdminController::class, 'customerOrders'])->name('admin.orders'); 
     Route::post('/admin/delete/{customer_id}', [App\Http\Controllers\AdminController::class, 'deleteCustomer'])->name('admin.delete'); 
 
+    //addmin product controlls
+    Route::get('/admin/product/new', [App\Http\Controllers\AdminController::class, 'newProduct'])->name('admin.proudct.new');
+    Route::post('/admin/product/create', [App\Http\Controllers\AdminController::class, 'createProduct'])->name('admin.product.create');
+
 
 });
 
-// newproducts
-Route::get('/newproducts', function () {
-    return view('newproducts'); // The name of your Blade file without .blade.php
-})->name('newproducts');
+
 
 
 

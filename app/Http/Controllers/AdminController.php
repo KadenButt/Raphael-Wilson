@@ -13,6 +13,7 @@ use App\Models\OrderItem;
 use App\Models\Item;
 use App\Models\Product;
 use App\Models\Basket;
+use App\Models\Category;
 use App\Models\Review;
 use App\Models\Wishlist;
 use App\Models\Inventory;
@@ -230,5 +231,66 @@ class AdminController extends Controller
 
 
         return redirect()->back()->withErrors($error);
+    }
+
+    public function newProduct(Request $request)
+    {
+        $categories = Category::all();
+        return view('newproduct', [
+            'categories' => $categories,
+        ]);
+    }
+
+    public function createProduct(Request $request)
+    {
+        $vd = $request->validate([
+            'shoe_name' => 'required|max:255|alpha',
+            'category' => 'required|integer',       
+            'quantity' => 'required|integer',       
+            'price' => 'required|numeric',        
+            'description' => 'required',           
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:64', 
+        ], [
+            'shoe_name.required' => 'The shoe name is required.',
+            'shoe_name.alpha' => 'The shoe name must contain only letters.',
+            'category.required' => 'The category is required.',
+            'category.integer' => 'The category must be an integer.',
+            'quantity.required' => 'The quantity is required.',
+            'quantity.integer' => 'The quantity must be an integer.',
+            'price.required' => 'The price is required.',
+            'price.integer' => 'The price must be an integer.',
+            'description.required' => 'The description is required.',
+            'photo.required' => 'The photo is required.',
+            'photo.image' => 'The file must be an image.',
+            'photo.mimes' => 'The image must be a file of type: jpeg, png, jpg, or gif.',
+            'photo.max' => 'The image must not exceed 64KB in size.',
+        ]);
+
+        $blob = file_get_contents($vd['photo']->getRealPath());
+
+        $product = Product::create([
+            'product_name' => $vd['shoe_name'], 
+            'product_photo' => $blob,
+            'product_description' => $vd['description'], 
+            'product_price' => $vd['price'], 
+            'category_id' => $vd['category']
+        ]);
+
+        for($x = 4;  $x < 14; $x++)
+        {
+            Item::create([
+                'product_id' => $product->product_id, 
+                'size_number' => (string)$x,
+                'stock_number' => $vd['quantity'],
+                'stock_changes_date' => date("Y-m-d"), 
+                'stock_changes_number' => 0, 
+                'customer_id' => Auth::user()->customer_id
+            ]);
+        }
+        return redirect()->back()->with('success', 'Product Created');
+
+        
+
+
     }
 }

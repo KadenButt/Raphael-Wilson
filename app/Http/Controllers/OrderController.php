@@ -34,8 +34,13 @@ class OrderController extends Controller
         //for each basket_item it will add the the order_item
         foreach ($basket_items as $basket_item)
         {
-            //dd($basket_item->item_id);
             $item = Item::where('item_id', $basket_item->item_id)->first();
+            //edit stock details
+            $item->update([
+                'stock_number' => $item->stock_number - 1,
+                'stock_change_date' => date("Y-m-d"),
+                'stock_changes_number' => $item->stock_changes_number + 1
+            ]);
             $product = Product::where('product_id', $item->product_id)->first();
             OrderItem::create([
                 'order_item_quantity' => $basket_item->quantity,

@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('item', function(Blueprint $table){
             $table->id('item_id')->primary();
-            $table->enum('size_number', ['4','5','6','7','8','9','10']);
+            $table->enum('size_number', ['4','5','6','7','8','9','10','11','12','13']);
+            $table->integer('stock_number');
+            $table->date('stock_changes_date');
+            $table->integer('stock_changes_number');
+            $table->foreignId('customer_id')->references('customer_id')->on('customer');
             $table->foreignId('product_id')->references('product_id')->on('product');
             
         });

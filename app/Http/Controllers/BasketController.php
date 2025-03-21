@@ -14,19 +14,18 @@ class BasketController extends Controller
     //adds item from product page to basket
     public static function addBasket(Request $request)
     {
-        $item = Item::create([
+        $item = Item::where([
             'product_id' => $request->input('product_id'),
             'size_number' => $request->input('size')
-        ]);
-
-
+        ])->first();
+        
         Basket::create([
             'customer_id' => Auth::user()->customer_id,
             'item_id' => $item->item_id,
             'quantity' => $request->input('quantity')
         ]);
 
-        return redirect()->back()->with('success', 'worlking');
+        return redirect()->back()->with('success', 'Added to basket');
     }
 
 

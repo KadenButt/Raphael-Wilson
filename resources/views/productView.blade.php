@@ -67,7 +67,7 @@
                 <form method="POST" action="{{ route('basket.add') }}">
                     @csrf
                     <label for="size"><b>Size:</b></label>
-                    <input type="number" id="size" name="size" min="4" max="10" value="5">
+                    <input type="number" id="size" name="size" min="4" max="13" value="5">
                     <br><br>
                     <label for="quantity"><b>Quantity:</b></label>
                     <input type="number" id="quantity" name="quantity" min="1" value="1">
