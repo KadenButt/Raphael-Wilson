@@ -5,6 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
+
+    <style>
+      body {
+        /* We'll add a transition so the color changes smoothly */
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+    </style>
+
+
     <style>
         @media (max-width: 768px) {
             #navigation {
@@ -181,6 +190,7 @@
             width: 35px;
             height: 6px;
             border-radius: 2px;
+            transition: background-color 0.3s ease;
         }
 
         .dropdown-menu {
@@ -192,6 +202,7 @@
             box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
             border-radius: 5px;
             overflow: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
 
         }
 
@@ -201,6 +212,7 @@
             color: #104904;
             text-decoration: none;
             font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
 
         }
 
@@ -219,6 +231,7 @@
             padding: 0;
             background-color: #f2f2f2;
             color: white;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -297,15 +310,62 @@
         .contact-form button:hover {
             background-color: #002200;
         }
+
+
+
+        body.dark {
+            background-color: #111 !important;
+            color: #eee !important;
+        }
+        body.dark #navigation {
+            background-color: #222 !important;
+        }
+        body.dark .menu-icon {
+            background-color: #aaa !important;
+        }
+        body.dark .dropdown-menu {
+            background-color: #333 !important;
+            color: #fff !important;
+        }
+        body.dark .dropdown-menu a {
+            color: #fff !important;
+        }
+        body.dark .container {
+            background-color: #333 !important;
+        }
+        body.dark h1, 
+        body.dark h2,
+        body.dark .contact-info p,
+        body.dark .social-media a,
+        body.dark .contact-form label {
+            color: #fff !important;
+        }
+        body.dark .contact-form input,
+        body.dark .contact-form textarea {
+            background-color: #444 !important;
+            color: #fff !important;
+            border: 1px solid #666 !important;
+        }
+        body.dark .contact-form button {
+            background-color: #555 !important;
+            color: #eee !important;
+        }
+        body.dark .contact-form button:hover {
+            background-color: #666 !important;
+        }
+
+
+
+
     </style>
 </head>
 
 <body>
-<header id="navigation">
+    <header id="navigation">
 
-    <a href="{{route('home')}}">
-      <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
-    </a>
+        <a href="{{route('home')}}">
+            <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
+        </a>
 
     <div class="luxury-text">
       <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
@@ -318,6 +378,24 @@
         <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
       </div>
       @endguest
+
+
+      <button id="themeToggleBtn" 
+        style="padding: 10px; 
+               border-radius: 4px; 
+               font-weight: bold; 
+               background-color: #fff; 
+               color: #104904; 
+               border: 2px solid #104904; 
+               cursor: pointer;
+               transition: background-color 0.3s ease, color 0.3s ease;">
+        Dark Mode
+      </button>
+
+
+
+
+
       <div class="dropdown">
 
         <button class="menu-button">
@@ -330,15 +408,48 @@
           <a href="{{route('products')}}">Products</a>
           <a href="{{route('contact')}}">Contact</a>
           <a href="{{route('aboutUs')}}">About us</a>
+          
           @auth
           <a href="{{route('basket')}}">Basket</a>
           <a href='{{route('order')}}'>Order History</a>
           <a href="{{route('logout')}}">Logout</a>
           @endauth
+        <div class="luxury-text">
+            <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
         </div>
-      </div>
-    </div>
-  </header>
+
+        <div class="right-section">
+            @guest
+            <div class="nav-buttons">
+                <button id="signup" onclick="window.location.href='{{route('register')}}'">Sign Up</button>
+                <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
+            </div>
+            @endguest
+            <div class="dropdown">
+
+                <button class="menu-button">
+                    <div class="menu-icon"></div>
+                    <div class="menu-icon"></div>
+                    <div class="menu-icon"></div>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="{{route('home')}}">Home</a>
+                    <a href="{{route('products')}}">Products</a>
+                    <a href="{{route('contact')}}">Contact</a>
+                    <a href="{{route('aboutUs')}}">About us</a>
+                    @auth
+                    <a href="{{route('basket')}}">Basket</a>
+                    <a href="{{route('order')}}">Order History</a>
+                    <a href="{{route('customer.details')}}">Change Customer Details</a>
+                    @if(session('admin'))
+                    <a href="{{ route('admin.home') }}">Admin Home</a>
+                    @endif
+                    <a href="{{route('logout')}}">Logout</a>
+                    @endauth
+                </div>
+            </div>
+        </div>
+    </header>
 
 
     <div class="container">
@@ -386,6 +497,34 @@
             @endif
         </section>
     </div>
+
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const body = document.body;
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+    // If user had dark mode on before, keep it on
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+        body.classList.toggle('dark');
+        if (body.classList.contains('dark')) {
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+    });
+});
+</script>
+
+
+
+
+
+
 </body>
 
 </html>

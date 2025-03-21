@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width , initial-scale=1.0">
     <link rel="icon" type="image" href="favicon_io\android-chrome-512x512.png">
 
-    <title>Log in</title>
+    <title>Forgot Password</title>
 </head>
-
 
 <header id="navigation">
 
@@ -33,6 +32,13 @@
                 <a href="{{route('products')}}">Products</a>
                 <a href="{{route('contact')}}">Contact</a>
                 <a href="{{route('aboutUs')}}">About us</a>
+                <a href="{{route('basket')}}">Basket</a>
+                <a href="{{route('order')}}">Order History</a>
+                <a href="{{route('customer.details')}}">Change Customer Details</a>
+                @if(session('admin'))
+                <a href="{{ route('admin.home') }}">Admin Home</a>
+                @endif
+                <a href="{{route('logout')}}">Logout</a>
             </div>
         </div>
     </div>
@@ -42,30 +48,43 @@
 
 
 
-    <section id="login">
-        <div id="login-header">
-            <h2>Log In</h2>
+    <section id="forgotPword">
+        <div id="forgotPword-header">
+            <h2>Forgot Password</h2>
         </div>
-
-        <form id="login-form" method="POST" action="{{ route('customer.login') }}">
+        <form id="forgotPword-form" method="POST" action="{{route('customer.changePassword')}}">
             @csrf
             <h3>Email</h3>
-            <input type="email" name="email" />
+            <input type="email" name="customer_email" />
             <br>
-            <h3>Password</h3>
-            <input type="password" name="password" />
+            <h3>Security Answer</h3>
+            <input type="text" name="security_answer" />
+            <br>
+            <h3>New Password</h3>
+            <input type="password" name="customer_password" />
+            <br>
+            <h3>Confirm new password</h3>
+            <input type="password" name="password_confirmation" />
             <br><br>
-            <input type="submit" name="submitted" value="Log In" />
-
+            <input type="submit" name="submitted" value="Change" />
             <input type="hidden" name="submitted" value="true" />
-            <p>Not a user? <a href="{{ route('register') }}">Register here</a></p> 
-            <a href="{{ route('customer.forgotpw') }}">Forgot Password</a></p>
 
-            
+            <p>Not a user? <a href="{{ route('register') }}">Register here</a></p>
+            <p>Want to Log in? <a href="{{ route('login') }}">Log in here</a></p>
         </form>
-    
-
         <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="side-logo">
+    </section>
+
+    <section id="form-error">
+        @if ($errors->any())
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
     </section>
 </body>
 
@@ -85,7 +104,6 @@
         background-color: #ebf3f7;
         color: #104904;
     }
-
 
     .luxury-text {
         flex-grow: 1;
@@ -176,7 +194,7 @@
         display: none;
         position: absolute;
         right: 0;
-        top: 100%;
+        top: 120%;
         background-color: white;
         box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
         border-radius: 5px;
@@ -202,14 +220,17 @@
         display: block;
     }
 
-    #login-header {
+
+
+    #forgotPword-header {
         font-size: 40px;
         margin-left: 23%;
         margin-top: -40px;
     }
 
-    input[name="email"],
-    input[name="password"] {
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
         border-radius: 20px;
         background-color: white;
         border-radius: 20px;
@@ -234,7 +255,7 @@
         box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
     }
 
-    #login-form {
+    #forgotPword-form {
         background-color: #104904;
         border-radius: 20px;
         margin-right: 50%;
@@ -243,19 +264,19 @@
         padding: 15px;
     }
 
-    #login-form p {
+    #forgotPword-form p {
         color: white;
-        
+        margin-left: 5%;
         font-size: 15px
     }
 
-    #login-form h3 {
+    #forgotPword-form h3 {
         color: #ebf3f7;
         margin-left: 2%;
         font-size: 25px
     }
 
-    #login img {
+    #forgotPword img {
         size: 40px;
     }
 
