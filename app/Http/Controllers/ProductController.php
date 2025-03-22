@@ -12,12 +12,7 @@ use Illuminate\Support\Facades\URL;
 
 class ProductController extends Controller
 {
-    public function createCategory($category)
-    {
-        Category::create([
-            'category_name' => $category
-        ]);
-    }
+
 
     public function showProduct($id)
     {

@@ -139,7 +139,12 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/stock/{size}', [App\Http\Controllers\AdminController::class, 'stockItems'])->name('admin.stock.items');
     Route::post('/admin/stock/{item_id}/change', [App\Http\Controllers\AdminController::class, 'stockItemChange'])->name('admin.stock.items.change');
 
+    //admin categories 
+    Route::get('/admin/category/new', function(){
+        return view('admin-category');
+    } )->name('admin.category.new');
 
+    Route::post('/admin/category/create', [App\Http\Controllers\AdminController::class, 'createCategory'])->name('admin.category.create');
 
 });
 

@@ -632,9 +632,10 @@
           <label for="description">Description</label>
           <textarea id="description" name="description" rows="6" placeholder="Enter shoe description"></textarea>
 
+          <a class="new-shoe-button" href="{{route('admin.category.new')}}"> Create a new Category </a>
+
           <!-- "New Shoe" submit button -->
           <button type="submit" class="new-shoe-button">New Shoe</button>
-
         </div>
       </form>
     </div>
