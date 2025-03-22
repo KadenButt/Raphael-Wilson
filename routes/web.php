@@ -124,6 +124,8 @@ Route::middleware('admin')->group(function () {
     //addmin product controlls
     Route::get('/admin/product/new', [App\Http\Controllers\AdminController::class, 'newProduct'])->name('admin.product.new');
     Route::post('/admin/product/create', [App\Http\Controllers\AdminController::class, 'createProduct'])->name('admin.product.create');
+    Route::get('/admin/product/edit/{product_id}', [App\Http\Controllers\AdminController::class, 'editProduct'])->name('admin.product.edit');
+    Route::post('/admin/product/udpate/{product_id}', [App\Http\Controllers\AdminController::class, 'udpateProduct'])->name('admin.product.udpate');
 
     //admin ordres
     Route::get ('/admin/orders', [App\Http\Controllers\AdminController::class, 'orders'])->name('admin.ordersAll');

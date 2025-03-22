@@ -271,285 +271,286 @@
     }
 
     @media (max-width: 768px) {
-        #navigation {
-            flex-direction: column;
-            align-items: center;
-        }
+      #navigation {
+        flex-direction: column;
+        align-items: center;
+      }
 
-        .product-container {
-            align-items: center;
-            flex-direction: column;
-        }
+      .product-container {
+        align-items: center;
+        flex-direction: column;
+      }
 
-        .black-shoe img {
-            width: 150px;
-        }
+      .black-shoe img {
+        width: 150px;
+      }
 
-        .product-view {
-            max-width: 100%;
-        }
+      .product-view {
+        max-width: 100%;
+      }
     }
 
     body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #ebf3f7;
-        color: #104904;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ebf3f7;
+      color: #104904;
     }
 
     .luxury-text {
-        flex-grow: 1;
-        text-align: center;
-        font-family: Arial, sans-serif;
-        white-space: nowrap;
-        /*stops text going underneath when larger*/
-        overflow: hidden;
-        /*so it doesnt overflow the container*/
-        color: #ebf3f7;
-        font-weight: bold;
-        margin: 0;
+      flex-grow: 1;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      white-space: nowrap;
+      /*stops text going underneath when larger*/
+      overflow: hidden;
+      /*so it doesnt overflow the container*/
+      color: #ebf3f7;
+      font-weight: bold;
+      margin: 0;
     }
 
 
     .product-view {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        /*keeps content vertical*/
-        justify-content: space-between;
-        text-align: left;
-        position: relative;
-        border-radius: 20px;
-        background-color: #104904;
-        color: #ebf3f7;
-        margin-top: 5%;
-        margin-left: 20px;
-        margin-right: 15%;
-        width: auto;
-        height: auto;
-        max-width: 100%;
-        padding: 15px;
-        padding-bottom: 5px;
-        box-sizing: border-box;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      /*keeps content vertical*/
+      justify-content: space-between;
+      text-align: left;
+      position: relative;
+      border-radius: 20px;
+      background-color: #104904;
+      color: #ebf3f7;
+      margin-top: 5%;
+      margin-left: 20px;
+      margin-right: 15%;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      padding: 15px;
+      padding-bottom: 5px;
+      box-sizing: border-box;
     }
 
     .product-view h2 {
-        margin-top: 0%;
+      margin-top: 0%;
     }
 
     .product-container {
-        display: flex;
-        align-items: flex-start;
-        gap: 20px;
-        position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      position: relative;
     }
 
     .black-shoe {
-        flex-shrink: 0;
-        margin-top: 5%;
-        margin-left: 5%;
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        max-width: 400px;
+      flex-shrink: 0;
+      margin-top: 5%;
+      margin-left: 5%;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      max-width: 400px;
     }
 
     .black-shoe img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
     }
 
     .basket-add-container {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-        position: absolute;
-        bottom: -15%;
-        right: 15%;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      position: absolute;
+      bottom: -15%;
+      right: 15%;
     }
 
     .basket-confirmation {
-        color: rgb(0, 123, 8);
-        font-size: 20px;
+      color: rgb(0, 123, 8);
+      font-size: 20px;
     }
 
     .basket-button {
-        bottom: -15%;
-        right: 15%;
-        display: inline-block;
-        margin: 10px auto 0;
-        padding: 5px 15px;
-        background-color: #104904;
-        color: white;
-        font-weight: bold;
-        font-size: 12px;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        text-align: center;
+      bottom: -15%;
+      right: 15%;
+      display: inline-block;
+      margin: 10px auto 0;
+      padding: 5px 15px;
+      background-color: #104904;
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      text-align: center;
 
     }
 
     .basket-button:hover {
-        background-color: #ebf3f7;
-        color: #104904;
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+      background-color: #ebf3f7;
+      color: #104904;
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
     }
 
     #navigation {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #104904;
-        padding: 5px 20px;
-        box-sizing: border-box;
-        overflow: visible;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #104904;
+      padding: 5px 20px;
+      box-sizing: border-box;
+      overflow: visible;
     }
 
     #navigation img {
-        flex-shrink: 0;
-        /*stops logo shrinking*/
-        width: 70px;
-        height: 70px;
+      flex-shrink: 0;
+      /*stops logo shrinking*/
+      width: 70px;
+      height: 70px;
     }
 
     .right-section {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-shrink: 0;
     }
 
 
     .nav-buttons {
-        display: flex;
-        gap: 10px;
+      display: flex;
+      gap: 10px;
     }
 
     .nav-buttons button {
-        padding: 10px 20px;
-        background-color: white;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 15px;
-        color: #104904;
-        transition: background-color 0.3s ease, color 0.3s ease;
+      padding: 10px 20px;
+      background-color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+      color: #104904;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .nav-buttons button:hover {
-        background-color: #ebf3f7;
-        color: #104904;
-        box-shadow: 0 6px 6px rgba(0.2, 0.2, 0.2, 0.2);
+      background-color: #ebf3f7;
+      color: #104904;
+      box-shadow: 0 6px 6px rgba(0.2, 0.2, 0.2, 0.2);
 
     }
 
     .dropdown {
-        position: relative;
+      position: relative;
     }
 
     .menu-button {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        cursor: pointer;
-        background: none;
-        border: none;
-        height: 30px;
-        gap: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      background: none;
+      border: none;
+      height: 30px;
+      gap: 6px;
     }
 
     .menu-icon {
-        background-color: white;
-        width: 35px;
-        height: 6px;
-        border-radius: 2px;
+      background-color: white;
+      width: 35px;
+      height: 6px;
+      border-radius: 2px;
     }
 
     .dropdown-menu {
-        display: none;
-        position: absolute;
-        right: 0;
-        top: 100%;
-        background-color: white;
-        box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
-        border-radius: 5px;
-        overflow: hidden;
-        z-index: 1000;
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background-color: white;
+      box-shadow: 0 4px 6px rgba(0.2, 0.2, 0.2, 0.2);
+      border-radius: 5px;
+      overflow: hidden;
+      z-index: 1000;
     }
 
     .dropdown-menu a {
-        display: block;
-        padding: 10px 20px;
-        color: #104904;
-        text-decoration: none;
-        font-weight: bold;
-        white-space: nowrap;
+      display: block;
+      padding: 10px 20px;
+      color: #104904;
+      text-decoration: none;
+      font-weight: bold;
+      white-space: nowrap;
     }
 
     .dropdown-menu a:hover {
-        background-color: #ebf3f7;
-        transition: background-color 0.3s ease, color 0.3s ease;
+      background-color: #ebf3f7;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .dropdown:hover .dropdown-menu {
-        display: block;
+      display: block;
     }
 
     button.link {
-        background: none;
-        border: none;
-        color: #ebf3f7;
-        cursor: pointer;
+      background: none;
+      border: none;
+      color: #ebf3f7;
+      cursor: pointer;
     }
   </style>
 </head>
 <header id="navigation">
 
-    <a href="{{route('home')}}">
-        <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
-    </a>
+  <a href="{{route('home')}}">
+    <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
+  </a>
 
-    <div class="luxury-text">
-        <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
+  <div class="luxury-text">
+    <h1><span style="font-weight:normal">Luxury footwear right at your fingertips</span></h1>
+  </div>
+
+  <div class="right-section">
+    @guest
+    <div class="nav-buttons">
+      <button id="signup" onclick="window.location.href='{{route('register')}}'">Sign Up</button>
+      <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
     </div>
+    @endguest
+    <div class="dropdown">
 
-    <div class="right-section">
-        @guest
-        <div class="nav-buttons">
-            <button id="signup" onclick="window.location.href='{{route('register')}}'">Sign Up</button>
-            <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
-        </div>
-        @endguest
-        <div class="dropdown">
-
-            <button class="menu-button">
-                <div class="menu-icon"></div>
-                <div class="menu-icon"></div>
-                <div class="menu-icon"></div>
-            </button>
-            <div class="dropdown-menu">
-                <a href="{{route('home')}}">Home</a>
-                <a href="{{route('products')}}">Products</a>
-                <a href="{{route('contact')}}">Contact</a>
-                <a href="{{route('aboutUs')}}">About us</a>
-                @auth
-                <a href="{{route('basket')}}">Basket</a>
-                <a href="{{route('order')}}">Order History</a>
-                <a href="{{route('customer.details')}}">Change Customer Details</a>
-                @if(session('admin'))
-                <a href="{{ route('admin.home') }}">Admin Home</a>
-                @endif
-                <a href="{{route('logout')}}">Logout</a>
-                @endauth
-            </div>
-        </div>
+      <button class="menu-button">
+        <div class="menu-icon"></div>
+        <div class="menu-icon"></div>
+        <div class="menu-icon"></div>
+      </button>
+      <div class="dropdown-menu">
+        <a href="{{route('home')}}">Home</a>
+        <a href="{{route('products')}}">Products</a>
+        <a href="{{route('contact')}}">Contact</a>
+        <a href="{{route('aboutUs')}}">About us</a>
+        @auth
+        <a href="{{route('basket')}}">Basket</a>
+        <a href="{{route('order')}}">Order History</a>
+        <a href="{{route('customer.details')}}">Change Customer Details</a>
+        @if(session('admin'))
+        <a href="{{ route('admin.home') }}">Admin Home</a>
+        @endif
+        <a href="{{route('logout')}}">Logout</a>
+        @endauth
+      </div>
     </div>
+  </div>
 </header>
+
 <body>
   <div class="page-container">
 
@@ -557,8 +558,8 @@
     <div class="top-section">
       <!-- Left: Title + Back button -->
       <div class="left-top">
-        <div class="title">New Product</div>
-        <a href="{{route('admin.stock');}}" class="back-button">Back to Stock</a>
+        <div class="title">Edit Product</div>
+        <a href="{{route('products')}}" class="back-button">Back to Prodcuts</a>
       </div>
 
       <!-- Right: Brand box -->
@@ -579,7 +580,7 @@
       </div>
 
       <!-- Product Form: Left column => Photo + fields, Right column => Photo preview + Description ///enctype="multipart/form-data"-->
-      <form method="POST" action="{{route('admin.product.create')}}" class="product-form" enctype="multipart/form-data">
+      <form method="POST" action="{{route('admin.product.udpate', [$product->product_id])}}" class="product-form" enctype="multipart/form-data">
         @csrf
         <!-- LEFT COLUMN: Photo upload + other fields -->
         <div class="left-column">
@@ -592,7 +593,7 @@
           <!-- Shoe Name -->
           <div class="field-group">
             <label for="shoe_name">Shoe Name</label>
-            <input type="text" id="shoe_name" name="shoe_name" placeholder="Enter shoe name" />
+            <input type="text" id="shoe_name" name="shoe_name" placeholder="Enter shoe name" value="{{$product->product_name}}" />
           </div>
 
           <!-- Category -->
@@ -600,7 +601,13 @@
             <label for="category">Category</label>
             <select name="category">
               @foreach($categories as $category)
-              <option value="{{$category->category_id}}">{{$category->category_name}}</option>
+                @if($product->category_id == $category->category_id)
+                <option selected value="{{$category->category_id}}">{{$category->category_name}}</option>
+                
+                @else
+                <option value="{{$category->category_id}}">{{$category->category_name}}</option>
+                @endif
+
               @endforeach
             </select>
           </div>
@@ -608,15 +615,8 @@
           <!-- Price -->
           <div class="field-group">
             <label for="price">Price</label>
-            <input type="number" step="0.01" id="price" name="price" placeholder="0.00" />
+            <input type="number" step="0.01" id="price" name="price" value="{{$product->product_price}}" />
           </div>
-
-          <!-- Quantity -->
-          <div class="field-group">
-            <label for="quantity">Quantity</label>
-            <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" />
-          </div>
-
 
         </div>
 
@@ -625,15 +625,15 @@
           <!-- Preview Container -->
           <div class="preview-container">
             <label>Photo Preview</label>
-            <img id="shoePreview" src="" alt="No image selected" />
+            <img src="data:image/jpeg;base64,{{ base64_encode($product->product_photo) }}" alt="shoe">
           </div>
 
           <!-- Description -->
           <label for="description">Description</label>
-          <textarea id="description" name="description" rows="6" placeholder="Enter shoe description"></textarea>
+          <textarea id="description" name="description" rows="6">{{ $product->product_description }}</textarea>
 
           <!-- "New Shoe" submit button -->
-          <button type="submit" class="new-shoe-button">New Shoe</button>
+          <button type="submit" class="new-shoe-button">Save Changes</button>
 
         </div>
       </form>
@@ -664,16 +664,31 @@
     const previewImg = document.getElementById('shoePreview');
 
     photoInput.addEventListener('change', function(event) {
-      const file = event.target.files[0];
+      const file = event.target.files[0]; // Get the selected file
       if (file) {
-        const reader = new FileReader();
+        const reader = new FileReader(); // Create a FileReader object
+
+        // Set up the onload event handler
         reader.onload = function(e) {
-          previewImg.src = e.target.result;
-        }
+          previewImg.src = e.target.result; // Set the src of the image to the file's data URL
+          previewImg.style.display = 'block'; // Make the image visible
+        };
+
+        // Read the file as a Data URL
         reader.readAsDataURL(file);
       } else {
-        // If no file is selected, remove the src
+        // If no file is selected, remove the src and hide the image
         previewImg.src = '';
+        previewImg.style.display = 'none';
+      }
+    });
+
+    // On page load, check if there's an existing image
+    window.addEventListener('load', function() {
+      if (previewImg.src && previewImg.src !== '#') {
+        previewImg.style.display = 'block'; // Show the existing image
+      } else {
+        previewImg.style.display = 'none'; // Hide the image if no src is set
       }
     });
   </script>

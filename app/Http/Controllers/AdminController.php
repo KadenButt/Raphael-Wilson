@@ -289,6 +289,66 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Product Created');
     }
 
+    public function editProduct($product_id)
+    {
+        $product = Product::where(['product_id' => $product_id])->first();
+        $categories = Category::all();
+
+        return view('admin-edit-product', [
+            'product' => $product,
+            'categories' => $categories,
+
+        ]);
+    }
+
+    public function udpateProduct(Request $request, $product_id)
+    {
+        $vd = $request->validate([
+            'shoe_name' => 'required|max:255|alpha',
+            'category' => 'required|integer',
+            'price' => 'required|numeric',
+            'description' => 'required',
+        ], [
+            'shoe_name.required' => 'The shoe name is required.',
+            'shoe_name.alpha' => 'The shoe name must contain only letters.',
+            'category.required' => 'The category is required.',
+            'category.integer' => 'The category must be an integer.',
+            'price.required' => 'The price is required.',
+            'price.integer' => 'The price must be an integer.',
+            'description.required' => 'The description is required.',
+
+        ]);
+
+        $product = Product::where(['product_id' => $product_id]);
+
+        $product->update([
+            'product_name' => $vd['shoe_name'],
+            'product_description' => $vd['description'],
+            'product_price' => $vd['price'],
+            'category_id' => $vd['category']
+        ]);
+
+        if ($request->file('photo') != null) {
+            $vd = $request->validate([
+                'photo' => 'required|image|mimes:jpeg,png,jpg|max:10000',
+            ], [
+                'photo.required' => 'The photo is required.',
+                'photo.image' => 'The file must be an image.',
+                'photo.mimes' => 'The image must be a file of type: jpeg, png, jpg.',
+                'photo.max' => 'The image must not exceed 10MB in size.',
+            ]);
+            $blob = file_get_contents($vd['photo']->getRealPath());
+
+            $product->update([
+                'product_photo' => $blob,
+
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
+
     public function orders()
     {
         $orders = Order::all();
@@ -343,10 +403,10 @@ class AdminController extends Controller
             $order->update([
                 'order_status' => $request->input('order-status'),
             ]);
-    
+
             return redirect()->back()->with('success', 'Order status updated successfully!');
         }
-    
+
         // If the order is not found, return with an error message
         return redirect()->back()->with('error', 'Order not found!');
     }

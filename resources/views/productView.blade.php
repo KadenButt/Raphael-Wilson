@@ -72,7 +72,7 @@
                     <label for="quantity"><b>Quantity:</b></label>
                     <input type="number" id="quantity" name="quantity" min="1" value="1">
                     <br><br>
-                    @if($outStock  == "")
+                    @if($outStock == "")
                     Items in stock
                     @else
                     Sizes {{$outStock}} are currently out of stock
@@ -84,6 +84,13 @@
                     <button type="submit" class="basket-button">
                         <h2>Add to Basket</h2>
                     </button>
+                    @if(session('admin'))
+                    <a href="{{route('admin.product.edit', [$product->product_id])}}" class="basket-button">
+                        <h2>Edit Product</h2>
+                    </a>
+                    @endif
+
+                </form>
             </div>
         </div>
 
