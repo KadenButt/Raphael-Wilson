@@ -265,6 +265,19 @@ class AdminController extends Controller
             'photo.mimes' => 'The image must be a file of type: jpeg, png, jpg.',
             'photo.max' => 'The image must not exceed 10MB in size.',
         ]);
+        
+        //check if product name is unquie
+        $product = Product::where([
+            "product_name" => $vd['shoe_name']
+        ]);
+
+        if($product != null)
+        {
+            $error = new MessageBag;
+            $error->add('name', 'The product name is already in use');
+            return redirect()->back()->withErrors($error);
+        }
+
 
         $blob = file_get_contents($vd['photo']->getRealPath());
 
