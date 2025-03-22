@@ -318,6 +318,18 @@ class AdminController extends Controller
             'description.required' => 'The description is required.',
 
         ]);
+        
+        //check if product name is unquie
+        $product = Product::where([
+            "product_name" => $vd['shoe_name']
+        ]);
+
+        if ($product != null) {
+            $error = new MessageBag;
+            $error->add('name', 'The product name is already in use');
+            return redirect()->back()->withErrors($error);
+        }
+
 
         $product = Product::where(['product_id' => $product_id]);
 
