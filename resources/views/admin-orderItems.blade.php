@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Your Orders</title>
     <link rel="icon" type="image/png" href="favicon_io/android-chrome-512x512.png">
 </head>
+
 <header id="navigation">
 
     <a href="{{route('home')}}">
@@ -33,7 +34,9 @@
                 <a href="{{route('basket')}}">Basket</a>
                 <a href="{{route('order')}}">Order History</a>
                 <a href="{{route('customer.details')}}">Change Customer Details</a>
+                @if(session('admin'))
                 <a href="{{ route('admin.home') }}">Admin Home</a>
+                @endif
                 <a href="{{route('logout')}}">Logout</a>
             </div>
         </div>
@@ -42,104 +45,128 @@
 
 <body>
 
-
-    <div class="logo-box">
-        <img src="{{ asset('images/Screenshot_2025-10-28_105449.png')}}" alt="raphael-wilson-logo">
+    <div class="order-header">
+        <h2>Your Orders</h2>
     </div>
 
-    <div class="admin-buttons-container">
-        <div class="inventory-container">
-            <h1>Stock</h1>
-            <div class="link-container">
-                <a href="{{route('admin.stock')}}">View all stock <span class="arrow">&rsaquo;</span> </a>
-            </div>
-        </div>
-
-        <div class="order-container">
-            <h1>Orders</h1>
-            <div class="link-container">
-                <a href="{{route('admin.ordersAll')}}">View all orders <span class="arrow">&rsaquo;</span> </a>
-            </div>
-        </div>
-
-        <div class="customers-container">
-            <h1>Customers</h1>
-            <div class="link-container">
-                <a href="{{route('admin.customers')}}">View all customers <span class="arrow">&rsaquo;</span> </a>
-            </div>
-        </div>
+    @if(session('success'))
+    <div class="order-confirmation">
+        <p>{{session('success')}}</p>
     </div>
+    @endif
+
+    <div class="orders-container">
+        @for ($i = 0; $i < count($orderItems); $i++)
+            <div class="order">
+            <div class="order-photo1">
+                <img src="data:image/jpeg;base64,{{ base64_encode($products[$i]->product_photo) }}" alt="shoe">
+            </div>
+            <div class="order-details">
+                <p><b>{{ $products[$i]->product_name }}</b></p>
+                <p>Order Number: {{$orderItems[$i]->order_id}}</p>
+                <p>Quantity: {{$orderItems[$i]->order_item_quantity}}
+                <p><b> £{{$products[$i]->product_price * $orderItems[$i]->order_item_quantity}} </b></p>
+            </div>
+            <form id='delete-order' method='POST' action="{{ route('order.delete') }}">
+                @csrf
+                <button id="cancel-button" type='submit'> Cancel Order</button>
+                <input type="hidden" name="order_item_id" value="{{$orderItems[$i]->order_item_id}}" />
+
+            </form>
+    </div>
+    @endfor
+    </div>
+
 
 </body>
 
+</html>
 
 <style>
-    .logo-box img {
-        display: flex;
-        margin: auto;
-        width: 40%;
-        height: auto;
+    @media (max-width: 768px) {
+        #navigation {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 
-    .logo-box {
-        margin: auto;
-        margin-top: 1%;
-        background-color: #104904;
-        width: 75%;
-        border-radius: 10px;
-    }
-
-    .admin-buttons-container {
+    .order-header {
         margin-top: -2%;
-        display: grid;
-        justify-items: center;
-        align-items: center;
-        grid-template-columns: repeat(3, 1fr);
-        padding: 30px;
-    }
-
-    .inventory-container a,
-    .order-container a,
-    .customers-container a {
-        color: #ebf3f7;
-        text-decoration: none;
-    }
-
-    .inventory-container,
-    .order-container,
-    .customers-container {
-        display: flex;
-        margin: auto;
+        font-size: 30px;
         text-align: center;
+    }
+
+    .order-confirmation {
+        margin-left: 5%;
+        margin-top: -2%;
+    }
+
+    .orders-container {
+        display: grid;
+        flex-wrap: wrap;
+        position: relative;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: -1%;
+    }
+
+    .order {
+        display: flex;
         flex-direction: column;
-        margin: 20px;
-        width: 30%;
-        height: 100px;
-        padding: 50px;
-        padding-top: 60px;
-        padding-bottom: 60px;
+        align-items: center;
+        padding-bottom: 5px;
+        margin: 0;
+
+    }
+
+    .order img {
+        width: 100%;
+        height: auto;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        display: block;
+        margin: 0;
+        padding: 0;
+    }
+
+    .order-photo1 {
+        width: 60%;
+        display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #104904;
-        border-radius: 20px;
+        overflow: hidden;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+
+    .order-details {
         color: #ebf3f7;
-        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
-
-    }
-
-
-
-    .link-container {
+        background-color: #104904;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        width: 60%;
         text-align: center;
+        margin: 0;
     }
 
-    .arrow {
-        font-size: 20px;
+    #cancel-button {
+        margin-top: 10px;
+        font-weight: bold;
+        border: none;
+        color: #ebf3f7;
+        background-color: #104904;
+        border-radius: 50px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    .inventory-container a:hover {
-        text-decoration: none;
+    #cancel-button:hover {
+        background-color: #ebf3f7;
+        color: #104904;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
+
 
     body {
         margin: 0;
@@ -157,6 +184,7 @@
         overflow: hidden;
         /*so it doesnt overflow the container*/
         color: #ebf3f7;
+        font-weight: bold;
         margin: 0;
     }
 
@@ -181,6 +209,31 @@
         display: flex;
         align-items: center;
         gap: 15px;
+
+    }
+
+
+    .nav-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .nav-buttons button {
+        padding: 10px 20px;
+        background-color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 15px;
+        color: #104904;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-buttons button:hover {
+        background-color: #ebf3f7;
+        color: #104904;
+        box-shadow: 0 6px 6px rgba(0.2, 0.2, 0.2, 0.2);
 
     }
 

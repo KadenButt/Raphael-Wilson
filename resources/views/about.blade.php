@@ -6,6 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us</title>
   <link rel="icon" type="image/png" href="favicon_io/android-chrome-512x512.png">
+
+  <style>
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+  </style>
+
+
+
+
   <style>
     @media (max-width: 768px) {
       #navigation {
@@ -20,6 +30,7 @@
       background-color: #ebf3f7;
       color: #104904;
       text-align: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .luxury-text {
@@ -48,6 +59,7 @@
       padding: 5px 20px;
       box-sizing: border-box;
       overflow: visible;
+      transition: background-color 0.3s ease;
     }
 
     #navigation img {
@@ -110,6 +122,7 @@
       width: 35px;
       height: 6px;
       border-radius: 2px;
+      transition: background-color 0.3s ease;
     }
 
     .dropdown-menu {
@@ -122,6 +135,7 @@
       border-radius: 5px;
       overflow: hidden;
       z-index: 1000;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .dropdown-menu a {
@@ -131,6 +145,7 @@
       text-decoration: none;
       font-weight: bold;
       white-space: nowrap;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .dropdown-menu a:hover {
@@ -141,11 +156,34 @@
     .dropdown:hover .dropdown-menu {
       display: block;
     }
+
+
+    body.dark {
+      background-color: #111 !important;
+      color: #eee !important;
+    }
+    body.dark #navigation {
+      background-color: #222 !important;
+    }
+    body.dark .menu-icon {
+      background-color: #999 !important;
+    }
+    body.dark .dropdown-menu {
+      background-color: #333 !important;
+      color: #fff !important;
+    }
+    body.dark .dropdown-menu a {
+      color: #fff !important;
+    }
+
+
+
+
   </style>
 </head>
 
 <body>
-<header id="navigation">
+  <header id="navigation">
 
     <a href="{{route('home')}}">
       <img src="{{asset('favicon_io/android-chrome-512x512.png')}} " alt="Logo">
@@ -162,6 +200,25 @@
         <button id="login" onclick="window.location.href='{{route('login')}}'">Log In</button>
       </div>
       @endguest
+
+
+
+      <button id="themeToggleBtn" 
+        style="padding: 10px; 
+               border-radius: 4px; 
+               font-weight: bold; 
+               background-color: #fff; 
+               color: #104904; 
+               border: 2px solid #104904; 
+               cursor: pointer;
+               transition: background-color 0.3s ease, color 0.3s ease;">
+        Dark Mode
+      </button>
+
+
+
+
+
       <div class="dropdown">
 
         <button class="menu-button">
@@ -174,9 +231,16 @@
           <a href="{{route('products')}}">Products</a>
           <a href="{{route('contact')}}">Contact</a>
           <a href="{{route('aboutUs')}}">About us</a>
+          
           @auth
           <a href="{{route('basket')}}">Basket</a>
-          <a href='{{route('order')}}'>Order History</a>
+          <a href="{{route('order')}}">Order History</a>
+          <a href="{{route('customer.details')}}">Change Customer Details</a>
+          @auth
+          @if(session('admin'))
+          <a href="{{ route('admin.home') }}">Admin Home</a>
+          @endif
+          @endauth
           <a href="{{route('logout')}}">Logout</a>
 
           @endauth
@@ -218,6 +282,33 @@
       </div>
     </section>
   </main>
+
+
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const body = document.body;
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+      // If user had dark mode on before, keep it on
+      if (localStorage.getItem('theme') === 'dark') {
+          body.classList.add('dark');
+      }
+
+      themeToggleBtn.addEventListener('click', function() {
+          body.classList.toggle('dark');
+          if (body.classList.contains('dark')) {
+              localStorage.setItem('theme', 'dark');
+          } else {
+              localStorage.setItem('theme', 'light');
+          }
+      });
+  });
+  </script>
+
+
+
+
 
 </body>
 

@@ -50,18 +50,18 @@
         }
 
         .basket-text {
-            margin-top:-2%;
+            margin-top: -2%;
             text-align: center;
             font-size: 30px;
         }
-        
+
         .basket-contents {
             text-align: center;
             position: relative;
             border-radius: 20px;
             background-color: #104904;
             color: #ebf3f7;
-            width:80%;
+            width: 80%;
             max-width: 400px;
             padding-bottom: 5px;
             box-sizing: border-box;
@@ -74,16 +74,16 @@
         }
 
         .basket-container {
-            margin-top:-3%;
-            display:grid;
+            margin-top: -3%;
+            display: grid;
             grid-template-columns: repeat(3, 1fr);
             flex-wrap: wrap;
             position: relative;
         }
- 
+
         .black-shoe img {
             width: 100%;
-            height:250px;
+            height: 250px;
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
         }
@@ -199,17 +199,20 @@
 
         .total {
             width: 340px;
-            grid-column: 3 / 4; /* Place the checkout button in the 3rd column */
+            grid-column: 3 / 4;
+            /* Place the checkout button in the 3rd column */
             text-align: center;
             margin-left: 10%;
-            margin-bottom:10%;
+            margin-bottom: 10%;
             border-radius: 20px;
             background-color: #104904;
             color: #ebf3f7;
             padding: 10px;
             box-sizing: border-box;
-            align-self:center; /* Align to the top of the grid row */
+            align-self: center;
+            /* Align to the top of the grid row */
         }
+
         .checkout-button {
             display: block;
             margin: 10px auto 0;
@@ -230,7 +233,6 @@
             color: #104904;
             box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
         }
-
     </style>
 </head>
 
@@ -259,7 +261,11 @@
                     <a href="{{route('contact')}}">Contact</a>
                     <a href="{{route('aboutUs')}}">About us</a>
                     <a href="{{route('basket')}}">Basket</a>
-                    <a href='{{route('order')}}'>Order History</a>
+                    <a href="{{route('order')}}">Order History</a>
+                    <a href="{{route('customer.details')}}">Change Customer Details</a>
+                    @if(session('admin'))
+                    <a href="{{ route('admin.home') }}">Admin Home</a>
+                    @endif
                     <a href="{{route('logout')}}">Logout</a>
                 </div>
             </div>
@@ -270,39 +276,39 @@
         <h1>Basket</h1>
     </div>
     <div class="basket-container">
-            @for ($i = 0; $i < count($products); $i++)
-                <div class="basket-contents">
-                    <div class="black-shoe">
-                        <img src="data:image/jpeg;base64,{{ base64_encode($products[$i]->product_photo) }}" alt="shoe">
-                    </div>
-                    <h3>{{ $products[$i]->product_name }}</h3>
-                    <div class="shoe-description">
-                        <p>
-                            <b>Size: </b> {{ $sizes[$i] }}
-                        </p>
-                        <form id="change-quantity" method="POST" action="{{ route('basket.change_quantity')}}">
-                            @csrf
-                            <label for="quantity"><b>Quantity: </b></label>
-                            <input type="number" id="quantity" name="quantity" min="1" value="{{$basket_items[$i]->quantity}}">
-                            <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
-                            <button type="submit"> Change</button>
-                        </form>
-                        
-                        <p>In stock</p>
-                       
-                        <h3>£{{ $products[$i]->product_price * $basket_items[$i]->quantity }}</h3>
-                    </div>
-                    <br>
-                    <div class="delete-button">
-                        <form id="delete-item" method="POST" action="{{ route('basket.delete') }}">
-                            @csrf
-                            <button type="submit"> Delete</button>
-                            <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
-                        </form>
-                    </div>
-                
-            </div>    @endfor
-            <div class="total">
+        @for ($i = 0; $i < count($products); $i++)
+            <div class="basket-contents">
+            <div class="black-shoe">
+                <img src="data:image/jpeg;base64,{{ base64_encode($products[$i]->product_photo) }}" alt="shoe">
+            </div>
+            <h3>{{ $products[$i]->product_name }}</h3>
+            <div class="shoe-description">
+                <p>
+                    <b>Size: </b> {{ $sizes[$i] }}
+                </p>
+                <form id="change-quantity" method="POST" action="{{ route('basket.change_quantity')}}">
+                    @csrf
+                    <label for="quantity"><b>Quantity: </b></label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="{{$basket_items[$i]->quantity}}">
+                    <input type="hidden" name="basket_item_id" value="{{$basket_items[$i]->basket_item_id}}" />
+                    <button type="submit"> Change</button>
+                </form>
+
+                <p>In stock</p>
+
+                <h3>£{{ $products[$i]->product_price * $basket_items[$i]->quantity }}</h3>
+            </div>
+            <br>
+            <div class="delete-button">
+                <form id="delete-item" method="POST" action="{{ route('basket.delete') }}">
+                    @csrf
+                    <button type="submit"> Delete</button>
+                    <input type="hidden" name="item_id" value="{{$basket_items[$i]->basket_item_id}}" />
+                </form>
+            </div>
+
+    </div> @endfor
+    <div class="total">
         <h2>Total: £{{$price}}</h2>
         <form method="POST" action="{{ route('order.create') }}">
             @csrf
@@ -312,7 +318,7 @@
             <input type="hidden" name="total_price" value="{{$price}}" />
         </form>
     </div>
-</div>
+    </div>
 
 
     </div>

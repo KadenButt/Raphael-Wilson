@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Item;
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\URL;
@@ -20,7 +22,20 @@ class ProductController extends Controller
     public function showProduct($id)
     {
         $product = Product::where('product_id', $id)->first();
-        return view('productView', ['product' => $product]);
+        $items = Item::where(['product_id' => $product->product_id])->get();
+        $outStock = "";
+        foreach($items as $item)
+        {
+            if($item->stock_number == 0)
+            {
+                $outStock = $outStock . $item->size_number . " ";
+
+            }
+        }
+
+        return view('productView', ['product' => $product, 'outStock' => $outStock]);
+
+
     }
 
     public function showProducts()
