@@ -122,11 +122,23 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/delete/{customer_id}', [App\Http\Controllers\AdminController::class, 'deleteCustomer'])->name('admin.delete');
 
     //addmin product controlls
-    Route::get('/admin/product/new', [App\Http\Controllers\AdminController::class, 'newProduct'])->name('admin.proudct.new');
+    Route::get('/admin/product/new', [App\Http\Controllers\AdminController::class, 'newProduct'])->name('admin.product.new');
     Route::post('/admin/product/create', [App\Http\Controllers\AdminController::class, 'createProduct'])->name('admin.product.create');
 
     //admin ordres
     Route::get ('/admin/orders', [App\Http\Controllers\AdminController::class, 'orders'])->name('admin.ordersAll');
+    Route::get('/admin/orders/items/{order_id}', [App\Http\Controllers\AdminController::class, 'ordersItems'])->name('admin.orderItems');
+    Route::post('/admin/orders/status/change', [App\Http\Controllers\AdminController::class, 'statusChange'])->name('admin.status.change');
+
+
+    //admin stock
+    Route::get('/admin/stock', [App\Http\Controllers\AdminController::class, 'stock'] )->name('admin.stock');
+    Route::get('/admin/stock/category/{category_id}', [App\Http\Controllers\AdminController::class, 'stockCategories'])->name('admin.stock.category');
+    Route::get('/admin/stock/{size}', [App\Http\Controllers\AdminController::class, 'stockItems'])->name('admin.stock.items');
+    Route::post('/admin/stock/{item_id}/change', [App\Http\Controllers\AdminController::class, 'stockItemChange'])->name('admin.stock.items.change');
+
+
+
 });
 
 

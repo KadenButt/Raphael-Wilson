@@ -276,8 +276,7 @@ class AdminController extends Controller
             'category_id' => $vd['category']
         ]);
 
-        for($x = 4;  $x < 14; $x++)
-        {
+        for ($x = 4; $x < 14; $x++) {
             Item::create([
                 'product_id' => $product->product_id,
                 'size_number' => (string)$x,
@@ -288,15 +287,106 @@ class AdminController extends Controller
             ]);
         }
         return redirect()->back()->with('success', 'Product Created');
-
-
-
-
     }
 
-    public function orders(Request $request)
+    public function orders()
     {
-        $orders= Order::all();
-        return view('admin-orders', ['orderItems' => $orders]);
+        $orders = Order::all();
+        $products = [];
+
+        foreach ($orders as $order) {
+            $orderItem = OrderItem::where(['order_id' => $order->first()->order_id])->first();
+            $item = Item::where(['item_id' => $orderItem->item_id])->first();
+            $product = Product::where(['product_id' => $item->product_id])->first();
+            $products[] = $product->product_photo;
+        }
+
+        return view('admin-orders', [
+            'orders' => $orders,
+            'products' => $products,
+        ]);
+    }
+
+    public function ordersItems($orderId)
+    {
+
+        //gets order item from the order
+
+        $orderItems = OrderItem::where(['order_Id' => $orderId])->get();
+        $products = [];
+
+        //Gets Product of each item
+        foreach ($orderItems as $order_item) {
+            $item = Item::where('item_id', $order_item->item_id)->first();
+            $products[] = Product::where('product_id', $item->product_id)->first();
+        }
+
+
+
+        return view('admin-orderItems', [
+            'orderItems' => $orderItems,
+            'products' => $products,
+        ]);
+    }
+
+    public function statusChange(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'order_id' => 'required|exists:order,order_id', // Ensure the order exists
+            'order-status' => 'required|in:Processing,Shipped,Delivered,Cancelled', // Validate status
+        ]);
+
+        $order = Order::find($request->input('order_id'));
+
+        if ($order) {
+            $order->update([
+                'order_status' => $request->input('order-status'),
+            ]);
+    
+            return redirect()->back()->with('success', 'Order status updated successfully!');
+        }
+    
+        // If the order is not found, return with an error message
+        return redirect()->back()->with('error', 'Order not found!');
+    }
+
+    public function stock()
+    {
+        $products = Product::all();
+        $categories = Category::all();
+        return view('admin-stock', [
+            'products' => $products,
+            'categories' => $categories
+        ]);
+    }
+
+    public function stockCategories($category_id)
+    {
+        $products = Product::where(['category_id' => $category_id])->get();
+        $categories = Category::all();
+        return view('admin-stock', [
+            'products' => $products,
+            'categories' => $categories
+        ]);
+    }
+
+    public function stockItems($size)
+    {
+        $items = Item::where(['size_number' => $size])->get();
+        $products = Product::All();
+        return view('admin-items', [
+            'size' => $size,
+            'items' => $items,
+            'products' => $products
+        ]);
+    }
+
+    public function stockItemChange(Request $request, $item_id)
+    {
+        Item::where(['item_id' => $item_id])->update([
+            'stock_number' => $request->input('quantity'),
+        ]);
+        return redirect()->back();
     }
 }
