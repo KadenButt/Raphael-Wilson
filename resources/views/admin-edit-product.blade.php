@@ -559,7 +559,7 @@
       <!-- Left: Title + Back button -->
       <div class="left-top">
         <div class="title">Edit Product</div>
-        <a href="{{route('products')}}" class="back-button">Back to Prodcuts</a>
+        <a href="{{route('products')}}" class="back-button">Back to Products</a>
       </div>
 
       <!-- Right: Brand box -->

@@ -41,7 +41,7 @@
 </header>
 
 <body>
-    @if($stockWarning != 0)
+    @if($stockWarning != null)
 
     <h3>Low stock Scroll down!</h3>
 
@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    @if($stockWarning != 0)
+    @if($stockWarning != null)
 
     <h1>Stock Warning</h1>
     @foreach($stockWarning as $item)

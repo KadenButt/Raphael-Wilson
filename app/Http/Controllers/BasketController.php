@@ -81,35 +81,6 @@ class BasketController extends Controller
     }
 
 
-    ////////////////temp
-    public function addBasketTemp()
-    {
-
-        $sizeItem1 = Item::create([
-            'product_id' => 1,
-            'size_number' => '10'
-        ]);
-
-        $sizeItem2 = Item::create([
-            'product_id' => 2,
-            'size_number' => '9'
-        ]);
-
-        Basket::create([
-            'quantity' => 1,
-            'size_item_id' => $sizeItem1->size_item_id,
-            'customer_id' => Auth::user()->customer_id
-        ]);
-
-        Basket::create([
-            'quantity' => 1,
-            'size_item_id' =>  $sizeItem2->size_item_id,
-            'customer_id' => Auth::user()->customer_id
-        ]);
-
-
-    }
-
 
 
 }

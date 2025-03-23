@@ -67,6 +67,11 @@
         </div>
         @endif
     </section>
+    @if(session('success'))
+    <div class="basket-confirmation">
+      <p>Product Created</p>
+    </div>
+    @endif
 </body>
 
 
