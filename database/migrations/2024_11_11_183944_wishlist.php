@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('wishlist', function(Blueprint $table){
             $table->id('wishlist_id')->primary();
             $table->foreignId('customer_id')->references('customer_id')->on('customer');
+            $table->foreignId('product_id')->references('product_id')->on('product');
+
         });
     }
 

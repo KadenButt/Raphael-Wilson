@@ -385,7 +385,7 @@
     <label for="redirectSelect">Choose a category</label>
 
     <select id="redirectSelect" onchange="redirectToPage()">
-        <option name="">Choose Size</option>
+        <option value="{{ route('admin.stock') }}">Choose Size</option>
         @for($x = 4; $x < 14; $x++)
             <option value="{{ route('admin.stock.items', [$x]) }}">Size {{$x}}</option>
             @endfor
@@ -404,6 +404,8 @@
                         <label for="quantity">Quantity</label>
                         <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" value='N/A'/>
                         <button type="submit" class="new-shoe-button">Change Stock Numbers</button>
+                        <br>
+                        <a href="{{route('admin.product.delete.check', [$product->product_id])}}">Delete product</a>
                     </div>
 
                 </form>

@@ -385,15 +385,15 @@
     <label for="redirectSelect">Choose a Size</label>
 
     <select id="redirectSelect" onchange="redirectToPage()">
-        <option name="">Choose Size</option>
+        <option value="{{ route('admin.stock') }}">Choose Size</option>
         @for($x = 4; $x < 14; $x++)
-            
-            @if($x == $size)
-                <option value="{{ route('admin.stock.items', [$x]) }}"selected>Size {{$x}}</option>
+
+            @if($x==$size)
+            <option value="{{ route('admin.stock.items', [$x]) }}" selected>Size {{$x}}</option>
             @else
-                <option value="{{ route('admin.stock.items', [$x]) }}">Size {{$x}}</option>
+            <option value="{{ route('admin.stock.items', [$x]) }}">Size {{$x}}</option>
             @endif
-        @endfor
+            @endfor
     </select>
 
     <a href="{{route('admin.product.new')}}">Create a new product</a>
@@ -411,7 +411,7 @@
                             <label for="quantity">Quantity</label>
                             <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" value='{{$items[$x]->stock_number }}' />
                             <button type="submit" class="new-shoe-button">Change Stock Numbers</button>
-                            <input type="hidden"  name="item_id" value='{{$items[$x]->item_id }}' />
+                            <input type="hidden" name="item_id" value='{{$items[$x]->item_id }}' />
                         </div>
 
                     </form>

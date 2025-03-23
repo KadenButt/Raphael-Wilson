@@ -132,6 +132,9 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/product/create', [App\Http\Controllers\AdminController::class, 'createProduct'])->name('admin.product.create');
     Route::get('/admin/product/edit/{product_id}', [App\Http\Controllers\AdminController::class, 'editProduct'])->name('admin.product.edit');
     Route::post('/admin/product/udpate/{product_id}', [App\Http\Controllers\AdminController::class, 'udpateProduct'])->name('admin.product.udpate');
+   
+    Route::get('/admin/product/delete/check/{product_id}', [App\Http\Controllers\AdminController::class, 'deleteProductCheck'])->name('admin.product.delete.check');
+    Route::post('/admin/product/delete/{product_id}', [App\Http\Controllers\AdminController::class, 'deleteProduct'])->name('admin.product.delete');
 
     //admin ordres
     Route::get ('/admin/orders', [App\Http\Controllers\AdminController::class, 'orders'])->name('admin.ordersAll');

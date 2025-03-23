@@ -32,7 +32,7 @@ return new class extends Migration
         //creates defualt admin account
         
         $payment = Payment::create([
-            'account_number' => '12345678',
+            'account_number' => '23423432412',
         ]);
 
         $address = Address::create([

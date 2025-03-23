@@ -16,8 +16,6 @@ use App\Models\Basket;
 use App\Models\Category;
 use App\Models\Review;
 use App\Models\Wishlist;
-use App\Models\Inventory;
-use App\Models\Stock;
 
 
 
@@ -220,7 +218,6 @@ class AdminController extends Controller
             Address::where('address_id', $customer->address_id)->delete();
             //delete payment
             Payment::where('payment_id', $customer->payment_id)->delete();
-
         }
 
 
@@ -363,6 +360,68 @@ class AdminController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function deleteProductCheck($product_id)
+    {
+        $product = Product::where(['product_id' => $product_id])->first();
+        return view('product-check-delete-account', [
+            'product' => $product
+        ]);
+    }
+
+    public function deleteProduct(Request $request, $product_id)
+    {
+        $product = Product::where([
+            'product_id' => $product_id
+        ])->first();
+
+        if ($request->input('product-text') == $product->product_name) {
+            Wishlist::where(['product_id' => $product_id])->delete();
+            Review::where(['product_id' => $product_id])->delete();
+
+            //get all items of the product (1->10)
+            $items = Item::where(['product_id' => $product_id])->get();
+            $test[] = [];
+
+            //dd($items);
+
+            foreach ($items as $item) {
+
+                //delete from basket
+                Basket::where(['item_id' => $item->item_id])->delete();
+                //get all order_id of OrderItem for one $item
+                $orderIds = OrderItem::where(['item_id' => $item->item_id])->pluck('order_id');
+                
+                //delete all order items
+                OrderItem::where(['item_id' => $item->item_id])->delete();
+                
+                //for each orderId of the Orderitems that we deleted 
+                foreach($orderIds as $orderId)
+                {
+                    //how many order_items belong to an order 
+                    $orderItems = OrderItem::where(['order_id' => $orderId])->get();
+                    if(count($orderItems) == 0)
+                    {
+                        Order::where(['order_id' => $orderId])->delete();
+                    }
+                }
+
+                $item->delete();
+
+            }
+            $product->delete();
+
+
+
+
+            Item::where(['product_id' => $product_id])->delete();
+            $product->delete();
+        } else {
+            $error = new MessageBag;
+            $error->add('Prodcut', 'The products\'s name was not typed correctly');
+            return redirect()->back()->withErrors($error);
+        }
     }
 
 
