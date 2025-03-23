@@ -37,9 +37,9 @@ class OrderController extends Controller
             $item = Item::where('item_id', $basket_item->item_id)->first();
             //edit stock details
             $item->update([
-                'stock_number' => $item->stock_number - 1,
+                'stock_number' => $item->stock_number - $basket_item->quantity,
                 'stock_change_date' => date("Y-m-d"),
-                'stock_changes_number' => $item->stock_changes_number + 1
+                'stock_changes_number' => $item->stock_changes_number + $basket_item->quantity,
             ]);
             $product = Product::where('product_id', $item->product_id)->first();
             OrderItem::create([

@@ -103,18 +103,9 @@ Route::middleware('auth')->group(function () {
 //adming routes
 Route::middleware('admin')->group(function () {
 
-    Route::get('/admin/home', function () {
-        return view('admin-home');
-    })->name('admin.home');
+    Route::get('/admin/home', [App\Http\Controllers\AdminController::class, 'adminHome'])->name('admin.home');
 
 
-    Route::get('/admin/stock', function () {
-        return dd('to-do');
-    })->name('stock');
-
-    Route::get('/admin/orders', function () {
-        return dd('to-do');
-    })->name('orders');
 
     //admin customer controls
     Route::get('/admin/customers', [App\Http\Controllers\AdminController::class, 'listCustomer'])->name('admin.customers');
@@ -154,6 +145,9 @@ Route::middleware('admin')->group(function () {
     } )->name('admin.category.new');
 
     Route::post('/admin/category/create', [App\Http\Controllers\AdminController::class, 'createCategory'])->name('admin.category.create');
+
+    //generate stock report
+    Route::get('/admin/stockreport',  [App\Http\Controllers\AdminController::class, 'stockReport'])->name('admin.stockReport');
 
 });
 

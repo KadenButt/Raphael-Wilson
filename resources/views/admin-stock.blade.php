@@ -339,6 +339,8 @@
     </select>
 
     <a href="{{route('admin.product.new')}}">Create a new product</a>
+    <a href="{{route('admin.stockReport')}}">Generate Stock Report</a>
+
     <br>
     @foreach($products as $product)
     <a>

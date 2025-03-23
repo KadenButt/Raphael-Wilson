@@ -21,9 +21,29 @@ use App\Models\Wishlist;
 
 class AdminController extends Controller
 {
+    public function adminHome()
+    {
+        $items = Item::all();
+        $stockWarning = [];
+
+        foreach($items as $item)
+        {
+            if($item->stock_number <= 5)
+            {
+                $product = Product::where(['product_id' => $item->product_id])->first();
+                $stockWarning[] = 'low stock: ' . $product->product_name . ' in size ' . $item->size_number . ' has only ' . $item->stock_number . ' remaining items';            
+            }
+        }
+
+        return view('admin-home', [
+            'stockWarning' => $stockWarning,
+        ]);
+    }
     public function listCustomer(Request $request)
     {
         $customers = Customer::all();
+
+
         return view('admin-customers', [
             'customers' => $customers,
         ]);
@@ -392,23 +412,20 @@ class AdminController extends Controller
                 Basket::where(['item_id' => $item->item_id])->delete();
                 //get all order_id of OrderItem for one $item
                 $orderIds = OrderItem::where(['item_id' => $item->item_id])->pluck('order_id');
-                
+
                 //delete all order items
                 OrderItem::where(['item_id' => $item->item_id])->delete();
-                
+
                 //for each orderId of the Orderitems that we deleted 
-                foreach($orderIds as $orderId)
-                {
+                foreach ($orderIds as $orderId) {
                     //how many order_items belong to an order 
                     $orderItems = OrderItem::where(['order_id' => $orderId])->get();
-                    if(count($orderItems) == 0)
-                    {
+                    if (count($orderItems) == 0) {
                         Order::where(['order_id' => $orderId])->delete();
                     }
                 }
 
                 $item->delete();
-
             }
             $product->delete();
 
@@ -556,5 +573,41 @@ class AdminController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function stockReport()
+    {
+        $products = Product::all();
+
+
+        //the highest value of total sold for 
+        $totalSold = 0;
+        
+        foreach($products as $product)
+        {
+            $items = Item::where(['product_id' => $product->product_id])->get();
+            //counts the number of sold items for one product
+            $count  = 0;
+            foreach($items as $item)
+            {
+                $count += $item->stock_changes_number;
+            }
+
+            $soldProducts[] = [$product, $count];
+        } 
+
+
+
+
+        //calculate most revenue generated from a products
+        
+        $items = Item::orderBy('stock_changes_number', 'desc')->get();
+
+        //dd($soldProducts);
+        return view('admin-generate-report', [
+            'items' => $items,
+            'products' => $products,
+            'soldProducts' => $soldProducts,
+        ]);
     }
 }

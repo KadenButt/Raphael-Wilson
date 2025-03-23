@@ -340,11 +340,11 @@
             @else
             <option value="{{ route('admin.stock.items', [$x]) }}">Size {{$x}}</option>
             @endif
-            @endfor
+        @endfor
     </select>
 
     <a href="{{route('admin.product.new')}}">Create a new product</a>
-    <a href="">Genreate Stock Report</a>
+    <a href="{{route('admin.stockReport')}}">Generate Stock Report</a>
     <br>
     @for($x = 0; $x < count($items); $x++)
         <a>

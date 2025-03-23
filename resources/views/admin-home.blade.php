@@ -41,7 +41,11 @@
 </header>
 
 <body>
+    @if($stockWarning != 0)
 
+    <h3>Low stock Scroll down!</h3>
+
+    @endif
 
     <div class="logo-box">
         <img src="{{ asset('images/Screenshot_2025-10-28_105449.png')}}" alt="raphael-wilson-logo">
@@ -69,6 +73,15 @@
             </div>
         </div>
     </div>
+
+    @if($stockWarning != 0)
+
+    <h1>Stock Warning</h1>
+    @foreach($stockWarning as $item)
+    <p>{{$item}}</p>
+    @endforeach
+
+    @endif
 
 </body>
 
