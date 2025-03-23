@@ -82,13 +82,10 @@
                 <a href="{{ route('admin.edit', ['customer_id' => $customer->customer_id]) }}" class="icon-button">
                     <i class="fas fa-edit"></i>
                 </a>
-
-                <form id="deleteAdmin" method="POST" action="{{route('admin.delete', ['customer_id' => $customer->customer_id])}}">
-                    @csrf
+                <a href="{{route('admin.delete.check', ['customer_id' => $customer->customer_id])}}">
                     <button type='submit' class="icon-button"><i class="fa-solid fa-trash"></i></button>
                     <input type="hidden" name="customer_id" value="{{$customer->customer_id}}" />
-                </form>
-
+                </a>
             </div>
         </div>
         @endforeach

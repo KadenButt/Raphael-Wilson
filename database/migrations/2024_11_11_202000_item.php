@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('stock_number');
             $table->date('stock_changes_date');
             $table->integer('stock_changes_number');
-            $table->foreignId('customer_id')->references('customer_id')->on('customer');
             $table->foreignId('product_id')->references('product_id')->on('product');
             
         });

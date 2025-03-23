@@ -175,38 +175,32 @@ class AdminController extends Controller
         ]);
     }
 
-    public function deleteCustomer($customer_id)
+    public function deleteCustomerCheck($customer_id)
     {
+        $customer = Customer::where(['customer_id' => $customer_id])->first();
+        return view('admin-check-delete-accout', [
+            'customer' => $customer
+        ]);
+    }
+
+    public function deleteCustomer($customer_id, Request $request)
+    {
+
+
 
 
         $customer = Customer::where(['customer_id' => $customer_id])->first();
         $error = new MessageBag;
 
-        //check if customer is admin
-        if ($customer->admin) {
+        if ($customer->customer_fname != $request->input('user-text')) {
+            $error->add('Customer', 'The customer\'s name was not typed correctly');
+            return redirect()->back()->withErrors($error);
+        }
+
+        //check if customer is deleting their own account
+        if (Auth::user()->customer_id == $customer_id) {
             //check if deleting thier own account
-            if (Auth::user()->customer_id != $customer_id) {
-                //Delete orders and order items
-                $orders = Order::where('customer_id', $customer_id)->get();
-                foreach ($orders as $order) {
-                    OrderItem::where('order_id', $order->order_id)->delete();
-                    $order->delete();
-                }
-                //delete basket
-                Basket::where('customer_id', $customer_id)->delete();
-                //delete review
-                Review::where('customer_id', $customer_id)->delete();
-                //delete wishlsit
-                WishList::where('customer_id', $customer_id)->delete();
-                //delete address
-                Address::where('address_id', $customer->address_id);
-                //delete payment
-                Payment::where('payment_id', $customer->payment_id);
-                //delete customer account
-                $customer->delete();
-            } else {
-                $error->add('admin', 'You cannot delete your own account');
-            }
+            $error->add('admin', 'You cannot delete your own account');
         } else {
             //Delete orders and order items
             $orders = Order::where('customer_id', $customer_id)->get();
@@ -220,17 +214,17 @@ class AdminController extends Controller
             Review::where('customer_id', $customer_id)->delete();
             //delete wishlsit
             WishList::where('customer_id', $customer_id)->delete();
-            //delete address
-            Address::where('address_id', $customer->address_id);
-            //delete payment
-            Payment::where('payment_id', $customer->payment_id);
-
             //delete customer
             $customer->delete();
+            //delete address
+            Address::where('address_id', $customer->address_id)->delete();
+            //delete payment
+            Payment::where('payment_id', $customer->payment_id)->delete();
+
         }
 
 
-        return redirect()->back()->withErrors($error);
+        return redirect()->route('admin.customers');
     }
 
     public function newProduct(Request $request)
@@ -265,14 +259,13 @@ class AdminController extends Controller
             'photo.mimes' => 'The image must be a file of type: jpeg, png, jpg.',
             'photo.max' => 'The image must not exceed 10MB in size.',
         ]);
-        
+
         //check if product name is unquie
         $product = Product::where([
             "product_name" => $vd['shoe_name']
-        ]);
+        ])->first();
 
-        if($product != null)
-        {
+        if ($product != null) {
             $error = new MessageBag;
             $error->add('name', 'The product name is already in use');
             return redirect()->back()->withErrors($error);
@@ -296,7 +289,6 @@ class AdminController extends Controller
                 'stock_number' => $vd['quantity'],
                 'stock_changes_date' => date("Y-m-d"),
                 'stock_changes_number' => 0,
-                'customer_id' => Auth::user()->customer_id
             ]);
         }
         return redirect()->back()->with('success', 'Product Created');
@@ -331,7 +323,7 @@ class AdminController extends Controller
             'description.required' => 'The description is required.',
 
         ]);
-        
+
         //check if product name is unquie
         $product = Product::where([
             "product_name" => $vd['shoe_name']
@@ -493,14 +485,13 @@ class AdminController extends Controller
             'category_name' => $vd['category-text']
         ])->first();
 
-        if($category != null)
-        {
+        if ($category != null) {
             $error = new MessageBag;
             $error->add('Category', 'category name is already in use');
             return redirect()->back()->withErrors($error);
         }
 
-        
+
 
         Category::create([
             'category_name' => $vd['category-text']

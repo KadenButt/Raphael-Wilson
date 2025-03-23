@@ -11,6 +11,11 @@ use App\Models\Customer;
 use App\Models\Admin;
 use App\Models\Address;
 use App\Models\Payment;
+use App\Models\Basket;
+use App\Models\Review;
+use App\Models\WishList;
+use App\Models\Order;
+use App\Models\OrderItem;
 
 class CustomerController extends Controller
 {
@@ -131,8 +136,7 @@ class CustomerController extends Controller
                 return redirect(route('product', [$previousRequest->input('product_id')]));
             }
 
-            if($customer->admin)
-            {
+            if ($customer->admin) {
                 session(['admin' => true]);
                 return redirect(route('admin.home'));
             }
@@ -200,8 +204,7 @@ class CustomerController extends Controller
 
         //check for duplicate email 
         $customer_check = Customer::where(['customer_email' => $vd['customer_email']])->first();
-        if($customer_check != null)
-        {
+        if ($customer_check != null) {
             $error = new MessageBag;
             $error->add('email', 'email is already in use');
             return redirect()->back()->withErrors($error);
@@ -263,8 +266,7 @@ class CustomerController extends Controller
         }
 
         //check to see if passwords match
-        if($vd['customer_password'] != $vd['password_confirmation'])
-        {
+        if ($vd['customer_password'] != $vd['password_confirmation']) {
             $error = new MessageBag;
             $error->add('passwords', 'Password do not match');
             return redirect()->back()->withErrors($error);
@@ -278,5 +280,58 @@ class CustomerController extends Controller
             ]);
             dd('$2y$12$WF0eyStdThItWCTbdOG.geeLW7Mv15JTMj/XRBIy5VPyaGXq3c7/2' == $customer->customer_password);
         }
+    }
+
+    public function deleteCustomerCheck()
+    {
+        $customer = Customer::where(['customer_id' => Auth::user()->customer_id])->first();
+        return view('customer-check-delete-accout', [
+            'customer' => $customer
+        ]);
+    }
+
+    public function deleteCustomer(Request $request)
+    {
+        $customer = Customer::where(['customer_id' => Auth::user()->customer_id])->first();
+        $error = new MessageBag;
+        
+
+
+        if ($customer->customer_fname == $request->input('user-text')) {
+
+            if($customer->admin == true)
+            {
+                $admin = Customer::where(['admin' => true])->get();
+                if( count($admin) <= 1)
+                {
+                    $error->add('Admin', 'There must be at least one admin account');
+                    return redirect()->back()->withErrors($error);
+                }
+
+            }
+
+            $orders = Order::where('customer_id', Auth::user()->customer_id)->get();
+            foreach ($orders as $order) {
+                OrderItem::where('order_id', $order->order_id)->delete();
+                $order->delete();
+            }
+            //delete basket
+            Basket::where('customer_id', Auth::user()->customer_id)->delete();
+            //delete review
+            Review::where('customer_id', Auth::user()->customer_id)->delete();
+            //delete wishlsit
+            WishList::where('customer_id', Auth::user()->customer_id)->delete();
+            //delete customer
+            $customer->delete();
+            //delete address
+            Address::where('address_id', $customer->address_id)->delete();
+            //delete payment
+            Payment::where('payment_id', $customer->payment_id)->delete();
+
+            return redirect()->route('logout');
+        }
+
+        $error->add('Customer', 'You did not type your name correctly');
+        return redirect()->back()->withErrors($error);
     }
 }

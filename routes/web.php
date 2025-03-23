@@ -87,6 +87,10 @@ Route::middleware('auth')->group(function () {
         return view('forgotPword');
     })->name('customer.forgotpw');
 
+    //delete account
+    Route::get("/customer/delete/check", [App\Http\Controllers\CustomerController::class, 'deleteCustomerCheck'])->name('customer.delete.check');
+    Route::post('/customer/delete', [App\Http\Controllers\CustomerController::class, 'deleteCustomer'])->name('customer.delete');
+
 
     //logout
     Route::get('/logout', function () {
@@ -119,7 +123,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/customers/edit/{customer_id}', [App\Http\Controllers\AdminController::class, 'editCustomer'])->name('admin.edit');
     Route::post('/admin/customers/update', [App\Http\Controllers\AdminController::class, 'updateCustomer'])->name('admin.update');
     Route::get('/admin/orders/{customer_id}', [App\Http\Controllers\AdminController::class, 'customerOrders'])->name('admin.orders');
+    Route::get('/admin/delete/check/{customer_id}', [App\Http\Controllers\AdminController::class, 'deleteCustomerCheck'])->name('admin.delete.check');
     Route::post('/admin/delete/{customer_id}', [App\Http\Controllers\AdminController::class, 'deleteCustomer'])->name('admin.delete');
+
 
     //addmin product controlls
     Route::get('/admin/product/new', [App\Http\Controllers\AdminController::class, 'newProduct'])->name('admin.product.new');

@@ -72,6 +72,8 @@
         <img src="{{asset('favicon_io/android-chrome-512x512.png')}}" alt="side-logo">
 
         <a href="{{route('customer.forgotpw')}}">Change Password</a>
+        <a href="{{route('customer.delete.check')}}">Delete Account</a>
+
 
         <section id="form-error">
             @if ($errors->any())
