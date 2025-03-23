@@ -429,9 +429,8 @@ class AdminController extends Controller
     {
         $orders = Order::all();
         $products = [];
-
         foreach ($orders as $order) {
-            $orderItem = OrderItem::where(['order_id' => $order->first()->order_id])->first();
+            $orderItem = OrderItem::where(['order_id' => $order->order_id])->first();
             $item = Item::where(['item_id' => $orderItem->item_id])->first();
             $product = Product::where(['product_id' => $item->product_id])->first();
             $products[] = $product->product_photo;
