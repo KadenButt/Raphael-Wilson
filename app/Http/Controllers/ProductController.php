@@ -165,7 +165,7 @@ class ProductController extends Controller
             "product_name" => $vd['shoe_name']
         ])->first();
 
-        if ($product != null) {
+        if ($product != null && $product->product_id != $product_id) {
             $error = new MessageBag;
             $error->add('name', 'The product name is already in use');
             return redirect()->back()->withErrors($error);

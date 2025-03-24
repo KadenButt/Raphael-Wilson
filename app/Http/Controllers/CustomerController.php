@@ -251,9 +251,7 @@ class CustomerController extends Controller
 
         ]);
 
-        //get customer from database making sure customer id matches to the correct email
         $customer = Customer::where([
-            'customer_id' => Auth::user()->customer_id,
             'customer_email' => $vd['customer_email'],
         ])->first();
 
@@ -273,12 +271,12 @@ class CustomerController extends Controller
 
 
         if (Hash::check(request()->input('security_answer'), $customer->customer_question)) {
-            //dd($vd['customer_password']);
             $customer->update([
                 'customer_password' => bcrypt($vd['customer_password'])
             ]);
-            dd('$2y$12$WF0eyStdThItWCTbdOG.geeLW7Mv15JTMj/XRBIy5VPyaGXq3c7/2' == $customer->customer_password);
         }
+
+        return redirect(route('login'));
     }
 
     public function deleteCustomerCheck()

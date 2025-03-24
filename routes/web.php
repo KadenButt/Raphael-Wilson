@@ -49,6 +49,13 @@ Route::get('/login', function () {
 Route::post('/login/customer', [App\Http\Controllers\CustomerController::class, 'loginCustomer'])->name('customer.login');
 
 
+Route::get("/customer/forgotpassword", function () {
+    return view('forgotPword');
+})->name('customer.forgotpw');
+
+
+//change password
+Route::post('/customer/changepassword', [App\Http\Controllers\CustomerController::class, 'changePassword'])->name('customer.changePassword');
 
 
 //customer routes
@@ -80,12 +87,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/customer/details/change', [App\Http\Controllers\CustomerController::class, 'updateCustomer'])->name('customer.update');
 
 
-    //change password
-    Route::post('/customer/changepassword', [App\Http\Controllers\CustomerController::class, 'changePassword'])->name('customer.changePassword');
 
-    Route::get("/customer/forgotpassword", function () {
-        return view('forgotPword');
-    })->name('customer.forgotpw');
+
 
     //delete account
     Route::get("/customer/delete/check", [App\Http\Controllers\CustomerController::class, 'deleteCustomerCheck'])->name('customer.delete.check');
