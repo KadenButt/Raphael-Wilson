@@ -34,6 +34,7 @@
             <a href="{{route('contact')}}">Contact</a>
             <a href="{{route('aboutUs')}}">About us</a>
             <a href="{{route('logout')}}">Logout</a>
+            <a href="{{ route('wishlist') }}">Wishlist</a> <!-- Added Wishlist link -->
             <a href="{{route('basket')}}">Basket</a>
         </div>
     </div>
