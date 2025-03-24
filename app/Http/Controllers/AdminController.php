@@ -134,7 +134,7 @@ class AdminController extends Controller
         $payment = Payment::where('payment_id', $customer->payment_id)->first();
 
         $customer_check = Customer::where(['customer_email' => $vd['customer_email']])->first();
-        if ($customer_check != null) {
+        if ($customer_check != null && $customer_check->customer_id !=  $customer->customer_id) {
             $error = new MessageBag;
             $error->add('email', 'email is already in use');
             return redirect()->back()->withErrors($error);

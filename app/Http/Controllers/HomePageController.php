@@ -10,7 +10,7 @@ class HomePageController extends Controller
     public function homePage(Request $request)
     {
         $categories = Category::all();
-        return view('home', [
+        return view('index', [
             'categories' => $categories
         ]);
     }

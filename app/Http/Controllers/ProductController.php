@@ -12,8 +12,8 @@ use Illuminate\Support\MessageBag;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Basket;
-use App\Models\Review;
-use App\Models\Wishlist;
+use App\Models\review;
+use App\Models\wishlist;
 
 
 class ProductController extends Controller
@@ -216,8 +216,8 @@ class ProductController extends Controller
         ])->first();
 
         if ($request->input('product-text') == $product->product_name) {
-            Wishlist::where(['product_id' => $product_id])->delete();
-            Review::where(['product_id' => $product_id])->delete();
+            wishlist::where(['product_id' => $product_id])->delete();
+            review::where(['product_id' => $product_id])->delete();
 
             //get all items of the product
             $items = Item::where(['product_id' => $product_id])->get();

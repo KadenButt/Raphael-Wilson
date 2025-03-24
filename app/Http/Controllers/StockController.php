@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Order;
 
 class StockController extends Controller
 {
@@ -53,11 +54,15 @@ class StockController extends Controller
     public function stockReport()
     {
         $products = Product::all();
+        $order = Order::all();
+
+        if($order->isEmpty())
+        {
+            return view('admin-generate-report-no-data');
+        }
 
 
-        //the highest value of total sold for 
-        $totalSold = 0;
-        
+;
         foreach($products as $product)
         {
             $items = Item::where(['product_id' => $product->product_id])->get();
@@ -78,7 +83,6 @@ class StockController extends Controller
         
         $items = Item::orderBy('stock_changes_number', 'desc')->get();
 
-        //dd($soldProducts);
         return view('admin-generate-report', [
             'items' => $items,
             'products' => $products,
