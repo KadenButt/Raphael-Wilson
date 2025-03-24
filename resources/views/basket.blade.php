@@ -7,12 +7,6 @@
     <title>Basket</title>
     <link rel="icon" type="image/png" href="{{asset('favicon_io/android-chrome-512x512.png')}}">
 
-    <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <style>
         @media (max-width: 768px) {
             #navigation {
@@ -272,7 +266,6 @@
                     <a href="{{route('products')}}">Products</a>
                     <a href="{{route('contact')}}">Contact</a>
                     <a href="{{route('aboutUs')}}">About us</a>
-                    <a href="{{ route('wishlist') }}">Wishlist</a> <!-- Added Wishlist link -->
                     <a href="{{route('basket')}}">Basket</a>
                     <a href='{{route('order')}}'>Order History</a>
                     <a href="{{route('logout')}}">Logout</a>
@@ -341,6 +334,5 @@
 
 
 </body>
-
 
 </html>

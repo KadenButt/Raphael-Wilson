@@ -37,7 +37,6 @@
           <a href="{{route('contact')}}">Contact</a>
           <a href="{{route('aboutUs')}}">About us</a>
           @auth
-          <a href="{{ route('wishlist') }}">Wishlist</a> <!-- Added Wishlist link -->
           <a href="{{route('basket')}}">Basket</a>
           <a href='{{route('order')}}'>Order History</a>
           <a href="{{route('logout')}}">Logout</a>
